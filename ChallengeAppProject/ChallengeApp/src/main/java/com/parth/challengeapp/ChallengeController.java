@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Validated
@@ -68,20 +70,42 @@ public class ChallengeController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addChallenges(
+    public ResponseEntity<Map<String, String>> addChallenges(
             @RequestBody Challenge challenge
     ) {
         boolean isAdded = challengeService.addChallenges(challenge);
+        Map<String, String> response = new HashMap<>();
 
         if (isAdded) {
+            response.put("message", "Challenge Added");
             return new ResponseEntity<>(
-                    "Challenge Added", HttpStatus.CREATED
+                    response, HttpStatus.CREATED
+            );
+        } else {
+            response.put("message", "Couldn't add challenge");
+            return new ResponseEntity<>(
+                    response, HttpStatus.BAD_REQUEST
             );
         }
-        return new ResponseEntity<>(
-                "Couldn't add challenge", HttpStatus.BAD_REQUEST
-        );
     }
+
+//    @PostMapping
+//    public ResponseEntity<String> addChallenges(
+//            @RequestBody Challenge challenge
+//    ) {
+//        boolean isAdded = challengeService.addChallenges(challenge);
+//        Map<String, String> response = new HashMap<>();
+//
+//        if (isAdded) {
+//            return new ResponseEntity<>(
+//                    "Challenge Added", HttpStatus.CREATED
+//            );
+//        } else {
+//            return new ResponseEntity<>(
+//                   "Couldn't add challenge", HttpStatus.BAD_REQUEST
+//            );
+//        }
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateChallenge(

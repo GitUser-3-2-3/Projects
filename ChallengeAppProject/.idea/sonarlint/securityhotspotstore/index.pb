@@ -69,3 +69,13 @@ T
 $challenge-app-ui/src/assets/.gitkeep,8/d/8da1bb4808bc5a59b7d01468e313ab4719a154a5
 G
 ChallengeAppProject.iml,6/0/60ccbb729549d1a4c47ab5c59d6fcf1772674c9e
+k
+;challenge-app-ui/src/app/challenge/challenge.component.html,8/9/8942209b8878557f7a43536ee282d53f9bfb8799
+i
+9challenge-app-ui/src/app/challenge/challenge.component.ts,c/4/c4c5fbb89fefa971e9601d8331756ef200dcac65
+\
+,challenge-app-ui/src/app/challenge/demo.html,c/0/c01600a70f00cbd97f1d20dc55149f1c32eaa1d9
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e

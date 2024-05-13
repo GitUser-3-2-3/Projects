@@ -81,3 +81,15 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
 j
 :challenge-app-ui/src/app/challenge/challenge.component.css,3/a/3ab1e8c484549659d3560beed51a154c759626d9
+w
+Gchallenge-app-ui/src/app/saved-challenges/saved-challenges.component.ts,3/7/37f6ac05587a600806c216ba066ca2a2369502f5
+y
+Ichallenge-app-ui/src/app/saved-challenges/saved-challenges.component.html,3/a/3ac77a774850e15c7603e0e13e4c81292d1c210c
+Ü
+Vchallenge-app-ui/src/app/challenge/saved-challenges/saved-challenges.component.spec.ts,4/2/421579453e19fc9e78e3344e892bdd35bea34563
+É
+Schallenge-app-ui/src/app/challenge/saved-challenges/saved-challenges.component.html,b/e/be5aa642f1ebda5b228d55783183929b448a7706
+Å
+Qchallenge-app-ui/src/app/challenge/saved-challenges/saved-challenges.component.ts,0/f/0f5eb9cd4b2d4d321d85cb6d6abb58729576a95e
+Ç
+Rchallenge-app-ui/src/app/challenge/saved-challenges/saved-challenges.component.css,e/b/ebeef36b78c6395f88265d8db7294d1490f7947c

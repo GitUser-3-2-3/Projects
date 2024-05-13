@@ -17,6 +17,7 @@ export class ChallengeComponent implements OnInit {
     }
 
     ngOnInit() {
+        // does something
     }
 
     challengeForm = this.fb.group({

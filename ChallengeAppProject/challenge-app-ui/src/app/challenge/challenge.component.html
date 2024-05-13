@@ -1,89 +1,96 @@
-<div class="card" style="width: 500px">
-   <div class="card-header bg-body-secondary pd-3">
-      Add New Challenge
-   </div>
-   <div class="card-body">
-      <form
-         [formGroup]="challengeForm"
-         (ngSubmit)="$event.preventDefault(); onSubmit()"
-      >
-         <div class="mb-3">
-            <label for="month" class="form-label fw-medium">Month</label>
-            <input
-               type="text"
-               class="form-control"
-               id="month"
-               aria-describedby="chooseMonth"
-               placeholder="Enter Month"
-               formControlName="month"
-            >
-            <div class="form-text"
-                 *ngIf="!challengeForm.get('month')?.dirty && !challengeForm.get('month')?.touched"
-            >
-               Choose the month for the challenge
-            </div>
+<div class="d-flex flex-column justify-content-center align-items-center bg-dark text-dark-emphasis" style="height:
+100vh">
+   <div class="card" style="width: 500px">
+      <div class="card-header bg-body-secondary pd-3">
+         Add New Challenge
+      </div>
+      <div class="card-body">
+         <form
+            [formGroup]="challengeForm"
+            (ngSubmit)="$event.preventDefault(); onSubmit()"
+         >
+            <div class="mb-3">
+               <label for="month" class="form-label fw-medium">Month</label>
+               <input
+                  type="text"
+                  class="form-control"
+                  id="month"
+                  aria-describedby="chooseMonth"
+                  placeholder="Enter Month"
+                  formControlName="month"
+               >
+               <div class="form-text"
+                    *ngIf="!challengeForm.get('month')?.dirty && !challengeForm.get('month')?.touched"
+               >
+                  Choose the month for the challenge
+               </div>
 
-            <div *ngIf="challengeForm.controls.month.invalid &&
+               <div *ngIf="challengeForm.controls.month.invalid &&
                  (challengeForm.controls.month.dirty || challengeForm.controls.month.touched)"
-            >
-               <small class="text-danger"
-                      *ngIf="challengeForm.controls.month.hasError('required')"
-               >*required</small>
+               >
+                  <small class="text-danger"
+                         *ngIf="challengeForm.controls.month.hasError('required')"
+                  >*required</small>
 
-               <small
-                  class="text-danger"
-                  *ngIf="challengeForm.controls.month.hasError('minlength')"
-               >*length is less than 3</small>
+                  <small
+                     class="text-danger"
+                     *ngIf="challengeForm.controls.month.hasError('minlength')"
+                  >*length is less than 3</small>
 
-               <small
-                  class="text-danger"
-                  *ngIf="challengeForm.controls.month.hasError('maxlength')"
-               >*length more that 10</small>
-            </div>
-         </div>
-
-         <div class="mb-3">
-            <label for="description" class="form-label fw-medium">Description</label>
-            <input
-               type="text"
-               class="form-control"
-               id="description"
-               aria-describedby="enterDescription"
-               placeholder="Describe the challenge"
-               formControlName="description"
-            >
-            <div class="form-text"
-                 *ngIf="!challengeForm.get('description')?.dirty && !challengeForm.get('description')?.touched"
-            >
-               Choose the description for the challenge
+                  <small
+                     class="text-danger"
+                     *ngIf="challengeForm.controls.month.hasError('maxlength')"
+                  >*length more that 10</small>
+               </div>
             </div>
 
-            <div *ngIf="challengeForm.controls.description.invalid &&
+            <div class="mb-3">
+               <label for="description" class="form-label fw-medium">Description</label>
+               <input
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  aria-describedby="enterDescription"
+                  placeholder="Describe the challenge"
+                  formControlName="description"
+               >
+               <div class="form-text"
+                    *ngIf="!challengeForm.get('description')?.dirty && !challengeForm.get('description')?.touched"
+               >
+                  Choose the description for the challenge
+               </div>
+
+               <div *ngIf="challengeForm.controls.description.invalid &&
                  (challengeForm.controls.description.dirty || challengeForm.controls.description.touched)"
-            >
-               <small class="text-danger"
-                      *ngIf="challengeForm.controls.description.hasError('required')"
-               >*required</small>
+               >
+                  <small class="text-danger"
+                         *ngIf="challengeForm.controls.description.hasError('required')"
+                  >*required</small>
 
-               <small
-                  class="text-danger"
-                  *ngIf="challengeForm.controls.description.hasError('minlength')"
-               >*length is less than 10</small>
+                  <small
+                     class="text-danger"
+                     *ngIf="challengeForm.controls.description.hasError('minlength')"
+                  >*length is less than 10</small>
 
-               <small
-                  class="text-danger"
-                  *ngIf="challengeForm.controls.description.hasError('maxlength')"
-               >*length more that 50</small>
+                  <small
+                     class="text-danger"
+                     *ngIf="challengeForm.controls.description.hasError('maxlength')"
+                  >*length more that 50</small>
+               </div>
             </div>
-         </div>
 
-         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-danger col-3"
-                    [disabled]="!challengeForm.valid"
-            >Submit
-            </button>
-         </div>
+            <div class="d-flex justify-content-center">
+               <button type="submit" class="btn btn-success col-3"
+                       [disabled]="!challengeForm.valid"
+               >Submit
+               </button>
+            </div>
 
-      </form>
+         </form>
+      </div>
+   </div>
+
+   <div class="mt-5">
+      <app-saved-challenges></app-saved-challenges>
    </div>
 </div>

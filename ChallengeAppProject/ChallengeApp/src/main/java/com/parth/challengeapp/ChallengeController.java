@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @Validated
 @RequestMapping("/challenges")
 public class ChallengeController {
@@ -108,36 +109,43 @@ public class ChallengeController {
 //    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateChallenge(
+    public ResponseEntity<Map<String, String>> updateChallenge(
             @RequestBody Challenge updatedChallenge,
             @PathVariable Long id
     ) {
         boolean isUpdated = challengeService.updateChallenge(updatedChallenge, id);
+        Map<String, String> response = new HashMap<>();
 
         if (isUpdated) {
+            response.put("message", "Challenge Updated");
             return new ResponseEntity<>(
-                    "Challenge Updated", HttpStatus.OK
+                    response, HttpStatus.OK
+            );
+        } else {
+            return new ResponseEntity<>(
+                    response, HttpStatus.NOT_FOUND
             );
         }
-        return new ResponseEntity<>(
-                "Couldn't update challenge", HttpStatus.NOT_FOUND
-        );
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteChallenge(
+    public ResponseEntity<Map<String, String>> deleteChallenge(
             @PathVariable Long id
     ) {
         boolean isDeleted = challengeService.deleteChallenge(id);
+        Map<String, String> response = new HashMap<>();
 
         if (isDeleted) {
+            response.put("message", "Challenge Deleted");
             return new ResponseEntity<>(
-                    "Challenge Deleted", HttpStatus.OK
+                    response, HttpStatus.OK
+            );
+        } else {
+            response.put("message", "Couldn't delete challenge");
+            return new ResponseEntity<>(
+                    response, HttpStatus.NOT_FOUND
             );
         }
-        return new ResponseEntity<>(
-                "Couldn't delete challenge", HttpStatus.NOT_FOUND
-        );
     }
 }

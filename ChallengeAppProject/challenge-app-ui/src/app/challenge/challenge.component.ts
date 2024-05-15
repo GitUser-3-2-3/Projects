@@ -47,16 +47,14 @@ export class ChallengeComponent implements OnInit {
                 next: response => {
                     console.log(response);
                     this.snackBar.open('Challenge added successfully', 'Close', {
-                        duration: 3000,
-                        panelClass: ['green-snackbar']
+                        duration: 3000
                     });
                     this.challengeForm.reset();
                 },
                 error: error => {
                     console.log(error);
                     this.snackBar.open("Couldn't add challenge", 'Close', {
-                        duration: 3000,
-                        panelClass: ['red-snackbar']
+                        duration: 3000
                     })
                 }
             });

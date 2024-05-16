@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {UpdateDialogComponent} from "../update-dialog/update-dialog.component";
 
 @Component({
     selector: 'app-saved-challenges',
@@ -10,16 +12,37 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class SavedChallengesComponent implements OnInit {
     challenges: any[] = [];
     selectedChallenge: any = null;
+    showUpdateForm = false;
 
-    updateChallenge(challenge: any) {
-        this.selectedChallenge = challenge;
-    }
-
-    constructor(private http: HttpClient, private snackBar: MatSnackBar) {
+    constructor(
+        private http: HttpClient,
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog
+    ) {
     }
 
     ngOnInit() {
         this.fetchChallenges();
+    }
+
+    updateToggle() {
+        this.showUpdateForm = !this.showUpdateForm;
+    }
+
+    updateChallenge(challenge: any) {
+        const dialogRef = this.dialog.open(
+            UpdateDialogComponent, {
+                width: '250px',
+                data: challenge
+            }
+        );
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.selectedChallenge = result;
+                this.submitUpdate();
+            }
+        });
     }
 
     fetchChallenges() {

@@ -9,12 +9,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { SavedChallengesComponent } from './saved-challenges/saved-challenges.component';
+import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
     declarations: [
         AppComponent,
         ChallengeComponent,
-        SavedChallengesComponent
+        SavedChallengesComponent,
+        UpdateDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -23,7 +28,10 @@ import { SavedChallengesComponent } from './saved-challenges/saved-challenges.co
         ReactiveFormsModule,
         HttpClientModule,
         MatSnackBarModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatInputModule,
+        MatButtonModule
     ],
     providers: [],
     bootstrap: [AppComponent]

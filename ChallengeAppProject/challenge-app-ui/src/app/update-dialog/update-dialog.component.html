@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Update Challenge</h1>
+<div mat-dialog-content>
+  <form #updateForm="ngForm">
+    <mat-form-field>
+      <mat-label>Month</mat-label>
+      <input matInput [(ngModel)]="data.month" name="month">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="data.description" name="description"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" [disabled]="!updateForm.valid">Update</button>
+</div>

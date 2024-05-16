@@ -46,10 +46,11 @@ export class ChallengeComponent implements OnInit {
             this.addChallenge(this.challengeForm.value).subscribe({
                 next: response => {
                     console.log(response);
-                    this.snackBar.open('Challenge added successfully', 'Close', {
-                        duration: 3000
-                    });
+                    // this.snackBar.open('Challenge added successfully', 'Close', {
+                    //     duration: 3000
+                    // });
                     this.challengeForm.reset();
+                    location.reload();
                 },
                 error: error => {
                     console.log(error);

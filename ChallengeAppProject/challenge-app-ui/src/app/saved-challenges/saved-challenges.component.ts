@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
-import {UpdateDialogComponent} from "../update-dialog/update-dialog.component";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-saved-challenges',
@@ -15,6 +15,7 @@ export class SavedChallengesComponent implements OnInit {
     showUpdateForm = false;
 
     constructor(
+        private fb: FormBuilder,
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private dialog: MatDialog
@@ -29,21 +30,50 @@ export class SavedChallengesComponent implements OnInit {
         this.showUpdateForm = !this.showUpdateForm;
     }
 
-    updateChallenge(challenge: any) {
-        const dialogRef = this.dialog.open(
-            UpdateDialogComponent, {
-                width: '250px',
-                data: challenge
-            }
-        );
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.selectedChallenge = result;
-                this.submitUpdate();
-            }
-        });
+    updateButton(challenge: any) {
+        this.selectedChallenge = challenge;
     }
+
+    updateChallenge() {
+        /* const dialogRef = this.dialog.open(
+             UpdateDialogComponent, {
+                 width: '250px',
+                 data: challenge
+             }
+         );
+
+         dialogRef.afterClosed().subscribe(result => {
+             if (result) {
+                 this.selectedChallenge = result;
+                 this.submitUpdate();
+             }
+         });*/
+
+        if (this.updateDialog.valid) {
+            this.selectedChallenge.month = this.updateDialog.get('month')?.value;
+            this.selectedChallenge.description = this.updateDialog.get('description')?.value;
+
+            this.submitUpdate();
+        }
+    }
+
+
+    updateDialog = this.fb.group({
+        month: ['',
+            [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(10)
+            ]
+        ],
+        description: ['',
+            [
+                Validators.required,
+                Validators.minLength(10),
+                Validators.maxLength(50)
+            ]
+        ]
+    });
 
     fetchChallenges() {
         this.http.get<any[]>('http://localhost:8080/challenges').subscribe({

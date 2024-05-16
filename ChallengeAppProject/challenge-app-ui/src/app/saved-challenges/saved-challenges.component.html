@@ -7,7 +7,7 @@
       </div>
       <div class="d-flex justify-content-between">
          <button class="btn btn-primary float-right pt-0 pb-0"
-                 (click)="updateChallenge(challenge); updateToggle()"
+                 (click)="updateButton(challenge); updateToggle()"
          >Update
          </button>
          <button class="btn btn-danger float-right pt-0 pb-0"
@@ -18,24 +18,85 @@
    </div>
 </div>
 
-<!--
 <div *ngIf="showUpdateForm">
    <div *ngIf="selectedChallenge" class="card" style="width: 31rem;">
       <h3 class="card-header">Update Challenge</h3>
       <div class="card-body">
-         <form (ngSubmit)="submitUpdate()">
-            <div class="form-group">
-               <label for="month">Month</label>
-               <input type="text" id="month" [(ngModel)]="selectedChallenge.month" name="month"
-                      class="form-control mb-3">
+         <form
+            [formGroup]="updateDialog"
+            (ngSubmit)="$event.preventDefault(); updateChallenge()">
+            <div class="mb-3">
+               <label for="month" class="form-label fw-medium">Month</label>
+               <input
+                  type="text"
+                  class="form-control"
+                  id="month"
+                  aria-describedby="chooseMonth"
+                  placeholder="Update Month"
+                  formControlName="month"
+               >
+               <div class="form-text"
+                    *ngIf="!updateDialog.get('month')?.dirty && !updateDialog.get('month')?.touched"
+               >
+                  Update the month for the challenge
+               </div>
+
+               <div *ngIf="updateDialog.controls.month.invalid &&
+                 (updateDialog.controls.month.dirty || updateDialog.controls.month.touched)"
+               >
+                  <small class="text-danger"
+                         *ngIf="updateDialog.controls.month.hasError('required')"
+                  >*required</small>
+
+                  <small
+                     class="text-danger"
+                     *ngIf="updateDialog.controls.month.hasError('minlength')"
+                  >*length is less than 3</small>
+
+                  <small
+                     class="text-danger"
+                     *ngIf="updateDialog.controls.month.hasError('maxlength')"
+                  >*length more that 10</small>
+               </div>
             </div>
-            <div class="form-group">
-               <label for="description">Description</label>
-               <textarea id="description" [(ngModel)]="selectedChallenge.description" name="description"
-                         class="form-control mb-3"></textarea>
+
+            <div class="mb-3">
+               <label for="description" class="form-label fw-medium">Month</label>
+               <input
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  aria-describedby="updateDescription"
+                  placeholder="Update Description"
+                  formControlName="description"
+               >
+               <div class="form-text"
+                    *ngIf="!updateDialog.get('description')?.dirty && !updateDialog.get('description')?.touched"
+               >
+                  Update the description for the challenge
+               </div>
+
+               <div *ngIf="updateDialog.controls.description.invalid &&
+                 (updateDialog.controls.description.dirty || updateDialog.controls.description.touched)"
+               >
+                  <small class="text-danger"
+                         *ngIf="updateDialog.controls.description.hasError('required')"
+                  >*required</small>
+
+                  <small
+                     class="text-danger"
+                     *ngIf="updateDialog.controls.description.hasError('minlength')"
+                  >*length is less than 10</small>
+
+                  <small
+                     class="text-danger"
+                     *ngIf="updateDialog.controls.description.hasError('maxlength')"
+                  >*length more that 50</small>
+               </div>
             </div>
+
             <button type="submit" class="btn btn-success pt-0 pb-0">Save</button>
          </form>
       </div>
    </div>
-</div>-->
+</div>

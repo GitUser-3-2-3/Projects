@@ -1,4 +1,4 @@
-package com.parth.rbac.rolebasedaccesscontrol;
+package com.parth.rbac;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,9 +1,10 @@
-package com.parth.rbac.security;
+package com.parth.rbac.config;
 
+import com.parth.rbac.security.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -29,6 +30,7 @@ public class SecurityConfig {
       http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
            .authorizeHttpRequests(req ->
                 req.requestMatchers("/api/v1/auth/**").permitAll()
+                     .requestMatchers(HttpMethod.PUT, "/users/**/assign-roles/**").hasRole("ADMIN")
                      .anyRequest().authenticated()
            ).sessionManagement(
                 session -> session.sessionCreationPolicy(STATELESS)

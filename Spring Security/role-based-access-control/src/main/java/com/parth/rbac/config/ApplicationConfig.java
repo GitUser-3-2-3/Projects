@@ -1,4 +1,4 @@
-package com.parth.rbac.security;
+package com.parth.rbac.config;
 
 import com.parth.rbac.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

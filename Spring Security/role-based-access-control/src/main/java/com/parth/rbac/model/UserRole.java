@@ -1,5 +1,6 @@
 package com.parth.rbac.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,10 +24,13 @@ public class UserRole {
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "user_id")
+   @JsonBackReference
    private User user;
+
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "role_id")
+   @JsonBackReference
    private Role role;
 
    @ManyToOne(fetch = FetchType.LAZY)

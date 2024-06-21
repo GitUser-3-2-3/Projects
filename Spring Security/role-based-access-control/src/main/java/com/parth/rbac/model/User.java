@@ -1,5 +1,6 @@
 package com.parth.rbac.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -38,7 +39,7 @@ public class User implements UserDetails {
    private String email;
 
    @Column(nullable = false)
-   @Length(min = 8, max = 20)
+   @Length(min = 8)
    @NotBlank
    private String password;
 
@@ -46,6 +47,7 @@ public class User implements UserDetails {
    private boolean enabled;
 
    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+   @JsonManagedReference
    private Set<UserRole> userRoles;
 
    @CreatedDate

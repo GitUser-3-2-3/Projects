@@ -1,5 +1,6 @@
 package com.parth.rbac.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,6 +27,7 @@ public class Role {
    private String name;
 
    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+   @JsonManagedReference
    private Set<UserRole> userRoles;
 
    @CreatedDate

@@ -50,14 +50,14 @@ public class JwtTokenUtil {
    }
 
    public String generateToken(UserDetails userDetails) {
-      return doGenerateToken(new HashMap<>(), userDetails);
+      return generateToken(new HashMap<>(), userDetails);
    }
 
-   public String doGenerateToken(Map<String, Object> claims, UserDetails userDetails) {
+   public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
       return buildToken(claims, userDetails, jwt_expiration);
    }
 
-   public String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long jwt_expiration) {
+   private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long jwt_expiration) {
       var authorities = userDetails.getAuthorities()
            .stream().map(GrantedAuthority::getAuthority)
            .collect(Collectors.toSet());

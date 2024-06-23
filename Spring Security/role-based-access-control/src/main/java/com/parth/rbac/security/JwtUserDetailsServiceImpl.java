@@ -1,12 +1,12 @@
 package com.parth.rbac.security;
 
 import com.parth.rbac.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +18,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
    @Transactional
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       return userRepository.findByEmail(username)
-           .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+           .orElseThrow(() -> new UsernameNotFoundException("User not found" + username));
    }
 }

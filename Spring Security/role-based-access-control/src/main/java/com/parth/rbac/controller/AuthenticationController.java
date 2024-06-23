@@ -4,7 +4,6 @@ import com.parth.rbac.dto.LoginResponseDto;
 import com.parth.rbac.dto.LoginUserDto;
 import com.parth.rbac.dto.RegisterUserDto;
 import com.parth.rbac.model.User;
-import com.parth.rbac.security.JwtTokenUtil;
 import com.parth.rbac.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,27 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
    private final AuthenticationService service;
-   private final JwtTokenUtil jwtTokenUtil;
 
    @PostMapping("/signup")
-   public ResponseEntity<User> register(
+   public ResponseEntity<?> register(
         @RequestBody @Valid RegisterUserDto request
    ) {
-      User registeredUser = service.signUp(request);
-      return ResponseEntity.ok(registeredUser);
+      try {
+         User registeredUser = service.signUp(request);
+         return ResponseEntity.ok(registeredUser);
+      } catch (Exception e) {
+         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+              .body("An error occurred during sign up: " + e.getMessage());
+      }
    }
 
    @PostMapping("/login")
-   public ResponseEntity<LoginResponseDto> authenticate(
+   public ResponseEntity<?> authenticate(
         @RequestBody @Valid LoginUserDto request
    ) {
-      LoginResponseDto response = service.buildResponse(request);
-      return ResponseEntity.ok(response);
+      try {
+         LoginResponseDto response = service.buildResponse(request);
+         return ResponseEntity.ok(response);
+      } catch (Exception e) {
+         return ResponseEntity.status(UNAUTHORIZED)
+              .body("Invalid credentials: " + e.getMessage());
+      }
    }
 }

@@ -18,12 +18,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
+   private static final String DEFAULT_USER_ROLE = "USER";
 
    private final UserRepository userRepository;
    private final PasswordEncoder passwordEncoder;
@@ -32,8 +35,9 @@ public class AuthenticationService {
    private final JwtTokenUtil jwtTokenUtil;
    private final UserRoleRepository userRoleRepository;
 
+   @Transactional
    public User signUp(@Valid RegisterUserDto request) {
-      var role = findUserRole("ADMIN");
+      var role = findUserRole(DEFAULT_USER_ROLE);
       var user = createUser(request);
 
       User savedUser = userRepository.save(user);

@@ -3,6 +3,7 @@ package com.parth.rbac.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,16 +32,19 @@ public class User implements UserDetails {
    @GeneratedValue
    private Integer id;
 
+   @NotNull
    @Column(nullable = false)
    private String firstname;
    private String lastname;
 
+   @NotNull
    @Column(unique = true, nullable = false)
    private String email;
 
-   @Column(nullable = false)
+   @NotNull
    @Length(min = 8)
-   @NotBlank
+   @Column(nullable = false)
+   @NotBlank(message = "Password is mandatory")
    private String password;
 
    private boolean accountLocked;
@@ -64,7 +68,7 @@ public class User implements UserDetails {
            .map(userRole ->
                 new SimpleGrantedAuthority(userRole.getRole().getName())
            )
-           .collect(Collectors.toSet());
+           .collect(Collectors.toList());
    }
 
    @Override

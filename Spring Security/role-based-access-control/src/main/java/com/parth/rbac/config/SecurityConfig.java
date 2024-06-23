@@ -4,7 +4,6 @@ import com.parth.rbac.security.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,10 +27,9 @@ public class SecurityConfig {
    @Bean
    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
-           .authorizeHttpRequests(req ->
-                req.requestMatchers("/api/v1/auth/**").permitAll()
-                     .requestMatchers(HttpMethod.PUT, "/users/**/assign-roles/**").hasRole("ADMIN")
-                     .anyRequest().authenticated()
+           .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .anyRequest().authenticated()
            ).sessionManagement(
                 session -> session.sessionCreationPolicy(STATELESS)
            ).authenticationProvider(authenticationProvider)

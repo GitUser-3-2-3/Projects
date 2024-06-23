@@ -23,10 +23,7 @@ public class AuditLog {
    @Column(nullable = false)
    private Integer adminId;
 
-   @Column(nullable = false)
    private Integer userId;
-
-   @Column(nullable = false)
    private String oldRole;
 
    @Column(nullable = false)

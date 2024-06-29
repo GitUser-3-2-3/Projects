@@ -3,6 +3,7 @@ package com.parth.services;
 import com.parth.utils.Media;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MediaService<T extends Media> {
@@ -18,19 +19,15 @@ public class MediaService<T extends Media> {
       System.out.println(media.getTitle() + " has been added to the archives");
    }
 
-   public void removeMedia(String title) {
-      for (T media : mediaItems) {
-         if (media.getTitle().equalsIgnoreCase(title)) {
-            if (mediaItems.remove(media)) {
-               System.out.println(media.getTitle() + " has been removed");
-            } else {
-               System.out.println(media.getTitle() + " was not found");
-            }
-         }
+   public void removeMedia(T media) {
+      if (mediaItems.remove(media)) {
+         System.out.println(media.getTitle() + " has been removed");
+      } else {
+         System.out.println(media.getTitle() + " was not found");
       }
    }
 
-   // ? add a better remove method with advanced search
+// ? add a better remove method with advanced search
 
    public T searchMedia(String title) {
       for (T media : mediaItems) {
@@ -41,6 +38,7 @@ public class MediaService<T extends Media> {
       return null;
    }
 
+/*
    public void listMedia() {
       if (mediaItems.isEmpty()) {
          System.out.println("Archive is empty");
@@ -49,5 +47,22 @@ public class MediaService<T extends Media> {
             System.out.println(media);
          }
       }
+   }
+*/
+
+   public List<T> mediaList(Class<T> mediaType) {
+      List<T> filteredMedia = new ArrayList<>();
+
+      if (mediaItems.isEmpty()) {
+         System.out.println("Archive is empty");
+         return Collections.emptyList();
+      } else {
+         for (T media : mediaItems) {
+            if (mediaType.isInstance(media)) {
+               filteredMedia.add(media);
+            }
+         }
+      }
+      return filteredMedia;
    }
 }

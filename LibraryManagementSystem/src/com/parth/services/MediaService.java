@@ -20,18 +20,30 @@ public class MediaService<T extends Media> {
    }
 
    public void removeMedia(T media) {
-      if (mediaItems.remove(media)) {
-         System.out.println(media.getTitle() + " has been removed");
+      T itemToRemove = null;
+
+      for (T mediaItem : mediaItems) {
+         if (mediaItem.getTitle().equalsIgnoreCase(media.getTitle()) &&
+              mediaItem.getYear().equals(media.getYear())
+         ) {
+            itemToRemove = mediaItem;
+            break;
+         }
+      }
+
+      if (itemToRemove != null) {
+         mediaItems.remove(itemToRemove);
+         System.out.println("Item removed: " + itemToRemove);
       } else {
-         System.out.println(media.getTitle() + " was not found");
+         System.out.println("Item not found");
       }
    }
 
 // ? add a better remove method with advanced search
 
-   public T searchMedia(String title) {
+   public T searchMedia(String title, Integer year) {
       for (T media : mediaItems) {
-         if (media.getTitle().equalsIgnoreCase(title)) {
+         if (media.getTitle().equalsIgnoreCase(title) && media.getYear().equals(year)) {
             return media;
          }
       }
@@ -50,7 +62,7 @@ public class MediaService<T extends Media> {
    }
 */
 
-   public List<T> mediaList(Class<T> mediaType) {
+   public List<? extends Media> mediaList(Class<? extends Media> mediaType) {
       List<T> filteredMedia = new ArrayList<>();
 
       if (mediaItems.isEmpty()) {

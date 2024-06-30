@@ -10,14 +10,45 @@ public class Book implements Media {
    private final Integer publicationYear;
    private final Double reviews;
 
-   public Book(
-        String title, String author, Integer edition, Integer publicationYear, Double reviews
-   ) {
-      this.title = title;
-      this.author = author;
-      this.edition = edition;
-      this.publicationYear = publicationYear;
-      this.reviews = reviews;
+   public static class Builder {
+      private final String title;
+      private final Integer publicationYear;
+
+      private String author = null;
+      private Integer edition = 0;
+      private Double reviews = 0.00;
+
+      public Builder(String title, Integer publicationYear) {
+         this.title = title;
+         this.publicationYear = publicationYear;
+      }
+
+      public Builder author(String value) {
+         author = value;
+         return this;
+      }
+
+      public Builder edition(Integer value) {
+         edition = value;
+         return this;
+      }
+
+      public Builder reviews(Double value) {
+         reviews = value;
+         return this;
+      }
+
+      public Book build() {
+         return new Book(this);
+      }
+   }
+
+   private Book(Builder builder) {
+      title = builder.title;
+      author = builder.author;
+      edition = builder.edition;
+      publicationYear = builder.publicationYear;
+      reviews = builder.reviews;
    }
 
    public String getTitle() {

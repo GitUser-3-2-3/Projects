@@ -29,7 +29,9 @@ public class MediaServiceImpl {
       Double reviews = sc.nextDouble();
       sc.nextLine();
 
-      return new Book(title, author, edition, year, reviews);
+      return new Book.Builder(title, year).author(author)
+           .edition(edition).reviews(reviews)
+           .build();
    }
 
    public static void addBook(MediaService<Media> media, Scanner sc) {

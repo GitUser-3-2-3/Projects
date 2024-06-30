@@ -13,24 +13,21 @@ public class Movie implements Media {
    public static class Builder {
 
       private final String title;
+      private final Integer launchYear;
       private final Double length;
 
-      private String director;
-      private Integer launchYear;
-      private Double reviews;
-
-      public Builder(String title, Double length) {
+      public Builder(String title, Integer launchYear, Double length) {
          this.title = title;
+         this.launchYear = launchYear;
          this.length = length;
       }
 
+      private String director = null;
+      private Double reviews = 0.00;
+
+
       public Builder director(String value) {
          director = value;
-         return this;
-      }
-
-      public Builder launchYear(Integer value) {
-         launchYear = value;
          return this;
       }
 
@@ -46,9 +43,9 @@ public class Movie implements Media {
 
    private Movie(Builder builder) {
       title = builder.title;
+      launchYear = builder.launchYear;
       length = builder.length;
       director = builder.director;
-      launchYear = builder.launchYear;
       reviews = builder.reviews;
    }
 
@@ -78,9 +75,10 @@ public class Movie implements Media {
 
    @Override
    public String toString() {
-      return String.format(
+      String movieDetails = String.format(
            "Movie[Title = %s, Director = %s, Launch Year = %d, Length = %.2f, Reviews = %.2f",
            title, director, launchYear, length, reviews
       );
+      return movieDetails + System.lineSeparator();
    }
 }

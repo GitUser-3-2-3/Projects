@@ -23,13 +23,13 @@ public class AuthenticationSystem {
    }
 
    public User login(Scanner sc) {
-      System.out.println("Enter your email: ");
-      String email = sc.nextLine();
+      System.out.println("Enter your role: ");
+      String role = sc.nextLine();
 
       System.out.println("Enter your password: ");
       String password = sc.nextLine();
 
-      User user = users.get(email);
+      User user = users.get(role);
       if (user != null && user.authenticate(password)) {
          System.out.println("Login successful.");
          return user;

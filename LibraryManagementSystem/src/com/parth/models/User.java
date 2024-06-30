@@ -28,9 +28,9 @@ public class User {
    }
 
    private User(Builder builder) {
-      this.username = builder.username;
-      this.email = builder.email;
-      this.password = builder.password;
+      email = builder.email;
+      password = builder.password;
+      username = builder.username;
    }
 
    public String getUsername() {

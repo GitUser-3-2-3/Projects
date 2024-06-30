@@ -1,7 +1,7 @@
 package com.parth;
 
 import com.parth.services.MediaService;
-import com.parth.services.MediaServiceImpl;
+import com.parth.services.MediaServiceImplForBook;
 import com.parth.utils.Media;
 
 import java.util.Scanner;
@@ -13,7 +13,7 @@ public class ArchiveApplication {
       int choice;
 
       do {
-         System.out.println("\n" + "Library Management System");
+         System.out.println("\n" + "Archive Management System");
          System.out.println("1. Add Media");
          System.out.println("2. Remove Media");
          System.out.println("3. Search Media");
@@ -25,16 +25,16 @@ public class ArchiveApplication {
 
          switch (choice) {
             case 1:
-               MediaServiceImpl.addBook(media, sc);
+               MediaServiceImplForBook.addBook(media, sc);
                break;
             case 2:
-               MediaServiceImpl.removeBook(media, sc);
+               MediaServiceImplForBook.removeBook(media, sc);
                break;
             case 3:
-               MediaServiceImpl.searchBook(media, sc);
+               MediaServiceImplForBook.searchBook(media, sc);
                break;
             case 4:
-               MediaServiceImpl.bookList(media);
+               MediaServiceImplForBook.bookList(media);
                break;
             case 5:
                System.out.println("Exiting the system");
@@ -45,4 +45,3 @@ public class ArchiveApplication {
       } while (choice != 5);
    }
 }
-

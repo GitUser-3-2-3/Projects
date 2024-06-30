@@ -10,14 +10,46 @@ public class Movie implements Media {
    private final Double length;
    private final Double reviews;
 
-   public Movie(
-        String title, String director, Integer launchYear, Double length, Double reviews
-   ) {
-      this.title = title;
-      this.director = director;
-      this.launchYear = launchYear;
-      this.length = length;
-      this.reviews = reviews;
+   public static class Builder {
+
+      private final String title;
+      private final Double length;
+
+      private String director;
+      private Integer launchYear;
+      private Double reviews;
+
+      public Builder(String title, Double length) {
+         this.title = title;
+         this.length = length;
+      }
+
+      public Builder director(String value) {
+         director = value;
+         return this;
+      }
+
+      public Builder launchYear(Integer value) {
+         launchYear = value;
+         return this;
+      }
+
+      public Builder reviews(Double value) {
+         reviews = value;
+         return this;
+      }
+
+      public Movie build() {
+         return new Movie(this);
+      }
+   }
+
+   private Movie(Builder builder) {
+      title = builder.title;
+      length = builder.length;
+      director = builder.director;
+      launchYear = builder.launchYear;
+      reviews = builder.reviews;
    }
 
    public String getTitle() {

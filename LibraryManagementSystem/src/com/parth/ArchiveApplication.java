@@ -8,9 +8,110 @@ import com.parth.utils.Media;
 import java.util.Scanner;
 
 import static com.parth.services.MediaServiceImplForBook.*;
+import static com.parth.services.MediaServiceImplForMagazine.*;
 import static com.parth.services.MediaServiceImplForMovie.*;
 
 public class ArchiveApplication {
+
+   private static void handleBookOptions(MediaService<Media> media, Scanner sc) {
+      int choice;
+
+      System.out.println("""
+           \nBook Options
+           --------------
+           1. Add
+           2. Remove
+           3. Search
+           4. List
+           """);
+      System.out.println("Enter your choice: ");
+      choice = sc.nextInt();
+      sc.nextLine();
+
+      switch (choice) {
+         case 1:
+            addBook(media, sc);
+            break;
+         case 2:
+            removeBook(media, sc);
+            break;
+         case 3:
+            searchBook(media, sc);
+            break;
+         case 4:
+            bookList(media);
+            break;
+         default:
+            System.out.println("Invalid choice. Please try again");
+      }
+   }
+
+   private static void handleMovieOptions(MediaService<Media> media, Scanner sc) {
+      int choice;
+
+      System.out.println("""
+           \nMovie Options
+           --------------
+           1. Add
+           2. Remove
+           3. Search
+           4. List
+           """);
+      System.out.println("Enter your choice: ");
+      choice = sc.nextInt();
+      sc.nextLine();
+
+      switch (choice) {
+         case 1:
+            addMovie(media, sc);
+            break;
+         case 2:
+            removeMovie(media, sc);
+            break;
+         case 3:
+            searchMovie(media, sc);
+            break;
+         case 4:
+            movieList(media);
+            break;
+         default:
+            System.out.println("Invalid choice. Please try again");
+      }
+   }
+
+   private static void handleMagazineOptions(MediaService<Media> media, Scanner sc) {
+      int choice;
+
+      System.out.println("""
+           \nMagazine Options
+           --------------
+           1. Add
+           2. Remove
+           3. Search
+           4. List
+           """);
+      System.out.println("Enter your choice: ");
+      choice = sc.nextInt();
+      sc.nextLine();
+
+      switch (choice) {
+         case 1:
+            addMagazine(media, sc);
+            break;
+         case 2:
+            removeMagazine(media, sc);
+            break;
+         case 3:
+            searchMagazine(media, sc);
+            break;
+         case 4:
+            magazineList(media);
+            break;
+         default:
+            System.out.println("Invalid choice. Please try again");
+      }
+   }
+
    public static void main(String[] args) {
 
       MediaService<Media> media = new MediaService<>();
@@ -29,22 +130,10 @@ public class ArchiveApplication {
          System.out.println("""
               \nArchive Management System
               ---------------------------
-              1. Add Book
-              2. Remove Book
-              3. Search Book
-              4. All Books
-              ---------------------------
-              5. Add Movie
-              6. Remove Movie
-              7. Search Movie
-              8. All Movies
-              ---------------------------
-              9. Add Magazine
-              10. Remove Magazine
-              11. Search Magazine
-              12. All Magazines
-              ---------------------------
-              13. Exit
+              1. Book
+              2. Movie
+              3. Magazine
+              4. Exit
               """);
          System.out.println("Enter your choice: ");
          choice = sc.nextInt();
@@ -52,34 +141,20 @@ public class ArchiveApplication {
 
          switch (choice) {
             case 1:
-               addBook(media, sc);
+               handleBookOptions(media, sc);
                break;
             case 2:
-               removeBook(media, sc);
+               handleMovieOptions(media, sc);
                break;
             case 3:
-               searchBook(media, sc);
+               handleMagazineOptions(media, sc);
                break;
             case 4:
-               bookList(media);
-               break;
-            case 5:
-               addMovie(media, sc);
-               break;
-            case 6:
-               removeMovie(media, sc);
-               break;
-            case 7:
-               searchMovie(media, sc);
-               break;
-            case 8:
-               movieList(media);
-               break;
-            case 13:
                System.out.println("Exiting the System");
+               break;
             default:
                System.out.println("Invalid choice. Please try again");
          }
-      } while (choice != 13);
+      } while (choice != 4);
    }
 }

@@ -16,15 +16,14 @@ public class Movie implements Media {
       private final Integer launchYear;
       private final Double length;
 
+      private String director = null;
+      private Double reviews = 0.00;
+
       public Builder(String title, Integer launchYear, Double length) {
          this.title = title;
          this.launchYear = launchYear;
          this.length = length;
       }
-
-      private String director = null;
-      private Double reviews = 0.00;
-
 
       public Builder director(String value) {
          director = value;

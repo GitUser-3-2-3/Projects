@@ -77,9 +77,10 @@ public class Book implements Media {
 
    @Override
    public String toString() {
-      return String.format(
-           "Book[ Title = %s, Author = %s, edition = %d, Publication Year = %d, Reviews = %.2f ]",
+      String bookDetails = String.format(
+           "Title = %s, Author = %s, edition = %d, Publication Year = %d, Reviews = %.2f",
            title, author, edition, publicationYear, reviews
       );
+      return bookDetails + System.lineSeparator();
    }
 }

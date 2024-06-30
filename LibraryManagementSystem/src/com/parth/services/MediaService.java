@@ -77,4 +77,22 @@ public class MediaService<T extends Media> {
       }
       return filteredMedia;
    }
+
+   static void listBuilder(List<? extends Media> list) {
+      if (list.isEmpty()) {
+         System.out.println("[]");
+      } else {
+         StringBuilder sb = new StringBuilder();
+         sb.append("[");
+         for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i).toString().trim());
+            if (i < list.size() - 1) {
+               sb.append(", \n");
+            }
+         }
+         sb.append("]");
+         System.out.println(sb);
+      }
+   }
+
 }

@@ -6,9 +6,9 @@ import com.parth.utils.Media;
 import java.util.List;
 import java.util.Scanner;
 
-public class MediaServiceImpl {
+public class MediaServiceImplForBook {
 
-   private MediaServiceImpl() {
+   private MediaServiceImplForBook() {
       throw new IllegalStateException("Utility Class");
    }
 
@@ -70,7 +70,22 @@ public class MediaServiceImpl {
       }
    }
 
-   public static List<? extends Media> bookList(MediaService<Media> media) {
-      return media.mediaList(Book.class);
+   public static void bookList(MediaService<Media> media) {
+      List<? extends Media> bookList = media.mediaList(Book.class);
+
+      if (bookList.isEmpty()) {
+         System.out.println("[]");
+      } else {
+         StringBuilder sb = new StringBuilder();
+         sb.append("[");
+         for (int i = 0; i < bookList.size(); i++) {
+            sb.append(bookList.get(i).toString().trim());
+            if (i < bookList.size() - 1) {
+               sb.append(", \n");
+            }
+         }
+         sb.append("]");
+         System.out.println(sb);
+      }
    }
 }

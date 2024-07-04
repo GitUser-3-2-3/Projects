@@ -1,9 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/challenge
-    username: root
-    password: Q-w-e-r-t-y1,0*
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update

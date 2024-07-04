@@ -33,7 +33,8 @@ public class MediaServiceImplForMovie {
       sc.nextLine();
 
       return new Movie.Builder(title, year, length)
-           .director(director).reviews(reviews).build();
+           .director(director).reviews(reviews)
+           .build();
    }
 
    public static void addMovie(MediaService<Media> media, Scanner sc) {

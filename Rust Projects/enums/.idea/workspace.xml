@@ -7,11 +7,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="690cdf24-a192-4dbf-9a3e-ee6f7f055151" name="Changes" comment="matrix calculator with add, subtract, multiply functionality">
-      <change afterPath="$PROJECT_DIR$/../enums/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../enums/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../enums/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="de6c9a45-756a-41fd-b3bd-341a4962fb6a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matrix_calculator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../matrix_calculator/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,16 +34,13 @@
     &quot;accountId&quot;: &quot;1cf00d13-9feb-45c8-ac2e-9f809c6c6672&quot;
   }
 }</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main.rs" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="kiobg2d2" />
+    <option name="directoryName" value="nwdundp7" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
+  &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="2ioLcf8y8uTJKNtfc2cU78GktXx" />
+  <component name="ProjectId" id="2ipKkzzVni8528Xr8IYJ9KTKtVU" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -63,15 +61,12 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
     &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Rust&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;language.rust.cargo.check&quot;
   }
 }</component>
-  <component name="RsExternalLinterProjectSettings">
-    <option name="runOnTheFly" value="true" />
-  </component>
   <component name="RunManager">
     <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run --package matrix_calculator --bin matrix_calculator" />
+      <option name="command" value="run --package enums --bin enums" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -94,25 +89,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="690cdf24-a192-4dbf-9a3e-ee6f7f055151" name="Changes" comment="" />
-      <created>1720152064102</created>
+      <changelist id="de6c9a45-756a-41fd-b3bd-341a4962fb6a" name="Changes" comment="" />
+      <created>1720182225967</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1720152064102</updated>
-      <workItem from="1720152065544" duration="2406000" />
-      <workItem from="1720154481426" duration="5949000" />
-      <workItem from="1720168878563" duration="271000" />
-      <workItem from="1720181540072" duration="649000" />
+      <updated>1720182225967</updated>
+      <workItem from="1720182227364" duration="4798000" />
+      <workItem from="1720235624326" duration="42000" />
+      <workItem from="1720235675194" duration="1031000" />
     </task>
-    <task id="LOCAL-00001" summary="matrix calculator with add, subtract, multiply functionality">
-      <option name="closed" value="true" />
-      <created>1720159827347</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1720159827347</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,7 +105,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="matrix calculator with add, subtract, multiply functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="matrix calculator with add, subtract, multiply functionality" />
   </component>
 </project>

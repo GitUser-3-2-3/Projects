@@ -10,70 +10,70 @@ import static com.parth.services.MediaService.listBuilder;
 
 public class MediaServiceImplForMagazine {
 
-   private MediaServiceImplForMagazine() {
-      throw new IllegalStateException("Utility Class");
-   }
+    private MediaServiceImplForMagazine() {
+        throw new IllegalStateException("Utility Class");
+    }
 
-   private static Magazine magazineDetails(Scanner sc) {
-      System.out.println("Enter magazine Title: ");
-      String title = sc.nextLine();
+    private static Magazine magazineDetails(Scanner sc) {
+        System.out.println("Enter magazine Title: ");
+        String title = sc.nextLine();
 
-      System.out.println("Enter magazine publisher: ");
-      String publisher = sc.nextLine();
+        System.out.println("Enter magazine publisher: ");
+        String publisher = sc.nextLine();
 
-      System.out.println("Enter issueNumber: ");
-      Integer issueNumber = sc.nextInt();
+        System.out.println("Enter issueNumber: ");
+        Integer issueNumber = sc.nextInt();
 
-      System.out.println("Enter publication year: ");
-      Integer year = sc.nextInt();
+        System.out.println("Enter publication year: ");
+        Integer year = sc.nextInt();
 
-      System.out.println("Enter reviews: ");
-      Double reviews = sc.nextDouble();
-      sc.nextLine();
+        System.out.println("Enter reviews: ");
+        Double reviews = sc.nextDouble();
+        sc.nextLine();
 
-      return new Magazine.Builder(title, publisher, issueNumber)
-           .publicationYear(year).reviews(reviews)
-           .build();
-   }
+        return new Magazine.Builder(title, publisher, issueNumber)
+            .publicationYear(year).reviews(reviews)
+            .build();
+    }
 
-   public static void addMagazine(MediaService<Media> media, Scanner sc) {
-      Magazine magazine = magazineDetails(sc);
-      media.addMedia(magazine);
-   }
+    public static void addMagazine(MediaService<Media> media, Scanner sc) {
+        Magazine magazine = magazineDetails(sc);
+        media.addMedia(magazine);
+    }
 
-   public static void removeMagazine(MediaService<Media> media, Scanner sc) {
-      System.out.println("Enter Magazine Title: ");
-      String title = sc.nextLine();
-      System.out.println("Enter Publication Year: ");
-      Integer year = sc.nextInt();
+    public static void removeMagazine(MediaService<Media> media, Scanner sc) {
+        System.out.println("Enter Magazine Title: ");
+        String title = sc.nextLine();
+        System.out.println("Enter Publication Year: ");
+        Integer year = sc.nextInt();
 
-      Media magazineToSearch = media.searchMedia(title, year);
+        Media magazineToSearch = media.searchMedia(title, year);
 
-      if (magazineToSearch != null) {
-         media.removeMedia(magazineToSearch);
-      } else {
-         System.out.println("Magazine not found.");
-      }
+        if (magazineToSearch != null) {
+            media.removeMedia(magazineToSearch);
+        } else {
+            System.out.println("Magazine not found.");
+        }
 
-   }
+    }
 
-   public static void searchMagazine(MediaService<Media> media, Scanner sc) {
-      System.out.println("Enter magazine Title: ");
-      String title = sc.nextLine();
-      System.out.println("Enter Publication Year: ");
-      Integer year = sc.nextInt();
+    public static void searchMagazine(MediaService<Media> media, Scanner sc) {
+        System.out.println("Enter magazine Title: ");
+        String title = sc.nextLine();
+        System.out.println("Enter Publication Year: ");
+        Integer year = sc.nextInt();
 
-      Media magazineToSearch = media.searchMedia(title, year);
+        Media magazineToSearch = media.searchMedia(title, year);
 
-      if (magazineToSearch != null) {
-         System.out.println("Found: " + magazineToSearch);
-      } else {
-         System.out.println("Magazine not found.");
-      }
-   }
+        if (magazineToSearch != null) {
+            System.out.println("Found: " + magazineToSearch);
+        } else {
+            System.out.println("Magazine not found.");
+        }
+    }
 
-   public static void magazineList(MediaService<Media> media) {
-      List<? extends Media> magazineList = media.mediaList(Magazine.class);
-      listBuilder(magazineList);
-   }
+    public static void magazineList(MediaService<Media> media) {
+        List<? extends Media> magazineList = media.mediaList(Magazine.class);
+        listBuilder(magazineList);
+    }
 }

@@ -1,5 +1,8 @@
 package com.parth.services;
 
+import com.parth.models.Book;
+import com.parth.models.Magazine;
+import com.parth.models.Movie;
 import com.parth.utils.Media;
 
 import java.util.ArrayList;
@@ -40,6 +43,16 @@ public class MediaService<T extends Media> {
     }
 
     // * todo - add a better remove method with advanced search
+
+
+    public List<T> advancedSearch(String keyword) {
+        return mediaItems.stream()
+            .filter(media -> media.getTitle().contains(keyword)
+                || (media instanceof Book && media.getAuthor().contains(keyword))
+                || (media instanceof Magazine && media.getPublisher().contains(keyword))
+                || (media instanceof Movie && media.getDirector().contains(keyword)))
+            .toList();
+    }
 
     public T searchMedia(String title, Integer year) {
         for (T media : mediaItems) {

@@ -72,6 +72,19 @@ public class MediaServiceImplForBook {
         }
     }
 
+    public static void advancedSearch(MediaService<Media> media, Scanner sc) {
+        System.out.println("Enter Keyword");
+        String keyword = sc.nextLine();
+
+        List<Media> foundBooks = media.advancedSearch(keyword);
+
+        if (foundBooks != null) {
+            System.out.println("Books found: " + foundBooks);
+        } else {
+            System.out.println("No results");
+        }
+    }
+
     public static void bookList(MediaService<Media> media) {
         List<? extends Media> bookList = media.mediaList(Book.class);
         listBuilder(bookList);

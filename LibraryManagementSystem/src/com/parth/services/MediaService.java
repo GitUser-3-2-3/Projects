@@ -8,6 +8,7 @@ import com.parth.utils.Media;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class MediaService<T extends Media> {
 
@@ -44,36 +45,30 @@ public class MediaService<T extends Media> {
 
     // * todo - add a better remove method with advanced search
 
-
     public List<T> advancedSearch(String keyword) {
-        return mediaItems.stream()
-            .filter(media -> media.getTitle().contains(keyword)
-                || (media instanceof Book && media.getAuthor().contains(keyword))
-                || (media instanceof Magazine && media.getPublisher().contains(keyword))
-                || (media instanceof Movie && media.getDirector().contains(keyword)))
+        String lowerCaseKey = keyword.toLowerCase();
+
+        return mediaItems.parallelStream()
+            .filter(media -> media.getTitle().toLowerCase().contains(lowerCaseKey)
+                || (media instanceof Book && media.getAuthor().toLowerCase().contains(lowerCaseKey))
+                || (media instanceof Magazine && media.getPublisher().contains(lowerCaseKey))
+                || (media instanceof Movie && media.getDirector().toLowerCase().contains(lowerCaseKey)))
             .toList();
     }
 
     public T searchMedia(String title, Integer year) {
-        for (T media : mediaItems) {
-            if (media.getTitle().equalsIgnoreCase(title) && media.getYear().equals(year)) {
-                return media;
-            }
+        Optional<T> optionalT = mediaItems.stream()
+            .filter(item -> item.getTitle().equalsIgnoreCase(title) && item.getYear().equals(year))
+            .findFirst();
+
+        if (optionalT.isPresent()) {
+            return optionalT.get();
+        } else {
+            System.out.println("Media does not exists");
         }
+
         return null;
     }
-
-/*
-   public void listMedia() {
-      if (mediaItems.isEmpty()) {
-         System.out.println("Archive is empty");
-      } else {
-         for (T media : mediaItems) {
-            System.out.println(media);
-         }
-      }
-   }
-*/
 
     public List<? extends Media> mediaList(Class<? extends Media> mediaType) {
         List<T> filteredMedia = new ArrayList<>();

@@ -8,7 +8,7 @@ import com.parth.utils.Media;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Locale;
 
 public class MediaService<T extends Media> {
 
@@ -43,28 +43,57 @@ public class MediaService<T extends Media> {
         }
     }
 
-    // * todo - add a better remove method with advanced search
+    // add a better remove method with advanced search
 
     public List<T> advancedSearch(String keyword) {
-        String lowerCaseKey = keyword.toLowerCase();
+        if (keyword == null || !keyword.isEmpty()) {
+            return Collections.emptyList();
+        }
 
-        return mediaItems.parallelStream()
-            .filter(media -> media.getTitle().toLowerCase().contains(lowerCaseKey)
-                || (media instanceof Book && media.getAuthor().toLowerCase().contains(lowerCaseKey))
-                || (media instanceof Magazine && media.getPublisher().contains(lowerCaseKey))
-                || (media instanceof Movie && media.getDirector().toLowerCase().contains(lowerCaseKey)))
-            .toList();
+        final String lowerCaseKey = keyword.toLowerCase(Locale.ROOT);
+        final ArrayList<T> list = new ArrayList<>(mediaItems.size());
+
+        for (final T media : mediaItems) {
+            if (containsMediaKey(media, lowerCaseKey)) {
+                list.add(media);
+            }
+        }
+
+        return list;
     }
 
-    public T searchMedia(String title, Integer year) {
-        Optional<T> optionalT = mediaItems.stream()
-            .filter(item -> item.getTitle().equalsIgnoreCase(title) && item.getYear().equals(year))
-            .findFirst();
+    public static boolean containsMediaKey(final Media media, String lowerCaseKey) {
+        if (media != null) {
+            return containsKey(media.getTitle(), lowerCaseKey)
+                // This should use media.getSearchKey() polymorphism instead
+                || (media instanceof Book && containsKey(media.getAuthor(), lowerCaseKey))
+                || (media instanceof Magazine && containsKey(media.getPublisher(), lowerCaseKey))
+                || (media instanceof Movie && containsKey(media.getDirector(), lowerCaseKey));
+        }
+        return false;
+    }
 
-        if (optionalT.isPresent()) {
-            return optionalT.get();
+    public static boolean containsKey(final String entry, final String lowerCaseKey) {
+        return (entry != null
+            && !entry.isEmpty()
+            && entry.toLowerCase(Locale.ROOT).contains(lowerCaseKey)
+        );
+    }
+
+    public T searchMedia(final String title, final Integer year) {
+
+        if (year != null && title != null && !title.isEmpty()) {
+            for (final T item : mediaItems) {
+
+                if (year.equals(item.getYear())
+                    && title.equalsIgnoreCase(item.getTitle())
+                ) {
+                    return item;
+                }
+                System.out.println("Media does not exists");
+            }
         } else {
-            System.out.println("Media does not exists");
+            System.out.println("Invalid parameters");
         }
 
         return null;

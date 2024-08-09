@@ -1,7 +1,7 @@
 package com.parth.services;
 
 import com.parth.models.Movie;
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
 import java.util.List;
 import java.util.Scanner;
@@ -37,18 +37,18 @@ public class MediaServiceImplForMovie {
             .build();
     }
 
-    public static void addMovie(MediaService<Media> media, Scanner sc) {
+    public static void addMovie(MediaService<MediaI> media, Scanner sc) {
         Movie movie = movieDetails(sc);
         media.addMedia(movie);
     }
 
-    public static void removeMovie(MediaService<Media> media, Scanner sc) {
+    public static void removeMovie(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter Movie Title: ");
         String title = sc.nextLine();
         System.out.println("Enter Year: ");
         Integer year = sc.nextInt();
 
-        Media movieToSearch = media.searchMedia(title, year);
+        MediaI movieToSearch = media.searchMedia(title, year);
 
         if (movieToSearch != null) {
             media.removeMedia(movieToSearch);
@@ -57,13 +57,13 @@ public class MediaServiceImplForMovie {
         }
     }
 
-    public static void searchMovie(MediaService<Media> media, Scanner sc) {
+    public static void searchMovie(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter Movie Title: ");
         String title = sc.nextLine();
         System.out.println("Enter Launch Year: ");
         Integer year = sc.nextInt();
 
-        Media movieToSearch = media.searchMedia(title, year);
+        MediaI movieToSearch = media.searchMedia(title, year);
 
         if (movieToSearch != null) {
             System.out.println("Found: " + movieToSearch);
@@ -72,8 +72,8 @@ public class MediaServiceImplForMovie {
         }
     }
 
-    public static void movieList(MediaService<Media> media) {
-        List<? extends Media> movieList = media.mediaList(Movie.class);
+    public static void movieList(MediaService<MediaI> media) {
+        List<? extends MediaI> movieList = media.mediaList(Movie.class);
         listBuilder(movieList);
     }
 }

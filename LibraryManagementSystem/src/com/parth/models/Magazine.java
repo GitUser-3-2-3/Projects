@@ -1,8 +1,8 @@
 package com.parth.models;
 
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
-public class Magazine implements Media {
+public class Magazine implements MediaI {
 
     private final String title;
     private final String publisher;

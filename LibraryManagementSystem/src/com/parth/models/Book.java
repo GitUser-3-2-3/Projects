@@ -1,8 +1,8 @@
 package com.parth.models;
 
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
-public class Book implements Media {
+public class Book implements MediaI {
 
     private final String title;
     private final String author;

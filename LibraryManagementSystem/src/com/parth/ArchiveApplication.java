@@ -3,7 +3,7 @@ package com.parth;
 import com.parth.models.User;
 import com.parth.security.AuthenticationSystem;
 import com.parth.services.MediaService;
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
 import java.util.Scanner;
 
@@ -13,7 +13,7 @@ import static com.parth.services.MediaServiceImplForMovie.*;
 
 public class ArchiveApplication {
 
-    private static void handleBookOptions(MediaService<Media> media, Scanner sc) {
+    private static void handleBookOptions(MediaService<MediaI> media, Scanner sc) {
         int choice;
 
         System.out.println("""
@@ -46,7 +46,7 @@ public class ArchiveApplication {
         }
     }
 
-    private static void handleMovieOptions(MediaService<Media> media, Scanner sc) {
+    private static void handleMovieOptions(MediaService<MediaI> media, Scanner sc) {
         int choice;
 
         System.out.println("""
@@ -79,7 +79,7 @@ public class ArchiveApplication {
         }
     }
 
-    private static void handleMagazineOptions(MediaService<Media> media, Scanner sc) {
+    private static void handleMagazineOptions(MediaService<MediaI> media, Scanner sc) {
         int choice;
 
         System.out.println("""
@@ -114,7 +114,7 @@ public class ArchiveApplication {
 
     public static void main(String[] args) {
 
-        MediaService<Media> media = new MediaService<>();
+        MediaService<MediaI> media = new MediaService<>();
         AuthenticationSystem authSystem = new AuthenticationSystem();
         Scanner sc = new Scanner(System.in);
 

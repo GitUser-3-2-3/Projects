@@ -1,7 +1,7 @@
 package com.parth.services;
 
 import com.parth.models.Magazine;
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,18 +36,18 @@ public class MediaServiceImplForMagazine {
             .build();
     }
 
-    public static void addMagazine(MediaService<Media> media, Scanner sc) {
+    public static void addMagazine(MediaService<MediaI> media, Scanner sc) {
         Magazine magazine = magazineDetails(sc);
         media.addMedia(magazine);
     }
 
-    public static void removeMagazine(MediaService<Media> media, Scanner sc) {
+    public static void removeMagazine(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter Magazine Title: ");
         String title = sc.nextLine();
         System.out.println("Enter Publication Year: ");
         Integer year = sc.nextInt();
 
-        Media magazineToSearch = media.searchMedia(title, year);
+        MediaI magazineToSearch = media.searchMedia(title, year);
 
         if (magazineToSearch != null) {
             media.removeMedia(magazineToSearch);
@@ -57,13 +57,13 @@ public class MediaServiceImplForMagazine {
 
     }
 
-    public static void searchMagazine(MediaService<Media> media, Scanner sc) {
+    public static void searchMagazine(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter magazine Title: ");
         String title = sc.nextLine();
         System.out.println("Enter Publication Year: ");
         Integer year = sc.nextInt();
 
-        Media magazineToSearch = media.searchMedia(title, year);
+        MediaI magazineToSearch = media.searchMedia(title, year);
 
         if (magazineToSearch != null) {
             System.out.println("Found: " + magazineToSearch);
@@ -72,8 +72,8 @@ public class MediaServiceImplForMagazine {
         }
     }
 
-    public static void magazineList(MediaService<Media> media) {
-        List<? extends Media> magazineList = media.mediaList(Magazine.class);
+    public static void magazineList(MediaService<MediaI> media) {
+        List<? extends MediaI> magazineList = media.mediaList(Magazine.class);
         listBuilder(magazineList);
     }
 }

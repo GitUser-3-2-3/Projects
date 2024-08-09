@@ -3,14 +3,14 @@ package com.parth.services;
 import com.parth.models.Book;
 import com.parth.models.Magazine;
 import com.parth.models.Movie;
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MediaService<T extends Media> {
+public class MediaService<T extends MediaI> {
 
     private final List<T> mediaItems;
 
@@ -62,7 +62,7 @@ public class MediaService<T extends Media> {
         return list;
     }
 
-    public static boolean containsMediaKey(final Media media, String lowerCaseKey) {
+    public static boolean containsMediaKey(final MediaI media, String lowerCaseKey) {
         if (media != null) {
             return containsKey(media.getTitle(), lowerCaseKey)
                 // This should use media.getSearchKey() polymorphism instead
@@ -90,7 +90,7 @@ public class MediaService<T extends Media> {
                 ) {
                     return item;
                 }
-                System.out.println("Media does not exists");
+                System.out.println("MediaI does not exists");
             }
         } else {
             System.out.println("Invalid parameters");
@@ -99,7 +99,7 @@ public class MediaService<T extends Media> {
         return null;
     }
 
-    public List<? extends Media> mediaList(Class<? extends Media> mediaType) {
+    public List<? extends MediaI> mediaList(Class<? extends MediaI> mediaType) {
         List<T> filteredMedia = new ArrayList<>();
 
         if (mediaItems.isEmpty()) {
@@ -115,7 +115,7 @@ public class MediaService<T extends Media> {
         return filteredMedia;
     }
 
-    static void listBuilder(List<? extends Media> list) {
+    static void listBuilder(List<? extends MediaI> list) {
         if (list.isEmpty()) {
             System.out.println("[]");
         } else {

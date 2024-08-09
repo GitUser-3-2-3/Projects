@@ -1,7 +1,7 @@
 package com.parth.services;
 
 import com.parth.models.Book;
-import com.parth.utils.Media;
+import com.parth.utils.MediaI;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,18 +36,18 @@ public class MediaServiceImplForBook {
             .build();
     }
 
-    public static void addBook(MediaService<Media> media, Scanner sc) {
+    public static void addBook(MediaService<MediaI> media, Scanner sc) {
         Book book = bookDetails(sc);
         media.addMedia(book);
     }
 
-    public static void removeBook(MediaService<Media> media, Scanner sc) {
+    public static void removeBook(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter Book Title: ");
         String title = sc.nextLine();
         System.out.println("Enter Publication Year: ");
         Integer year = sc.nextInt();
 
-        Media bookToSearch = media.searchMedia(title, year);
+        MediaI bookToSearch = media.searchMedia(title, year);
 
         if (bookToSearch != null) {
             media.removeMedia(bookToSearch);
@@ -57,13 +57,13 @@ public class MediaServiceImplForBook {
 
     }
 
-    public static void searchBook(MediaService<Media> media, Scanner sc) {
+    public static void searchBook(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter Book Title: ");
         String title = sc.nextLine();
         System.out.println("Enter Publication Year: ");
         Integer year = sc.nextInt();
 
-        Media bookToSearch = media.searchMedia(title, year);
+        MediaI bookToSearch = media.searchMedia(title, year);
 
         if (bookToSearch != null) {
             System.out.println("Found: " + bookToSearch);
@@ -72,11 +72,11 @@ public class MediaServiceImplForBook {
         }
     }
 
-    public static void advancedSearch(MediaService<Media> media, Scanner sc) {
+    public static void advancedSearch(MediaService<MediaI> media, Scanner sc) {
         System.out.println("Enter Keyword");
         String keyword = sc.nextLine();
 
-        List<Media> foundBooks = media.advancedSearch(keyword);
+        List<MediaI> foundBooks = media.advancedSearch(keyword);
 
         if (foundBooks != null) {
             System.out.println("Books found: " + foundBooks);
@@ -85,8 +85,8 @@ public class MediaServiceImplForBook {
         }
     }
 
-    public static void bookList(MediaService<Media> media) {
-        List<? extends Media> bookList = media.mediaList(Book.class);
+    public static void bookList(MediaService<MediaI> media) {
+        List<? extends MediaI> bookList = media.mediaList(Book.class);
         listBuilder(bookList);
     }
 }

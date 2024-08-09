@@ -1,6 +1,6 @@
 package com.parth.utils;
 
-public interface Media {
+public interface MediaI {
 
     String getTitle();
 

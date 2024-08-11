@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static java.util.Objects.requireNonNull;
+
 @Getter
 public class Transaction {
     private final String transactionId;
@@ -18,9 +20,9 @@ public class Transaction {
     public Transaction(
         String transactionId, Account sourceAccount, Account targetAccount, double amount
     ) {
-        this.transactionId = Objects.requireNonNull(transactionId);
-        this.sourceAccount = Objects.requireNonNull(sourceAccount);
-        this.targetAccount = Objects.requireNonNull(targetAccount);
+        this.transactionId = requireNonNull(transactionId);
+        this.sourceAccount = requireNonNull(sourceAccount);
+        this.targetAccount = requireNonNull(targetAccount);
         if (amount <= 0) {
             throw new IllegalArgumentException("Transaction must be greater than zero");
         }

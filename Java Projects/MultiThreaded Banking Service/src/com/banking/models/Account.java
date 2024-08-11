@@ -108,6 +108,7 @@ public class Account {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Account account = (Account) o;
         return Double.compare(balance, account.balance) == 0
             && Objects.equals(accountNumber, account.accountNumber)

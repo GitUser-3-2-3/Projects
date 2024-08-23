@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println();
 
-        Reader readerClass = new Reader();
+        InputOutput readerClass = new InputOutput();
         readerClass.reader();
+        readerClass.writer();
     }
 }

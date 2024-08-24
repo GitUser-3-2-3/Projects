@@ -1,5 +1,8 @@
 package com.project.simplereader;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,10 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Getter
+@Setter
 public class InputOutput {
     private String everything;
 
-   public void reader() {
+    public void reader() {
         try (BufferedReader reader = new BufferedReader(
             new FileReader("File.txt"))
         ) {
@@ -29,7 +34,7 @@ public class InputOutput {
         }
     }
 
-    public void writer() {
+    public synchronized void writer(String writerId) {
         Path filePath = Paths.get("FileWriter.txt");
         try {
             if (!Files.exists(filePath)) {
@@ -38,7 +43,7 @@ public class InputOutput {
             try (
                 BufferedWriter writer = Files.newBufferedWriter(filePath)
             ) {
-                writer.write(everything);
+                writer.write("Writer Id: " + writerId + "\n" + everything);
             }
         } catch (IOException ioException) {
             System.out.println("Exception Writing: " + ioException);

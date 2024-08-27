@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -19,7 +19,9 @@ public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date createdAt = new Date();
+
+    @NotNull(message = "Date & Time cannot be null")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @NotBlank(message = "Size cannot be empty")
     private String size;

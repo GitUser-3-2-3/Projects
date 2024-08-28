@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -27,9 +28,10 @@ public class Ingredient {
     private Type type;
 
     @NotNull(message = "Price cannot be null")
+    @Positive(message = "Price cannot be negative")
     private BigDecimal price;
 
     public enum Type {
-        MEAT, VEGETABLE, CHEESE, SAUCE, PEPPERS
+        MEAT, VEGETABLE, CHEESE, SAUCE, PEPPER
     }
 }

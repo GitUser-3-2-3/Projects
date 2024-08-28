@@ -3,6 +3,7 @@ package com.brownpizza.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,14 +30,16 @@ public class Pizza {
     @NotBlank(message = "Crust type cannot be empty")
     private String crustType;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Size(min = 3, message = "At-least 3 ingredients are needed")
     private List<Ingredient> ingredients;
 
     @NotNull(message = "Base price cannot be null")
+    @Positive(message = "Base price cannot be negative")
     private BigDecimal basePrice;
 
     @NotNull(message = "Final price cannot be null")
+    @Positive(message = "Final price cannot be negative")
     private BigDecimal finalPrice;
 }
 

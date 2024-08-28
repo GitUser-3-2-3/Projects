@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Table(name = "pizza_order")
 public class Order implements Serializable {
 
     @Serial

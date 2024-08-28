@@ -5,16 +5,18 @@ import com.brownpizza.model.Pizza;
 import com.brownpizza.model.Pizza.CrustType;
 import com.brownpizza.model.Pizza.PizzaSize;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+@Component
 public class PriceCalculator {
 
     public static final BigDecimal PLATFORM_FEE_PERCENTAGE = new BigDecimal("0.05");
 
-    public static BigDecimal calculateBasePizzaPrice(
+    public BigDecimal calculateBasePizzaPrice(
         @NotNull PizzaSize pizzaSize, @NotNull CrustType crustType
     ) {
         return switch (pizzaSize) {
@@ -33,7 +35,7 @@ public class PriceCalculator {
         };
     }
 
-    public static BigDecimal calculateFinalPizzaPrice(
+    public BigDecimal calculateFinalPizzaPrice(
         @NotNull BigDecimal basePrice, @NotNull List<Ingredient> ingredients
     ) {
         BigDecimal ingredientCost = ingredients.stream()
@@ -43,19 +45,19 @@ public class PriceCalculator {
         return basePrice.add(ingredientCost);
     }
 
-    public static BigDecimal calculateOrderSubTotal(@NotNull List<Pizza> pizzas) {
+    public BigDecimal calculateOrderSubTotal(@NotNull List<Pizza> pizzas) {
         return pizzas.stream().map(Pizza::getFinalPrice)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public static BigDecimal calculatePlatformFee(@NotNull BigDecimal subTotal) {
+    public BigDecimal calculatePlatformFee(@NotNull BigDecimal subTotal) {
         return subTotal.multiply(PLATFORM_FEE_PERCENTAGE)
             .setScale(2, RoundingMode.HALF_UP);
     }
 
     // todo Add a dynamic delivery fee method that charges delivery fee according to distance.
 
-    public static BigDecimal calculateFinalPrice(
+    public BigDecimal calculateFinalPrice(
         @NotNull BigDecimal subtotal, @NotNull BigDecimal platformFee, @NotNull BigDecimal deliveryFee
     ) {
         return subtotal.add(platformFee).add(deliveryFee);

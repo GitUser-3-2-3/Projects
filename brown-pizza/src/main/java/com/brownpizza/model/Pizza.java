@@ -25,10 +25,10 @@ public class Pizza {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @NotBlank(message = "Size cannot be empty")
-    private String size;
+    private PizzaSize size;
 
     @NotBlank(message = "Crust type cannot be empty")
-    private String crustType;
+    private CrustType crustType;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Size(min = 3, message = "At-least 3 ingredients are needed")
@@ -48,6 +48,15 @@ public class Pizza {
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
+    }
+
+    public enum PizzaSize {
+        SMALL, MEDIUM, LARGE
+    }
+
+    public enum CrustType {
+        CHEESEBURST, DOUBLE_CHEESEBURST, FILLED_MOZARELLA,
+        HAND_TOSSED, PAN, THIN_CRUST
     }
 }
 

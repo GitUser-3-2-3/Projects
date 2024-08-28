@@ -38,7 +38,7 @@ public class Order implements Serializable {
 
     @NotNull(message = "Total pizza price cannot be null")
     @Positive(message = "Total Pizza price cannot be negative")
-    private BigDecimal sumTotalPizza;
+    private BigDecimal subTotal;
 
     @NotNull(message = "Platform fee cannot be null")
     @Positive(message = "Platform fee cannot be negative")
@@ -52,17 +52,12 @@ public class Order implements Serializable {
     @Positive(message = "Total price cannot be negative")
     private BigDecimal totalPrice;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Pizza> pizzas;
 
-    public void calculatePlatformFee() {
-        platformFee = sumTotalPizza.multiply(new BigDecimal("0.05"));
-    }
-
-    //* add a method to make delivery prices dynamic based on relative distance.
-
-    public void totalPrice() {
-        totalPrice = sumTotalPizza.add(platformFee).add(deliveryFee);
+    public void addPizza(Pizza pizza) {
+        this.pizzas.add(pizza);
+        pizza.setOrder(this);
     }
 }
 

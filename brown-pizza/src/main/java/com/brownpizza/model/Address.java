@@ -23,5 +23,4 @@ public class Address {
     @NotBlank(message = "Pin-code cannot be blank")
     @Size(min = 6, max = 6, message = "Pin-code must be 6 char in length")
     private String pinCode;
-
 }

@@ -41,6 +41,14 @@ public class Pizza {
     @NotNull(message = "Final price cannot be null")
     @Positive(message = "Final price cannot be negative")
     private BigDecimal finalPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+    }
 }
 
 

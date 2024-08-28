@@ -64,7 +64,7 @@ public class BrownPizzaApplication {
                 "RANC", "Ranch Sauce", Type.SAUCE, new BigDecimal("0.75")
             ),
             new Ingredient(
-                "JALA", "Jalapeños", Type.PEPPERS, new BigDecimal("0.25")
+                "JALA", "Jalapeños", Type.PEPPER, new BigDecimal("0.25")
             )
         );
 

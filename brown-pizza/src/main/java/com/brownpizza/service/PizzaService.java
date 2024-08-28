@@ -22,7 +22,9 @@ public class PizzaService {
         BigDecimal basePrice = PriceCalculator.calculateBasePizzaPrice(
             pizza.getSize(), pizza.getCrustType()
         );
-        return PriceCalculator.calculateFinalPizzaPrice(basePrice, pizza.getIngredients());
+        return PriceCalculator.calculateFinalPizzaPrice(
+            basePrice, pizza.getIngredients()
+        );
     }
 
     public List<Ingredient> getAvailableIngredients() {
@@ -30,8 +32,8 @@ public class PizzaService {
     }
 
     public Pizza savePizza(Pizza pizza) {
-        pizza.setBasePrice(
-            PriceCalculator.calculateBasePizzaPrice(pizza.getSize(), pizza.getCrustType())
+        pizza.setBasePrice(PriceCalculator
+            .calculateBasePizzaPrice(pizza.getSize(), pizza.getCrustType())
         );
         pizza.setFinalPrice(calculatePizzaPrice(pizza));
         return pizzaRepository.save(pizza);

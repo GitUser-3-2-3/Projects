@@ -5,6 +5,7 @@ import com.brownpizza.repository.IngredientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ public class BrownPizzaApplication {
         SpringApplication.run(BrownPizzaApplication.class, args);
     }
 
+    @Bean
     public CommandLineRunner dataLoader(IngredientRepository repository) {
         List<Ingredient> ingredients = Arrays.asList(
             new Ingredient(

@@ -21,7 +21,7 @@ public class Ingredient {
     private String id;
 
     @NotBlank(message = "Name cannot be empty")
-    @Size(min = 5, message = "Name cannot be less than 5 char")
+    @Size(min = 3, message = "Name cannot be less than 5 char")
     private String name;
 
     @NotNull(message = "Type cannot be null")
@@ -35,3 +35,12 @@ public class Ingredient {
         MEAT, VEGETABLE, CHEESE, SAUCE, PEPPER
     }
 }
+
+
+
+
+
+
+
+
+

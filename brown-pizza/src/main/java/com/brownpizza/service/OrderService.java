@@ -7,25 +7,29 @@ import com.brownpizza.repository.OrderRepository;
 import com.brownpizza.util.PriceCalculator;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class OrderService {
     private static final BigDecimal DELIVERY_FEE = new BigDecimal("3.99");
 
     private final OrderRepository orderRepository;
     private final PriceCalculator priceCalculator;
 
+    @Autowired
+    public OrderService(OrderRepository orderRepository, PriceCalculator priceCalculator) {
+        this.orderRepository = orderRepository;
+        this.priceCalculator = priceCalculator;
+    }
+
     @Transactional
-    public Order createOrder(@Valid final Order order, final Address address) {
+    public Order createOrder(@Valid Order order, @Valid Address address) {
         order.setPlacedAt(LocalDateTime.now());
         order.setDeliveryAddress(address);
 
@@ -33,10 +37,13 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    private void calculateOrderPrices(final Order order) {
-        BigDecimal subTotal = priceCalculator.calculateOrderSubTotal(order.getPizzas());
-        BigDecimal platformFee = priceCalculator.calculatePlatformFee(subTotal);
-        BigDecimal totalPrice = priceCalculator.calculateFinalPrice(subTotal, platformFee, DELIVERY_FEE);
+    private void calculateOrderPrices(Order order) {
+        BigDecimal subTotal = priceCalculator
+            .calculateOrderSubTotal(order.getPizzas());
+        BigDecimal platformFee = priceCalculator
+            .calculatePlatformFee(subTotal);
+        BigDecimal totalPrice = priceCalculator
+            .calculateFinalPrice(subTotal, platformFee, DELIVERY_FEE);
 
         order.setSubTotal(subTotal);
         order.setPlatformFee(platformFee);
@@ -45,8 +52,9 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Order> getOrderById(@NotNull final Long id) {
-        return orderRepository.findById(id);
+    public Order getOrderById(@NotNull final Long id) {
+        return orderRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + id));
     }
 
     @Transactional(readOnly = true)
@@ -56,10 +64,13 @@ public class OrderService {
 
     @Transactional
     public void deleteOrder(@NotNull final Long id) {
+        if (!orderRepository.existsById(id)) {
+            throw new IllegalArgumentException("Order not found with id: " + id);
+        }
         orderRepository.deleteById(id);
     }
 
-    public Order addPizzaToOrder(final Long orderId, final Pizza pizza) {
+    public Order addPizzaToOrder(@NotNull final Long orderId, @NotNull Pizza pizza) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
 

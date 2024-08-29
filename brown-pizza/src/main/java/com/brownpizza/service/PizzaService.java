@@ -5,37 +5,87 @@ import com.brownpizza.model.Pizza;
 import com.brownpizza.repository.IngredientRepository;
 import com.brownpizza.repository.PizzaRepository;
 import com.brownpizza.util.PriceCalculator;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class PizzaService {
 
     private final IngredientRepository ingredientRepository;
     private final PizzaRepository pizzaRepository;
+    private final PriceCalculator priceCalculator;
 
-    public BigDecimal calculatePizzaPrice(Pizza pizza) {
-        BigDecimal basePrice = PriceCalculator.calculateBasePizzaPrice(
-            pizza.getSize(), pizza.getCrustType()
-        );
-        return PriceCalculator.calculateFinalPizzaPrice(
-            basePrice, pizza.getIngredients()
-        );
+    @Autowired
+    public PizzaService(
+        IngredientRepository ingredientRepository, PizzaRepository pizzaRepository,
+        PriceCalculator priceCalculator
+    ) {
+        this.ingredientRepository = ingredientRepository;
+        this.pizzaRepository = pizzaRepository;
+        this.priceCalculator = priceCalculator;
     }
 
+    @Transactional
+    public Pizza createPizza(@Valid Pizza pizza) {
+        pizza.setCreatedAt(LocalDateTime.now());
+        calculatePizzaPrice(pizza);
+        return pizzaRepository.save(pizza);
+    }
+
+    public void calculatePizzaPrice(Pizza pizza) {
+        BigDecimal basePrice = priceCalculator
+            .calculateBasePizzaPrice(pizza.getSize(), pizza.getCrustType());
+        BigDecimal finalPrice = priceCalculator
+            .calculateFinalPizzaPrice(basePrice, pizza.getIngredients());
+
+        pizza.setBasePrice(basePrice);
+        pizza.setFinalPrice(finalPrice);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Pizza> getPizzaById(final Long id) {
+        return pizzaRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Pizza> getAllPizzas() {
+        return pizzaRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public List<Ingredient> getAvailableIngredients() {
         return ingredientRepository.findAll();
     }
 
-    public Pizza savePizza(Pizza pizza) {
-        pizza.setBasePrice(PriceCalculator
-            .calculateBasePizzaPrice(pizza.getSize(), pizza.getCrustType())
-        );
-        pizza.setFinalPrice(calculatePizzaPrice(pizza));
+    @Transactional
+    public Pizza addIngredientToPizza(final Long pizzaId, Ingredient ingredient) {
+        Pizza pizza = pizzaRepository.findById(pizzaId)
+            .orElseThrow(() -> new IllegalArgumentException("Pizza not found with id: " + pizzaId));
+
+        pizza.addIngredient(ingredient);
+        calculatePizzaPrice(pizza);
         return pizzaRepository.save(pizza);
     }
+
+    @Transactional(readOnly = true)
+    public boolean isPizzaValid(Pizza pizza) {
+        return pizza.getIngredients().size() >= 3;
+    }
 }
+
+
+
+
+
+
+
+
+
+

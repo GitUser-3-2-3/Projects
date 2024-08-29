@@ -22,17 +22,13 @@ public class Pizza {
     private Long id;
 
     @NotNull(message = "Date & Time cannot be null")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @NotBlank(message = "Size cannot be empty")
     private PizzaSize size;
 
     @NotBlank(message = "Crust type cannot be empty")
     private CrustType crustType;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Size(min = 3, message = "At-least 3 ingredients are needed")
-    private List<Ingredient> ingredients;
 
     @NotNull(message = "Base price cannot be null")
     @Positive(message = "Base price cannot be negative")
@@ -45,6 +41,10 @@ public class Pizza {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Size(min = 3, message = "At-least 3 ingredients are needed")
+    private List<Ingredient> ingredients;
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);

@@ -35,7 +35,7 @@ public class Order implements Serializable {
     private Address deliveryAddress;
 
     @NotNull(message = "Date & Time cannot be null")
-    private LocalDateTime placedAt = LocalDateTime.now();
+    private LocalDateTime placedAt;
 
     @NotNull(message = "Total pizza price cannot be null")
     @Positive(message = "Total Pizza price cannot be negative")

@@ -8,7 +8,6 @@ import com.brownpizza.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +23,15 @@ public class PizzaService {
     private final IngredientRepository ingredientRepository;
     private final PizzaRepository pizzaRepository;
     private final PriceCalculator priceCalculator;
-    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
 
     @Autowired
     public PizzaService(
         IngredientRepository ingredientRepository, PizzaRepository pizzaRepository,
-        PriceCalculator priceCalculator,
-        DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration) {
+        PriceCalculator priceCalculator
+    ) {
         this.ingredientRepository = ingredientRepository;
         this.pizzaRepository = pizzaRepository;
         this.priceCalculator = priceCalculator;
-        this.dataSourceTransactionManagerAutoConfiguration = dataSourceTransactionManagerAutoConfiguration;
     }
 
     @Transactional

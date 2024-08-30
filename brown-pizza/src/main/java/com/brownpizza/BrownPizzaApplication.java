@@ -2,6 +2,7 @@ package com.brownpizza;
 
 import com.brownpizza.model.Ingredient;
 import com.brownpizza.repository.IngredientRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,11 @@ public class BrownPizzaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BrownPizzaApplication.class, args);
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Bean

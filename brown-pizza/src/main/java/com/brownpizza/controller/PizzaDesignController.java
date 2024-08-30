@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -75,5 +76,16 @@ public class PizzaDesignController {
         }
         List<IngredientDTO> ingredientDTO = dtoMapper.convertIngredientListToDtoList(ingredients);
         return ResponseEntity.ok(ingredientDTO);
+    }
+
+    @GetMapping("/{id}/basePrice")
+    public ResponseEntity<BigDecimal> getBasePizzaPrice(
+        @PathVariable Long id, @Valid @RequestBody Pizza pizza
+    ) {
+        if (pizzaService.getPizzaById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        BigDecimal basePrice = pizzaService.getBasePrice(id, pizza);
+        return ResponseEntity.ok(basePrice);
     }
 }

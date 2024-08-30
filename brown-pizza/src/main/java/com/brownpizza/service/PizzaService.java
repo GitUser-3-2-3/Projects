@@ -71,8 +71,11 @@ public class PizzaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Pizza> getAllPizzas() {
-        return pizzaRepository.findAll();
+    public BigDecimal getBasePrice(final Long id, @Valid Pizza pizza) {
+        if (!pizzaRepository.existsById(id)) {
+            throw new EntityNotFoundException("Pizza does not exists with id: " + id);
+        }
+        return pizzaRepository.findBasePriceById(id);
     }
 
     @Transactional
@@ -83,11 +86,14 @@ public class PizzaService {
                 existingPizza.setCrustType(updatedPizza.getCrustType());
 
                 List<Ingredient> ingredients = new ArrayList<>(updatedPizza.getIngredients());
-                populateIngredientPrices(updatedPizza);
                 existingPizza.setIngredients(ingredients);
+                populateIngredientPrices(updatedPizza);
 
                 existingPizza.setUpdatedAt(LocalDateTime.now());
                 calculatePizzaPrice(updatedPizza);
+
+                existingPizza.setBasePrice(updatedPizza.getBasePrice());
+                existingPizza.setFinalPrice(updatedPizza.getFinalPrice());
 
                 return pizzaRepository.save(existingPizza);
             })

@@ -1,5 +1,6 @@
 package com.brownpizza.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(force = true)
 public class Ingredient {
 
     @Id
@@ -27,8 +28,8 @@ public class Ingredient {
     @NotNull(message = "Type cannot be null")
     private Type type;
 
-    @NotNull(message = "Price cannot be null")
     @Positive(message = "Price cannot be negative")
+    @Column(nullable = false)
     private BigDecimal price;
 
     public enum Type {

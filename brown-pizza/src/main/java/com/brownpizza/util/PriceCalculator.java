@@ -5,12 +5,14 @@ import com.brownpizza.model.Pizza;
 import com.brownpizza.model.Pizza.CrustType;
 import com.brownpizza.model.Pizza.PizzaSize;
 import jakarta.validation.constraints.NotNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+@Slf4j
 @Component
 public class PriceCalculator {
 
@@ -39,7 +41,13 @@ public class PriceCalculator {
         @NotNull BigDecimal basePrice, @NotNull List<Ingredient> ingredients
     ) {
         BigDecimal ingredientCost = ingredients.stream()
-            .map(Ingredient::getPrice)
+            .map(ingredient -> {
+                if (ingredient.getPrice() == null) {
+                    log.warn("Ingredient has no price {}", ingredient.getName());
+                    return BigDecimal.ZERO;
+                }
+                return ingredient.getPrice();
+            })
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return basePrice.add(ingredientCost);

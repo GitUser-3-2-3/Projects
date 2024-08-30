@@ -23,6 +23,7 @@ public class Pizza {
     private Long id;
 
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     private PizzaSize size;

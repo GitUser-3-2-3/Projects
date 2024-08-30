@@ -5,6 +5,7 @@ import com.brownpizza.model.Order;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.repository.OrderRepository;
 import com.brownpizza.util.PriceCalculator;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Order getOrderById(@NotNull final Long id) {
         return orderRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + id));
+            .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
     }
 
     @Transactional(readOnly = true)
@@ -65,14 +66,14 @@ public class OrderService {
     @Transactional
     public void deleteOrder(@NotNull final Long id) {
         if (!orderRepository.existsById(id)) {
-            throw new IllegalArgumentException("Order not found with id: " + id);
+            throw new EntityNotFoundException("Order not found with id: " + id);
         }
         orderRepository.deleteById(id);
     }
 
     public Order addPizzaToOrder(@NotNull final Long orderId, @NotNull Pizza pizza) {
         Order order = orderRepository.findById(orderId)
-            .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
+            .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + orderId));
 
         order.addPizza(pizza);
         calculateOrderPrices(order);

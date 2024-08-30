@@ -35,8 +35,22 @@ public class PizzaService {
     @Transactional
     public Pizza createPizza(@Valid Pizza pizza) {
         pizza.setCreatedAt(LocalDateTime.now());
+
+        populateIngredientPrices(pizza);
         calculatePizzaPrice(pizza);
+
         return pizzaRepository.save(pizza);
+    }
+
+    public void populateIngredientPrices(Pizza pizza) {
+        List<Ingredient> ingredients = pizza.getIngredients().stream()
+            .map(ingredient -> ingredientRepository
+                .findById(ingredient.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("Invalid ingredient id: " + ingredient.getId())
+                )
+            ).toList();
+
+        pizza.setIngredients(ingredients);
     }
 
     public void calculatePizzaPrice(Pizza pizza) {

@@ -11,4 +11,7 @@ public interface PizzaRepository extends JpaRepository<Pizza, Long> {
 
     @Query("select p.basePrice from Pizza p where p.id = :id")
     BigDecimal findBasePriceById(@Param("id") Long id);
+
+    @Query("select p.finalPrice from Pizza p where p.id = :id")
+    BigDecimal findFinalPriceById(@Param("id") Long id);
 }

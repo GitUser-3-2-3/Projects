@@ -21,7 +21,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
-@RequestMapping("/api/design")
+@RequestMapping("/design")
 public class PizzaDesignController {
 
     private final PizzaService pizzaService;
@@ -79,13 +79,20 @@ public class PizzaDesignController {
     }
 
     @GetMapping("/{id}/basePrice")
-    public ResponseEntity<BigDecimal> getBasePizzaPrice(
-        @PathVariable Long id, @Valid @RequestBody Pizza pizza
-    ) {
+    public ResponseEntity<BigDecimal> getBasePizzaPrice(@PathVariable Long id) {
         if (pizzaService.getPizzaById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        BigDecimal basePrice = pizzaService.getBasePrice(id, pizza);
+        BigDecimal basePrice = pizzaService.getBasePrice(id);
+        return ResponseEntity.ok(basePrice);
+    }
+
+    @GetMapping("/{id}/finalPrice")
+    public ResponseEntity<BigDecimal> getFinalPizzaPrice(@PathVariable Long id) {
+        if (pizzaService.getPizzaById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        BigDecimal basePrice = pizzaService.getFinalPrice(id);
         return ResponseEntity.ok(basePrice);
     }
 }

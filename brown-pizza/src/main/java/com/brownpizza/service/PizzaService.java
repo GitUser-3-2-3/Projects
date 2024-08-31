@@ -71,11 +71,19 @@ public class PizzaService {
     }
 
     @Transactional(readOnly = true)
-    public BigDecimal getBasePrice(final Long id, @Valid Pizza pizza) {
+    public BigDecimal getBasePrice(final Long id) {
         if (!pizzaRepository.existsById(id)) {
             throw new EntityNotFoundException("Pizza does not exists with id: " + id);
         }
         return pizzaRepository.findBasePriceById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal getFinalPrice(final Long id) {
+        if (!pizzaRepository.existsById(id)) {
+            throw new EntityNotFoundException("Pizza does not exists with id: " + id);
+        }
+        return pizzaRepository.findFinalPriceById(id);
     }
 
     @Transactional

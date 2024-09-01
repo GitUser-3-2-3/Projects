@@ -1,13 +1,13 @@
 package com.brownpizza.util;
 
 import com.brownpizza.DTO.IngredientDTO;
-import com.brownpizza.DTO.PizzaDTO;
 import com.brownpizza.model.Ingredient;
-import com.brownpizza.model.Pizza;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class DTOMapper {
     private final ModelMapper modelMapper;
 
@@ -23,7 +23,21 @@ public class DTOMapper {
             .toList();
     }
 
-    public PizzaDTO convertPizzaToPizzaDto(Pizza pizza) {
-        return modelMapper.map(pizza, PizzaDTO.class);
+    public <U, T> U convertEntityToDto(T clazz, Class<U> dto) {
+        return modelMapper.map(clazz, dto);
+    }
+
+    public <T, U> T convertDtoToEntity(U dto, Class<T> clazz) {
+        return modelMapper.map(dto, clazz);
     }
 }
+
+
+
+
+
+
+
+
+
+

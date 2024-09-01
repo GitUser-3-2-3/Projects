@@ -1,9 +1,12 @@
 package com.brownpizza.service;
 
+import com.brownpizza.DTO.IngredientDTO;
+import com.brownpizza.DTO.PizzaDTO;
 import com.brownpizza.model.Ingredient;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.repository.IngredientRepository;
 import com.brownpizza.repository.PizzaRepository;
+import com.brownpizza.util.DTOMapper;
 import com.brownpizza.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -23,25 +26,29 @@ public class PizzaService {
     private final IngredientRepository ingredientRepository;
     private final PizzaRepository pizzaRepository;
     private final PriceCalculator priceCalculator;
+    private final DTOMapper dtoMapper;
 
     @Autowired
     public PizzaService(
         IngredientRepository ingredientRepository, PizzaRepository pizzaRepository,
-        PriceCalculator priceCalculator
+        PriceCalculator priceCalculator, DTOMapper dtoMapper
     ) {
         this.ingredientRepository = ingredientRepository;
         this.pizzaRepository = pizzaRepository;
         this.priceCalculator = priceCalculator;
+        this.dtoMapper = dtoMapper;
     }
 
     @Transactional
-    public Pizza createPizza(@Valid Pizza pizza) {
+    public PizzaDTO createPizza(@Valid PizzaDTO pizzaDTO) {
+        Pizza pizza = dtoMapper.convertDtoToEntity(pizzaDTO, Pizza.class);
         pizza.setCreatedAt(LocalDateTime.now());
 
         populateIngredientPrices(pizza);
         calculatePizzaPrice(pizza);
 
-        return pizzaRepository.save(pizza);
+        Pizza savedPizza = pizzaRepository.save(pizza);
+        return dtoMapper.convertEntityToDto(savedPizza, PizzaDTO.class);
     }
 
     public void populateIngredientPrices(Pizza pizza) {
@@ -87,7 +94,9 @@ public class PizzaService {
     }
 
     @Transactional
-    public Pizza updatePizza(final Long id, @Valid Pizza updatedPizza) {
+    public PizzaDTO updatePizza(final Long id, @Valid PizzaDTO updatedPizzaDTO) {
+        Pizza updatedPizza = dtoMapper.convertDtoToEntity(updatedPizzaDTO, Pizza.class);
+
         return pizzaRepository.findById(id)
             .map(existingPizza -> {
                 existingPizza.setSize(updatedPizza.getSize());
@@ -103,14 +112,16 @@ public class PizzaService {
                 existingPizza.setBasePrice(updatedPizza.getBasePrice());
                 existingPizza.setFinalPrice(updatedPizza.getFinalPrice());
 
-                return pizzaRepository.save(existingPizza);
+                Pizza savedPizza = pizzaRepository.save(existingPizza);
+                return dtoMapper.convertEntityToDto(savedPizza, PizzaDTO.class);
             })
             .orElseThrow(() -> new EntityNotFoundException("Pizza not found with id: " + id));
     }
 
     @Transactional(readOnly = true)
-    public List<Ingredient> getAvailableIngredients() {
-        return ingredientRepository.findAll();
+    public List<IngredientDTO> getAvailableIngredients() {
+        List<Ingredient> ingredient = ingredientRepository.findAll();
+        return dtoMapper.convertIngredientListToDtoList(ingredient);
     }
 
     /**

@@ -4,6 +4,7 @@ import com.brownpizza.model.Address;
 import com.brownpizza.model.Order;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.repository.OrderRepository;
+import com.brownpizza.repository.PizzaRepository;
 import com.brownpizza.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -22,11 +23,16 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final PriceCalculator priceCalculator;
+    private final PizzaRepository pizzaRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, PriceCalculator priceCalculator) {
+    public OrderService(
+        OrderRepository orderRepository, PriceCalculator priceCalculator,
+        PizzaRepository pizzaRepository
+    ) {
         this.orderRepository = orderRepository;
         this.priceCalculator = priceCalculator;
+        this.pizzaRepository = pizzaRepository;
     }
 
     @Transactional
@@ -34,8 +40,20 @@ public class OrderService {
         order.setPlacedAt(LocalDateTime.now());
         order.setDeliveryAddress(address);
 
+        populateOrderWithPizzas(order);
         calculateOrderPrices(order);
+
         return orderRepository.save(order);
+    }
+
+    private void populateOrderWithPizzas(Order order) {
+        List<Pizza> pizzas = order.getPizzas().stream()
+            .map(pizza -> pizzaRepository
+                .findById(pizza.getId()).orElseThrow(
+                    () -> new EntityNotFoundException("Pizza not found with id: " + pizza.getId())
+                )).toList();
+
+        order.setPizzas(pizzas);
     }
 
     private void calculateOrderPrices(Order order) {

@@ -1,35 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
     <head>
         <title>Pizza Summary</title>
+        <link rel="stylesheet" href="/css/summary.css">
     </head>
     <body>
-        <h1>Pizza Summary</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Crust Type</th>
-                    <th>Ingredients</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td th:text="${pizza.name}">Name</td>
-                    <td th:text="${pizza.size}">Size</td>
-                    <td th:text="${pizza.crustType}">Crust Type</td>
-                    <td>
-                        <ul>
-                            <li th:each="ingredient : ${pizza.ingredients}"
-                                th:text="${ingredient.name}">Ingredient
-                            </li>
-                        </ul>
-                    </td>
-                    <td th:text="${pizza.finalPrice}">Price</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="container">
+            <h1>Pizza Summary</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Crust Type</th>
+                        <th>Ingredients</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${pizza.name}">Name</td>
+                        <td th:text="${pizza.size}">Size</td>
+                        <td th:text="${pizza.crustType}">Crust Type</td>
+                        <td>
+                            <ul class="ingredients">
+                                <li th:each="ingredient : ${pizza.ingredients}"
+                                    th:text="${ingredient.name}">Ingredient
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="price" th:text="${pizza.finalPrice}">Price</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            // Add a fade-in effect to the table rows
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                row.style.animationDelay = `${index * 0.5}s`;
+            });
+        </script>
     </body>
 </html>

@@ -7,6 +7,7 @@ import com.brownpizza.repository.PizzaRepository;
 import com.brownpizza.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,27 +36,26 @@ public class PizzaService {
     }
 
     @Transactional
-    public Pizza createPizza(@Valid Pizza pizza) {
+    public Pizza createPizza(@Valid @NotNull Pizza pizza) {
         pizza.setCreatedAt(LocalDateTime.now());
 
-        populateIngredientPrices(pizza);
+        populatePizzaWithIngredients(pizza);
         calculatePizzaPrice(pizza);
 
         return pizzaRepository.save(pizza);
     }
 
-    public void populateIngredientPrices(Pizza pizza) {
+    private void populatePizzaWithIngredients(Pizza pizza) {
         List<Ingredient> ingredients = pizza.getIngredients().stream()
             .map(ingredient -> ingredientRepository
                 .findById(ingredient.getId()).orElseThrow(
                     () -> new EntityNotFoundException("Invalid ingredient id: " + ingredient.getId())
-                )
-            ).toList();
+                )).toList();
 
         pizza.setIngredients(ingredients);
     }
 
-    public void calculatePizzaPrice(Pizza pizza) {
+    private void calculatePizzaPrice(Pizza pizza) {
         BigDecimal basePrice = priceCalculator
             .calculateBasePizzaPrice(pizza.getSize(), pizza.getCrustType());
         BigDecimal finalPrice = priceCalculator
@@ -95,7 +95,7 @@ public class PizzaService {
 
                 List<Ingredient> ingredients = new ArrayList<>(updatedPizza.getIngredients());
                 existingPizza.setIngredients(ingredients);
-                populateIngredientPrices(updatedPizza);
+                populatePizzaWithIngredients(updatedPizza);
 
                 existingPizza.setUpdatedAt(LocalDateTime.now());
                 calculatePizzaPrice(updatedPizza);

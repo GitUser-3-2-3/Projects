@@ -1,25 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Brown Pizza</title>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome to Brown Pizza</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f8f8f8;
+            }
+
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            button {
+                background-color: #ff5733;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                border-radius: 5px;
+                font-size: 18px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #e64e1c;
+            }
+        </style>
     </head>
     <body>
-        <div th:fragment="header">
-            <header>
-                <nav>
-                    <ul>
-                        <li><a href="#" class="logo">
-                            <img th:src="@{/images/pizza_icon.jpeg}" alt="Brown Pizza">
-                        </a></li>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Menu</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </nav>
-            </header>
-        </div>
+        <h1>Welcome to Brown Pizza</h1>
+        <button onclick="window.location.href='/design'">Design Your Pizza</button>
     </body>
 </html>

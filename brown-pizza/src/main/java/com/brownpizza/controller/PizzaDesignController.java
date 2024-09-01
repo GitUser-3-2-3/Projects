@@ -1,6 +1,7 @@
 package com.brownpizza.controller;
 
 import com.brownpizza.model.Ingredient;
+import com.brownpizza.model.Order;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.service.PizzaService;
 import jakarta.validation.Valid;
@@ -14,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.brownpizza.model.Pizza.CrustType;
+import static com.brownpizza.model.Pizza.PizzaSize;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -28,23 +31,32 @@ public class PizzaDesignController {
         this.pizzaService = pizzaService;
     }
 
+    @ModelAttribute(name = "order")
+    public Order addOrderToModel(Model model) {
+        return new Order();
+    }
+
+    @ModelAttribute(name = "pizza")
+    public Pizza addPizzaToModel(Model model) {
+        model.addAttribute("sizes", PizzaSize.values());
+        model.addAttribute("crustTypes", CrustType.values());
+        return new Pizza();
+    }
+
+    @ModelAttribute
+    public void addIngredientToModel(Model model) {
+        List<Ingredient> ingredientList = pizzaService.getAvailableIngredients();
+        model.addAttribute("ingredientList", ingredientList);
+        model.addAttribute("ingredientTypes", Ingredient.Type.values());
+    }
+
     /**
      * Displays the pizza design form to the user.
-     * This method fetches the available ingredients and sends them to the thymeleaf template.
      *
-     * @param model Thymeleaf Model to pass the data to the view.
      * @return The name of the Thymeleaf template for pizza design.
      */
     @GetMapping
-    public String showDesignForm(Model model) {
-        List<Ingredient> ingredientList = pizzaService.getAvailableIngredients();
-        model.addAttribute("ingredients", ingredientList);
-        model.addAttribute("ingredientTypes", Ingredient.Type.values());
-
-        model.addAttribute("pizza", new Pizza());
-        model.addAttribute("sizes", Pizza.PizzaSize.values());
-        model.addAttribute("crustTypes", Pizza.CrustType.values());
-
+    public String showDesignForm() {
         return "brown-pizza-design";
     }
 

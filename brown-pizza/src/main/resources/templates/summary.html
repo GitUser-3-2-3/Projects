@@ -6,40 +6,29 @@
     </head>
     <body>
         <div class="container">
-            <h1>Pizza Summary</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Size</th>
-                        <th>Crust Type</th>
-                        <th>Ingredients</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td th:text="${pizza.name}">Name</td>
-                        <td th:text="${pizza.size}">Size</td>
-                        <td th:text="${pizza.crustType}">Crust Type</td>
-                        <td>
-                            <ul class="ingredients">
-                                <li th:each="ingredient : ${pizza.ingredients}"
-                                    th:text="${ingredient.name}">Ingredient
-                                </li>
-                            </ul>
-                        </td>
-                        <td class="price" th:text="${pizza.finalPrice}">Price</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h1 class="title">Pizza Summary</h1>
+            <div class="summary-card">
+                <div class="pizza-detail">
+                    <h2 class="pizza-name" th:text="${pizza.name}">Pizza Name</h2>
+                    <p class="pizza-size" th:text="'Size: ' + ${pizza.size}">Size</p>
+                    <p class="pizza-crust" th:text="'Crust Type: ' + ${pizza.crustType}">Crust Type</p>
+                </div>
+                <div class="ingredients-section">
+                    <h3>Ingredients</h3>
+                    <div class="ingredients">
+                    <span th:each="ingredient : ${pizza.ingredients}"
+                          th:text="${ingredient.name}"
+                          class="ingredient-badge">
+                        Ingredient
+                    </span>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <h3>Total Price</h3>
+                    <p class="price" th:text="${pizza.finalPrice}">Price</p>
+                </div>
+            </div>
         </div>
-        <script>
-            // Add a fade-in effect to the table rows
-            const rows = document.querySelectorAll('tbody tr');
-            rows.forEach((row, index) => {
-                row.style.animationDelay = `${index * 0.5}s`;
-            });
-        </script>
+        <script src="/js/summary.js"></script>
     </body>
 </html>

@@ -1,10 +1,8 @@
 package com.brownpizza.controller;
 
-import com.brownpizza.DTO.IngredientDTO;
-import com.brownpizza.DTO.PizzaDTO;
+import com.brownpizza.model.Ingredient;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.service.PizzaService;
-import com.brownpizza.util.DTOMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +22,10 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class PizzaDesignController {
 
     private final PizzaService pizzaService;
-    private final DTOMapper dtoMapper;
 
     @Autowired
-    public PizzaDesignController(PizzaService pizzaService, DTOMapper dtoMapper) {
+    public PizzaDesignController(PizzaService pizzaService) {
         this.pizzaService = pizzaService;
-        this.dtoMapper = dtoMapper;
     }
 
     /**
@@ -41,25 +37,27 @@ public class PizzaDesignController {
      */
     @GetMapping
     public String showDesignForm(Model model) {
-        List<IngredientDTO> ingredients = pizzaService.getAvailableIngredients();
+        List<Ingredient> ingredientList = pizzaService.getAvailableIngredients();
+        model.addAttribute("ingredients", ingredientList);
+        model.addAttribute("ingredientTypes", Ingredient.Type.values());
 
-        model.addAttribute("ingredients", ingredients);
-        model.addAttribute("pizza", new PizzaDTO());
-        model.addAttribute("types", IngredientDTO.Type.values());
+        model.addAttribute("pizza", new Pizza());
+        model.addAttribute("sizes", Pizza.PizzaSize.values());
+        model.addAttribute("crustTypes", Pizza.CrustType.values());
+
         return "brown-pizza-design";
     }
 
     @PostMapping
     public String processDesign(
-        @Valid @ModelAttribute("pizza") PizzaDTO pizzaDTO, Model model
+        @Valid @ModelAttribute("pizza") Pizza pizza, Model model
     ) {
-        PizzaDTO createdPizzaDTO = pizzaService.createPizza(pizzaDTO);
-        if (createdPizzaDTO == null) {
+        Pizza createdPizza = pizzaService.createPizza(pizza);
+        if (createdPizza == null) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Pizza creation failed");
         }
 
-        model.addAttribute("pizza", createdPizzaDTO);
-        Pizza createdPizza = dtoMapper.convertDtoToEntity(createdPizzaDTO, Pizza.class);
+        model.addAttribute("pizza", createdPizza);
         return "redirect:/design/summary" + createdPizza.getId();
     }
 
@@ -68,34 +66,32 @@ public class PizzaDesignController {
         Pizza pizza = pizzaService.getPizzaById(id)
             .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pizza not found"));
 
-        PizzaDTO pizzaDTO = dtoMapper.convertEntityToDto(pizza, PizzaDTO.class);
-        model.addAttribute("pizza", pizzaDTO);
+        model.addAttribute("pizza", pizza);
         return "summary";
     }
 
     @PutMapping("/update/{id}")
     public String updatePizza(
-        @PathVariable final Long id, @Valid @ModelAttribute("pizza") PizzaDTO pizzaDTO, Model model
+        @PathVariable final Long id, @Valid @ModelAttribute("pizza") Pizza pizza, Model model
     ) {
         if (pizzaService.getPizzaById(id).isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND, "Pizza not found");
         }
 
-        PizzaDTO updatedPizzaDTO = pizzaService.updatePizza(id, pizzaDTO);
-        model.addAttribute("pizza", updatedPizzaDTO);
+        Pizza updatedPizza = pizzaService.updatePizza(id, pizza);
+        model.addAttribute("pizza", updatedPizza);
 
-        Pizza updatedPizza = dtoMapper.convertDtoToEntity(updatedPizzaDTO, Pizza.class);
         return "redirect:/design/summary" + updatedPizza.getId();
     }
 
     @GetMapping("/availableIngredient")
-    public ResponseEntity<List<IngredientDTO>> getAvailableIngredient() {
-        List<IngredientDTO> ingredientDTOList = pizzaService.getAvailableIngredients();
+    public ResponseEntity<List<Ingredient>> getAvailableIngredient() {
+        List<Ingredient> ingredientList = pizzaService.getAvailableIngredients();
 
-        if (ingredientDTOList.isEmpty()) {
+        if (ingredientList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ingredientDTOList);
+        return ResponseEntity.ok(ingredientList);
     }
 
     @ResponseBody

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Pizza Summary</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.9.6/htmx.min.js"></script>
+    </head>
+    <body>
+        <h1>Your Pizza Summary</h1>
+        <h2 th:text="${pizza.name}">Pizza Name</h2>
+
+        <h3>Ingredients:</h3>
+        <ul>
+            <li th:each="ingredient : ${pizza.ingredients}" th:text="${ingredient.name}">Ingredient</li>
+        </ul>
+
+        <button hx-get="@{/design/{id}/basePrice(id=${pizza.id})}"
+                hx-target="#basePrice">
+            Show Base Price
+        </button>
+        <div id="basePrice"></div>
+
+        <button hx-get="@{/design/{id}/finalPrice(id=${pizza.id})}"
+                hx-target="#finalPrice">
+            Show Final Price
+        </button>
+        <div id="finalPrice"></div>
+
+        <a th:href="@{/design}">Design Another Pizza</a>
+    </body>
+</html>

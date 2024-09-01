@@ -1,12 +1,9 @@
 package com.brownpizza.controller;
 
-import com.brownpizza.DTO.IngredientDTO;
-import com.brownpizza.DTO.PizzaDTO;
+import com.brownpizza.model.Ingredient;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.service.PizzaService;
-import com.brownpizza.util.DTOMapper;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,44 +18,41 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class PizzaController {
 
     private final PizzaService pizzaService;
-    private final DTOMapper dtoMapper;
 
-    public PizzaController(PizzaService pizzaService, ModelMapper mapper) {
+    public PizzaController(PizzaService pizzaService) {
         this.pizzaService = pizzaService;
-        this.dtoMapper = new DTOMapper(mapper);
     }
 
-    public ResponseEntity<PizzaDTO> createPizza(@Valid @RequestBody PizzaDTO pizzaDTO) {
-        PizzaDTO createdPizza = pizzaService.createPizza(pizzaDTO);
+    public ResponseEntity<Pizza> createPizza(@Valid @RequestBody Pizza pizza) {
+        Pizza createdPizza = pizzaService.createPizza(pizza);
 
         if (createdPizza != null) {
             return ResponseEntity.status(HttpStatus.CREATED)
-                .body(pizzaDTO);
+                .body(pizza);
         }
         return ResponseEntity.internalServerError().build();
     }
 
-    public ResponseEntity<PizzaDTO> getPizzaById(@PathVariable Long id) {
+    public ResponseEntity<Pizza> getPizzaById(@PathVariable Long id) {
         Pizza pizza = pizzaService.getPizzaById(id)
             .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pizza not found"));
 
-        PizzaDTO pizzaDTO = dtoMapper.convertEntityToDto(pizza, PizzaDTO.class);
-        return ResponseEntity.ok(pizzaDTO);
+        return ResponseEntity.ok(pizza);
     }
 
-    public ResponseEntity<PizzaDTO> updatePizza(
-        @PathVariable Long id, @Valid @RequestBody PizzaDTO pizzaDTO
+    public ResponseEntity<Pizza> updatePizza(
+        @PathVariable Long id, @Valid @RequestBody Pizza pizza
     ) {
         if (pizzaService.getPizzaById(id).isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND, "Pizza not found");
         }
 
-        PizzaDTO updatedPizza = pizzaService.updatePizza(id, pizzaDTO);
+        Pizza updatedPizza = pizzaService.updatePizza(id, pizza);
         return ResponseEntity.ok(updatedPizza);
     }
 
-    public ResponseEntity<List<IngredientDTO>> getAvailableIngredient() {
-        List<IngredientDTO> ingredientDTOList = pizzaService.getAvailableIngredients();
+    public ResponseEntity<List<Ingredient>> getAvailableIngredient() {
+        List<Ingredient> ingredientDTOList = pizzaService.getAvailableIngredients();
 
         if (ingredientDTOList.isEmpty()) {
             return ResponseEntity.notFound().build();

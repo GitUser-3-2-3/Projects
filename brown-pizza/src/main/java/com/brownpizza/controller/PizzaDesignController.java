@@ -58,7 +58,7 @@ public class PizzaDesignController {
         }
 
         model.addAttribute("pizza", createdPizza);
-        return "redirect:/design/summary" + createdPizza.getId();
+        return "redirect:/design/summary/" + createdPizza.getId();
     }
 
     @GetMapping("/summary/{id}")
@@ -81,7 +81,7 @@ public class PizzaDesignController {
         Pizza updatedPizza = pizzaService.updatePizza(id, pizza);
         model.addAttribute("pizza", updatedPizza);
 
-        return "redirect:/design/summary" + updatedPizza.getId();
+        return "redirect:/design/summary/" + updatedPizza.getId();
     }
 
     @GetMapping("/availableIngredient")

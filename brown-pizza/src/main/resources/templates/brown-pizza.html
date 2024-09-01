@@ -2,10 +2,43 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Welcome to Brown Pizza</title>
-        <link rel="stylesheet" href="/css/style.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f8f8f8;
+            }
+
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            button {
+                background-color: #ff5733;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                border-radius: 5px;
+                font-size: 18px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #e64e1c;
+            }
+        </style>
     </head>
     <body>
         <h1>Welcome to Brown Pizza</h1>
+        <button onclick="window.location.href='/design'">Design Your Pizza</button>
     </body>
 </html>

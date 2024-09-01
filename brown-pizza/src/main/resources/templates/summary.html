@@ -15,12 +15,16 @@
                 </div>
                 <div class="ingredients-section">
                     <h3>Ingredients</h3>
-                    <div class="ingredients">
-                    <span th:each="ingredient : ${pizza.ingredients}"
-                          th:text="${ingredient.name}"
-                          class="ingredient-badge">
-                        Ingredient
-                    </span>
+
+                    <!-- Separate ingredients by type -->
+                    <div th:each="type : ${ingredientTypes}" class="ingredient-type-section">
+                        <h4 class="ingredient-type" th:text="${type.name()}">Ingredient Type</h4>
+                        <div class="ingredients">
+                        <span th:each="ingredient : ${pizza.ingredients}" th:if="${ingredient.type == type}"
+                              th:text="${ingredient.name}" class="ingredient-badge">
+                            Ingredient
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="price-section">

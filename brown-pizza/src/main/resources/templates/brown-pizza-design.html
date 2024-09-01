@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,6 +39,10 @@
                         </label>
                     </div>
                 </div>
+            </div>
+            <div>
+                <label for="name">Enter name:</label>
+                <input type="text" id="name" th:field="*{name}"/><br/>
             </div>
             <button type="submit">Create Pizza</button>
         </form>

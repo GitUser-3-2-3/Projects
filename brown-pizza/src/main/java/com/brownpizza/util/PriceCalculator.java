@@ -23,16 +23,16 @@ public class PriceCalculator {
     ) {
         return switch (pizzaSize) {
             case SMALL -> switch (crustType) {
-                case THIN_CRUST, HAND_TOSSED, PAN -> new BigDecimal("7.99");
-                default -> new BigDecimal("9.99");
+                case THIN_CRUST, HAND_TOSSED, PAN -> new BigDecimal("1.99");
+                default -> new BigDecimal("2.99");
             };
             case MEDIUM -> switch (crustType) {
-                case THIN_CRUST, HAND_TOSSED, PAN -> new BigDecimal("9.99");
-                default -> new BigDecimal("11.99");
+                case THIN_CRUST, HAND_TOSSED, PAN -> new BigDecimal("2.99");
+                default -> new BigDecimal("3.99");
             };
             case LARGE -> switch (crustType) {
-                case THIN_CRUST, HAND_TOSSED, PAN -> new BigDecimal("11.99");
-                default -> new BigDecimal("13.99");
+                case THIN_CRUST, HAND_TOSSED, PAN -> new BigDecimal("3.99");
+                default -> new BigDecimal("4.99");
             };
         };
     }

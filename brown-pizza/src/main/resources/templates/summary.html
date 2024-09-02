@@ -32,6 +32,9 @@
                     <p class="price" th:text="${pizza.finalPrice}">Price</p>
                 </div>
             </div>
+            <form th:action="@{/order}" method="get">
+                <button type="submit" class="add-to-order-btn">Add Pizza to Order</button>
+            </form>
         </div>
         <script src="/js/summary.js"></script>
     </body>

@@ -1,6 +1,7 @@
 package com.brownpizza.controller;
 
 import com.brownpizza.model.Ingredient;
+import com.brownpizza.model.Order;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.service.PizzaService;
 import jakarta.validation.Valid;
@@ -18,6 +19,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Controller
+@SessionAttributes("order")
 @RequestMapping("/design")
 public class PizzaDesignController {
 
@@ -40,7 +42,8 @@ public class PizzaDesignController {
 
     @PostMapping
     public String processDesign(
-        @Valid @ModelAttribute("pizza") Pizza pizza, Model model
+        @Valid @ModelAttribute("pizza") Pizza pizza, Model model,
+        @ModelAttribute("order") Order order
     ) {
         Pizza createdPizza = pizzaService.createPizza(pizza);
         if (createdPizza == null) {
@@ -48,6 +51,8 @@ public class PizzaDesignController {
         }
 
         model.addAttribute("pizza", createdPizza);
+        model.addAttribute("order", createdPizza);
+        order.addPizza(pizza);
         return "redirect:/design/summary/" + createdPizza.getId();
     }
 

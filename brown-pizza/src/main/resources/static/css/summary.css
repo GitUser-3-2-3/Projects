@@ -81,6 +81,22 @@ body {
     color: #e74c3c;
 }
 
+
+.add-to-order-btn {
+    background-color: #1e9cd2;
+    color: white;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-to-order-btn:hover {
+    background-color: #20c1e4;
+}
+
 /* Animations */
 @keyframes fadeInDown {
     from {

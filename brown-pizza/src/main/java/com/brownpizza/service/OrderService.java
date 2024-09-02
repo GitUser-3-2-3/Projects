@@ -1,6 +1,5 @@
 package com.brownpizza.service;
 
-import com.brownpizza.model.Address;
 import com.brownpizza.model.Order;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.repository.OrderRepository;
@@ -36,9 +35,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createOrder(@Valid Order order, @Valid Address address) {
+    public Order createOrder(@Valid Order order) {
         order.setPlacedAt(LocalDateTime.now());
-        order.setDeliveryAddress(address);
 
         populateOrderWithPizzas(order);
         calculateOrderPrices(order);

@@ -4,6 +4,7 @@ import com.brownpizza.model.Ingredient;
 import com.brownpizza.model.Order;
 import com.brownpizza.model.Pizza;
 import com.brownpizza.service.PizzaService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
-import static com.brownpizza.model.Pizza.*;
+import static com.brownpizza.model.Pizza.CrustType;
+import static com.brownpizza.model.Pizza.PizzaSize;
 
 @ControllerAdvice
 public class ModelAttributes {
@@ -23,7 +25,7 @@ public class ModelAttributes {
     }
 
     @ModelAttribute(name = "order")
-    public Order addOrderToModel(Model model) {
+    public Order addOrderToModel() {
         return new Order();
     }
 

@@ -35,10 +35,6 @@ public class Pizza {
     private BigDecimal basePrice;
     private BigDecimal finalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @Size(min = 3, message = "At-least 3 ingredients are needed")
     private List<Ingredient> ingredients = new ArrayList<>();

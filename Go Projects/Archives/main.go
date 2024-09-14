@@ -40,10 +40,12 @@ func findByCreator(media Media, creator string) []interface{} {
 
 func main() {
 	songs := []Song{
-		{"Song", "Pop", "Singer1", 3.5},
-		{"Song", "Rock", "Singer2", 4.0},
-		{"Song3", "Pop", "Singer1", 2.8},
-		{"Song4", "Jazz", "Singer3", 5.2},
+		{
+			songName:  "Bye Bye Bye",
+			songGenre: "Pop",
+			singer:    "NSYNC",
+			length:    3.20,
+		},
 	}
 
 	songCollection := SongCollection{songs: songs}

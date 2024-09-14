@@ -39,20 +39,28 @@ func findByCreator(media Media, creator string) []interface{} {
 }
 
 func main() {
-	songs := []Song{
-		{
-			songName:  "Bye Bye Bye",
-			songGenre: "Pop",
-			singer:    "NSYNC",
-			length:    3.20,
-		},
-	}
-
+	songs := songData()
 	songCollection := SongCollection{songs: songs}
 
+	movies := movieData()
+	movieCollection := MovieCollection{movies: movies}
+
+	books := bookData()
+	bookCollection := BookCollection{books: books}
+
 	// Example usage
-	result := findByName(&songCollection, "Song")
-	if result != nil {
-		fmt.Println("Found songs:", result)
+	song := findByName(&songCollection, "Shape of You")
+	if song != nil {
+		fmt.Println("Found songs:", song)
+	}
+
+	movie := findByName(&movieCollection, "Inception")
+	if movie != nil {
+		fmt.Println("Found songs:", movie)
+	}
+
+	book := findByName(&bookCollection, "1984")
+	if book != nil {
+		fmt.Println("Found songs:", book)
 	}
 }

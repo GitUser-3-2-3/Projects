@@ -6,7 +6,6 @@ import com.brownpizza.repository.OrderRepository;
 import com.brownpizza.repository.PizzaRepository;
 import com.brownpizza.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +34,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createOrder(@Valid Order order) {
+    public Order createOrder(Order order) {
         order.setPlacedAt(LocalDateTime.now());
-
-        populateOrderWithPizzas(order);
-        calculateOrderPrices(order);
-
         return orderRepository.save(order);
     }
 

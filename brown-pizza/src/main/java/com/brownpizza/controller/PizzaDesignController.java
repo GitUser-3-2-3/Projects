@@ -41,23 +41,19 @@ public class PizzaDesignController {
     }
 
     @PostMapping
-    public String processDesign(
-        @Valid @ModelAttribute("pizza") Pizza pizza, Model model,
-        @ModelAttribute("order") Order order
-    ) {
+    public String processDesign(@Valid @ModelAttribute("pizza") Pizza pizza, Model model) {
         Pizza createdPizza = pizzaService.createPizza(pizza);
         if (createdPizza == null) {
             throw new ResponseStatusException(INTERNAL_SERVER_ERROR, "Pizza creation failed");
         }
 
         model.addAttribute("pizza", createdPizza);
-        model.addAttribute("order", createdPizza);
-        order.addPizza(pizza);
         return "redirect:/design/summary/" + createdPizza.getId();
     }
 
     @GetMapping("/summary/{id}")
     public String showSummary(@PathVariable final Long id, Model model) {
+
         Pizza pizza = pizzaService.getPizzaById(id)
             .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pizza not found"));
 
@@ -65,33 +61,22 @@ public class PizzaDesignController {
         return "summary";
     }
 
-    @PutMapping("/update/{id}")
-    public String updatePizza(
-        @PathVariable final Long id, @Valid @ModelAttribute("pizza") Pizza pizza, Model model
+    @PostMapping("summary/{id}")
+    public String processSummary(
+        @PathVariable final Long id, Model model, @ModelAttribute("order") Order order
     ) {
-        if (pizzaService.getPizzaById(id).isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, "Pizza not found");
-        }
+        Pizza pizza = pizzaService.getPizzaById(id)
+            .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pizza not found"));
 
-        Pizza updatedPizza = pizzaService.updatePizza(id, pizza);
-        model.addAttribute("pizza", updatedPizza);
-
-        return "redirect:/design/summary/" + updatedPizza.getId();
-    }
-
-    @GetMapping("/availableIngredient")
-    public ResponseEntity<List<Ingredient>> getAvailableIngredient() {
-        List<Ingredient> ingredientList = pizzaService.getAvailableIngredients();
-
-        if (ingredientList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(ingredientList);
+        model.addAttribute("pizza", pizza);
+        order.addPizza(pizza);
+        return "redirect:/order/order-form";
     }
 
     @ResponseBody
     @GetMapping("{id}/basePrice")
     public String getBasePizzaPrice(@PathVariable Long id) {
+
         if (pizzaService.getPizzaById(id).isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND, "Pizza not found");
         }
@@ -102,6 +87,7 @@ public class PizzaDesignController {
     @ResponseBody
     @GetMapping("{id}/finalPrice")
     public String getFinalPizzaPrice(@PathVariable Long id) {
+
         if (pizzaService.getPizzaById(id).isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND, "Pizza not found");
         }

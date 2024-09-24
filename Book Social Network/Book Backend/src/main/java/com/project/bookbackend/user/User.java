@@ -1,5 +1,7 @@
 package com.project.bookbackend.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.project.bookbackend.role.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -25,7 +27,7 @@ import java.util.List;
 public class User implements UserDetails, Principal {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String firstname;
@@ -33,7 +35,7 @@ public class User implements UserDetails, Principal {
 
     private LocalDateTime dateOfBirth;
 
-    @Email
+    @Email(message = "Invalid Email")
     @Column(unique = true)
     private String userEmail;
     private String password;
@@ -41,7 +43,9 @@ public class User implements UserDetails, Principal {
     private boolean accountLocked;
     private boolean accountEnabled;
 
-    // private List<Roles> roles;
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

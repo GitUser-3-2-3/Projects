@@ -79,12 +79,7 @@ public class User implements UserDetails, Principal {
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
+    public boolean isEnabled() {
         return false;
     }
 
@@ -94,7 +89,12 @@ public class User implements UserDetails, Principal {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
         return false;
     }
 }

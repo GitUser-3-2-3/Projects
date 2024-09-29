@@ -40,3 +40,11 @@ public class Role {
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
 }
+
+
+
+
+
+
+
+

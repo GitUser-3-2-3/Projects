@@ -31,7 +31,11 @@ spring:
 server:
   port: 8088
 
-
+application:
+  security:
+    jwt:
+      secret-key: C1C3EFD866C9686599781AD925A1C
+      expiration: 86400000
 
 
 

@@ -1,11 +1,10 @@
 package com.jwt.security.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -25,14 +24,17 @@ public class Student {
     private String stdntEmail;
 
     @NotBlank(message = "DOB is mandatory.")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @NotBlank(message = "Residence is mandatory.")
     private String stdntResidence;
 
     @ManyToOne
     @JoinColumn(name = "institution_id")
+    @JsonBackReference
     private Institution institution;
+
+    private String stdntInstitute;
 }
 
 

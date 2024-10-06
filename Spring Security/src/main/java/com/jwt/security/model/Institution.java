@@ -1,5 +1,6 @@
 package com.jwt.security.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Institution {
     private String instFee;
 
     @OneToMany(mappedBy = "institution")
+    @JsonManagedReference
     private List<Student> students;
 }
 

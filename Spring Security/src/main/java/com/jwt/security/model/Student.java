@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -23,7 +25,7 @@ public class Student {
     private String studentEmail;
 
     @NotBlank(message = "DOB is mandatory.")
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @NotBlank(message = "Zipcode is mandatory.")
     private Integer zipcode;

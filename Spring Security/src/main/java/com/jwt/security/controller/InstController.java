@@ -27,7 +27,6 @@ public class InstController {
         @RequestBody @Valid Institution institution
     ) {
         Map<Boolean, Institution> response = instService.addInstitution(institution);
-
         if (response.containsKey(true)) {
             return new ResponseEntity<>(response.get(true), HttpStatus.CREATED);
         }
@@ -43,6 +42,7 @@ public class InstController {
     @GetMapping("/city/{city}")
     public ResponseEntity<List<Institution>> getAllInstByCity(@PathVariable("city") String city) {
         List<Institution> institutions = instService.getAllInstByCity(city);
+
         if (institutions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -52,6 +52,7 @@ public class InstController {
     @GetMapping("/name/{name}")
     public ResponseEntity<Institution> getInstByName(@PathVariable("name") String name) {
         Institution institution = instService.getInstByName(name);
+
         if (institution != null) {
             return new ResponseEntity<>(institution, HttpStatus.OK);
         }
@@ -61,6 +62,7 @@ public class InstController {
     @GetMapping("/email/{email}")
     public ResponseEntity<Institution> getInstByEmail(@PathVariable("email") String email) {
         Institution institution = instService.getInstByEmail(email);
+
         if (institution != null) {
             return new ResponseEntity<>(institution, HttpStatus.OK);
         }

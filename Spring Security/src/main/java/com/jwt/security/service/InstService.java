@@ -4,6 +4,7 @@ import com.jwt.security.model.Institution;
 import com.jwt.security.repo.InstRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +20,12 @@ public class InstService {
         this.instRepository = instRepository;
     }
 
+    @Transactional
     public Map<Boolean, Institution> addInstitution(final Institution inst) {
-        if (inst != null) {
-            return new HashMap<>(Map.of(true, instRepository.save(inst)));
+        if (inst == null) {
+            return new HashMap<>(Map.of(false, new Institution()));
         }
-        return new HashMap<>(Map.of(false, new Institution()));
+        return new HashMap<>(Map.of(true, instRepository.save(inst)));
     }
 
     public List<Institution> getAllInstitutions() {
@@ -42,14 +44,10 @@ public class InstService {
         return instRepository.findByInstEmail(instEmail);
     }
 
-    public Map<Boolean, String> deleteInstitution(final String instEmail) {
-        Institution inst = instRepository.findByInstEmail(instEmail);
-
-        if (inst != null) {
-            instRepository.deleteByInstEmail(instEmail);
-            return new HashMap<>(Map.of(true, "Institution deleted successfully."));
-        }
-        return new HashMap<>(Map.of(false, instEmail));
+    @Transactional
+    public boolean deleteInstByEmail(final String instEmail) {
+        return instRepository.existsByInstEmail(instEmail)
+            && instRepository.deleteByInstEmail(instEmail) == 1;
     }
 }
 

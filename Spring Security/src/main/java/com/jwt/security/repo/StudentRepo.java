@@ -2,7 +2,6 @@ package com.jwt.security.repo;
 
 import com.jwt.security.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -15,7 +14,11 @@ public interface StudentRepo extends JpaRepository<Student, Integer> {
 
     Student findByStdntEmail(String studentEmail);
 
+    Boolean existsByStdntEmail(String stdntEmail);
+
     List<Student> findByDateOfBirth(LocalDate dateOfBirth);
 
-    List<Student> findByStdntResidence(String stdntResidence);
+    List<Student> findAllByStdntResidence(String stdntResidence);
+
+    void deleteByStdntEmail(String stdntEmail);
 }

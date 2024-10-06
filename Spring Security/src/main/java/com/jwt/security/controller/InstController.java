@@ -27,10 +27,9 @@ public class InstController {
         @RequestBody @Valid Institution institution
     ) {
         Map<Boolean, Institution> response = instService.addInstitution(institution);
-        if (response.containsKey(true)) {
-            return new ResponseEntity<>(response.get(true), HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(institution, HttpStatus.BAD_REQUEST);
+        return response.containsKey(true)
+            ? new ResponseEntity<>(response.get(true), HttpStatus.CREATED)
+            : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
@@ -43,39 +42,40 @@ public class InstController {
     public ResponseEntity<List<Institution>> getAllInstByCity(@PathVariable("city") String city) {
         List<Institution> institutions = instService.getAllInstByCity(city);
 
-        if (institutions.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(institutions, HttpStatus.OK);
+        return institutions.isEmpty()
+            ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+            : new ResponseEntity<>(institutions, HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Institution> getInstByName(@PathVariable("name") String name) {
-        Institution institution = instService.getInstByName(name);
+    public ResponseEntity<Institution> getInstByName(@PathVariable("name") String instName) {
+        Institution institution = instService.getInstByName(instName);
 
-        if (institution != null) {
-            return new ResponseEntity<>(institution, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return institution == null
+            ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+            : new ResponseEntity<>(institution, HttpStatus.OK);
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<Institution> getInstByEmail(@PathVariable("email") String email) {
-        Institution institution = instService.getInstByEmail(email);
+    @GetMapping("/email/{instEmail}")
+    public ResponseEntity<Institution> getInstByEmail(@PathVariable("instEmail") String instEmail) {
+        Institution institution = instService.getInstByEmail(instEmail);
 
-        if (institution != null) {
-            return new ResponseEntity<>(institution, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return institution == null
+            ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+            : new ResponseEntity<>(institution, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{email}")
-    public ResponseEntity<Map<Boolean, String>> deleteInstitution(@PathVariable("email") String email) {
-        Map<Boolean, String> response = instService.deleteInstitution(email);
-
-        if (response.containsKey(true)) {
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    @DeleteMapping("/delete/{instEmail}")
+    public ResponseEntity<String> deleteInstitution(@PathVariable("instEmail") String instEmail) {
+        return instService.deleteInstByEmail(instEmail)
+            ? new ResponseEntity<>("Institution deleted successfully.", HttpStatus.OK)
+            : new ResponseEntity<>(instEmail, HttpStatus.NOT_FOUND);
     }
 }
+
+
+
+
+
+
+

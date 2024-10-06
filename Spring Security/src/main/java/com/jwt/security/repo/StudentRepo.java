@@ -2,19 +2,20 @@ package com.jwt.security.repo;
 
 import com.jwt.security.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository
 public interface StudentRepo extends JpaRepository<Student, Integer> {
 
-    List<Student> findByStudentName(String studentName);
+    List<Student> findByStdntName(String stdntName);
 
-    Student findByStudentEmail(String studentEmail);
+    Student findByStdntEmail(String studentEmail);
 
     List<Student> findByDateOfBirth(LocalDate dateOfBirth);
 
-    List<Student> findByZipcode(Integer zipcode);
-
-    List<Student> findStudentByInstitutionContaining(String instName);
+    List<Student> findByStdntResidence(String stdntResidence);
 }

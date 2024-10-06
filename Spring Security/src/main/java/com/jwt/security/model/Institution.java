@@ -19,13 +19,13 @@ public class Institution {
 
     @Column(unique = true)
     @NotBlank(message = "Name is mandatory.")
-    private String institutionName;
+    private String instName;
 
     @NotBlank(message = "Email is mandatory.")
-    private String institutionEmail;
+    private String instEmail;
 
-    @NotBlank(message = "Zipcode is mandatory.")
-    private String zipcode;
+    @NotBlank(message = "City is mandatory.")
+    private String instCity;
     private String instFee;
 
     @OneToMany(mappedBy = "institution")

@@ -15,20 +15,20 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer studentId;
+    private Integer stdntId;
 
     @NotBlank(message = "Name is mandatory.")
-    private String studentName;
+    private String stdntName;
 
     @Column(unique = true)
     @NotBlank(message = "Email is mandatory.")
-    private String studentEmail;
+    private String stdntEmail;
 
     @NotBlank(message = "DOB is mandatory.")
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "Zipcode is mandatory.")
-    private Integer zipcode;
+    @NotBlank(message = "Residence is mandatory.")
+    private String stdntResidence;
 
     @ManyToOne
     @JoinColumn(name = "institution_id")

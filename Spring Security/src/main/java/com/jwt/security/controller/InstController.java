@@ -35,7 +35,11 @@ public class InstController {
     @GetMapping
     public ResponseEntity<List<Institution>> getAllInstitutions() {
         List<Institution> institutions = instService.getAllInstitutions();
-        return new ResponseEntity<>(institutions, HttpStatus.OK);
+
+        return institutions == null
+            ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+            : new ResponseEntity<>(institutions, HttpStatus.OK);
+
     }
 
     @GetMapping("/city/{city}")

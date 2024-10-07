@@ -18,10 +18,10 @@ public class Institution {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer instId;
 
-    @Column(unique = true)
     @NotBlank(message = "Name is mandatory.")
     private String instName;
 
+    @Column(unique = true)
     @NotBlank(message = "Email is mandatory.")
     private String instEmail;
 

@@ -1,5 +1,8 @@
 package com.jwt.security.service;
 
+import com.jwt.security.auth.AuthRequest;
+import com.jwt.security.auth.AuthResponse;
+import com.jwt.security.auth.RegRequest;
 import com.jwt.security.repo.UserRepo;
 import com.jwt.security.user.Roles;
 import com.jwt.security.user.Users;
@@ -25,17 +28,19 @@ public class UserService {
         this.authenticationManager = authManager;
     }
 
-    public Users registerUser(final Users req) {
+    public AuthResponse registerUser(final RegRequest req) {
         var user = Users.builder()
-            .userName(req.getUsername()).userEmail(req.getUserEmail())
+            .userName(req.getUserName()).userEmail(req.getUserEmail())
             .userPass(passwordEncoder.encode(req.getUserPass()))
-            .role(Roles.USER)
-            .build();
+            .role(Roles.USER).build();
 
-        return userRepository.save(user);
+        userRepository.save(user);
+        return AuthResponse.builder().userName(req.getUserName())
+            .userEmail(user.getUserEmail()).userRole(user.getRole())
+            .build();
     }
 
-    public boolean verifyUser(final Users req) {
+    public boolean verifyUser(final AuthRequest req) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 req.getUserEmail(),

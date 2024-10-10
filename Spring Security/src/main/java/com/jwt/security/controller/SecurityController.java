@@ -1,7 +1,9 @@
 package com.jwt.security.controller;
 
+import com.jwt.security.auth.AuthRequest;
+import com.jwt.security.auth.AuthResponse;
+import com.jwt.security.auth.RegRequest;
 import com.jwt.security.service.UserService;
-import com.jwt.security.user.Users;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,18 +25,18 @@ public class SecurityController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Users> registerUser(@RequestBody @Valid Users user) {
-        if (user == null) {
+    public ResponseEntity<AuthResponse> registerUser(@RequestBody @Valid RegRequest req) {
+        if (req == null) {
             throw new ResponseStatusException(BAD_REQUEST);
         }
         return new ResponseEntity<>(
-            userService.registerUser(user), CREATED
+            userService.registerUser(req), CREATED
         );
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> verifyUser(@RequestBody @Valid Users user) {
-        boolean verified = userService.verifyUser(user);
+    public ResponseEntity<String> verifyUser(@RequestBody @Valid AuthRequest req) {
+        boolean verified = userService.verifyUser(req);
 
         if (verified) {
             return new ResponseEntity<>("Logged in Successfully", OK);

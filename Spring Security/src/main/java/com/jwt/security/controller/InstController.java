@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/institution")
+@RequestMapping("/institution")
 public class InstController {
 
     private final InstService instService;

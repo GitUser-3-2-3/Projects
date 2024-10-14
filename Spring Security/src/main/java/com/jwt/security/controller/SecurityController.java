@@ -29,19 +29,15 @@ public class SecurityController {
         if (req == null) {
             throw new ResponseStatusException(BAD_REQUEST);
         }
-        return new ResponseEntity<>(
-            userService.registerUser(req), CREATED
-        );
+        return new ResponseEntity<>(userService.registerUser(req), CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> verifyUser(@RequestBody @Valid AuthRequest req) {
-        boolean verified = userService.verifyUser(req);
-
-        if (verified) {
-            return new ResponseEntity<>("Logged in Successfully", OK);
+        if (req == null) {
+            throw new ResponseStatusException(BAD_REQUEST);
         }
-        return new ResponseEntity<>("Login Failed", UNAUTHORIZED);
+        return new ResponseEntity<>(userService.verifyUser(req), OK);
     }
 }
 

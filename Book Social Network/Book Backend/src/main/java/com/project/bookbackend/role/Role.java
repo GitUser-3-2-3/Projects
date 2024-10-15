@@ -15,9 +15,9 @@ import java.util.List;
 @Setter
 @Entity
 @Builder
+@Table(name = "_role")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_role")
 @EntityListeners(AuditingEntityListener.class)
 public class Role {
 
@@ -28,16 +28,16 @@ public class Role {
     @Column(unique = true)
     private String name;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "roles")
+    @JsonManagedReference
     private List<User> users;
 
-    @CreatedDate
     @Column(nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdDate;
 
-    @LastModifiedDate
     @Column(insertable = false)
+    @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 }
 

@@ -18,31 +18,30 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-    private final JwtFilter jwtAuthFilter;
+    private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
 
-    public SecurityConfig(JwtFilter jwtAuthFilter, AuthenticationProvider authenticationProvider) {
-        this.jwtAuthFilter = jwtAuthFilter;
+    public SecurityConfig(JwtFilter jwtFilter, AuthenticationProvider authenticationProvider) {
+        this.jwtFilter = jwtFilter;
         this.authenticationProvider = authenticationProvider;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(req ->
-                req.requestMatchers("/auth/**", "/v2/api-docs", "/v3/api-docs",
-                        "/v3/api-docs/**", "/swagger-resources",
-                        "/swagger-resources/**", "/configuration/ui",
-                        "/configuration/security", "/swagger-ui/**",
-                        "/webjars/**", "/swagger-ui.html"
-                    )
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
+    public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
+        security.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(req -> req.requestMatchers(
+                    "/auth/**", "/v2/api-docs", "/v3/api-docs",
+                    "/v3/api-docs/**", "/swagger-resources",
+                    "/swagger-resources/**", "/configuration/ui",
+                    "/configuration/security", "/swagger-ui/**",
+                    "/webjars/**", "/swagger-ui.html"
+                ).permitAll().anyRequest().authenticated()
+            );
+        security.httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
             .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
+        return security.build();
     }
 }

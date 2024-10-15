@@ -1,7 +1,6 @@
-package com.project.bookbackend.role;
+package com.project.bookbackend.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.project.bookbackend.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

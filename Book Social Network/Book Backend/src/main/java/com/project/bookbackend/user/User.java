@@ -1,7 +1,6 @@
 package com.project.bookbackend.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.project.bookbackend.role.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;

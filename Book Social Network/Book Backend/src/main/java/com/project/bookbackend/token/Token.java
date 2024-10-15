@@ -1,5 +1,6 @@
-package com.project.bookbackend.user;
+package com.project.bookbackend.token;
 
+import com.project.bookbackend.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

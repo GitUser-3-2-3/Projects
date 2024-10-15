@@ -1,5 +1,6 @@
-package com.project.bookbackend.security;
+package com.project.bookbackend.config;
 
+import com.project.bookbackend.security.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -1,6 +1,6 @@
-package com.project.bookbackend.security;
+package com.project.bookbackend.service;
 
-import com.project.bookbackend.user.UserRepository;
+import com.project.bookbackend.repo.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

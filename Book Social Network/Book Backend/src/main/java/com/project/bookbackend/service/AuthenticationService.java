@@ -40,10 +40,10 @@ public class AuthenticationService {
     private String activationUrl;
 
     public AuthenticationService(
-        RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-        UserRepository userRepository, TokenRepository tokenRepository,
-        EmailService emailService, AuthenticationManager authManager,
-        JwtService jwtService) {
+        RoleRepository roleRepository, PasswordEncoder passwordEncoder, UserRepository userRepository,
+        TokenRepository tokenRepository, EmailService emailService,
+        AuthenticationManager authManager, JwtService jwtService
+    ) {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;

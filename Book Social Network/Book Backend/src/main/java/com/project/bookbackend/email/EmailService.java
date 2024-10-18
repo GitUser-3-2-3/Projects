@@ -21,6 +21,7 @@ public class EmailService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public EmailService(JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;

@@ -105,8 +105,8 @@ public class AuthenticationService {
     }
 
     private String generateActivationCode() {
-        String chars = "0123456789";
         StringBuilder codeBuilder = new StringBuilder();
+        String chars = "0123456789";
         SecureRandom secureRandom = new SecureRandom();
 
         for (int i = 0; i < 6; i++) {

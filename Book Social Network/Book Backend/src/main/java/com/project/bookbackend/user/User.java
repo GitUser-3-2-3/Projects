@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +34,7 @@ public class User implements UserDetails, Principal {
     private String firstname;
     private String lastname;
 
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Email(message = "Invalid Email")
     @Column(unique = true)
@@ -75,6 +76,10 @@ public class User implements UserDetails, Principal {
     @Override
     public String getUsername() {
         return userEmail;
+    }
+
+    public String getFullName() {
+        return firstname + " " + lastname;
     }
 
     @Override

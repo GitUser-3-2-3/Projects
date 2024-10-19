@@ -36,7 +36,7 @@ public class User implements UserDetails, Principal {
 
     private LocalDate dateOfBirth;
 
-    @Email(message = "Invalid Email")
+    @Email(message = "Invalid Email Format.")
     @Column(unique = true)
     private String userEmail;
     private String password;

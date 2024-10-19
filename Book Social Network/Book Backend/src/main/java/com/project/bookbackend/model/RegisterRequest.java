@@ -26,7 +26,7 @@ public class RegisterRequest {
 
     private LocalDate dateOfBirth;
 
-    @Email(message = "Invalid Email")
+    @Email(message = "Invalid Email Format.")
     @Column(unique = true)
     private String userEmail;
 

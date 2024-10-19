@@ -16,12 +16,12 @@ import java.time.LocalDate;
 @Builder
 public class RegisterRequest {
 
-    @NotBlank(message = "Field mandatory.")
-    @NotEmpty(message = "Field mandatory.")
+    @NotBlank(message = "Firstname is mandatory.")
+    @NotEmpty(message = "Firstname is mandatory.")
     private String firstname;
 
-    @NotBlank(message = "Field mandatory.")
-    @NotEmpty(message = "Field mandatory.")
+    @NotBlank(message = "Lastname is mandatory.")
+    @NotEmpty(message = "Lastname is mandatory.")
     private String lastname;
 
     private LocalDate dateOfBirth;

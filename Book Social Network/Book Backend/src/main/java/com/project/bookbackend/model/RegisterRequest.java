@@ -30,7 +30,7 @@ public class RegisterRequest {
     @Column(unique = true)
     private String userEmail;
 
-    @Size(min = 8, message = "Password can't be << 8")
+    @Size(min = 8, message = "Password can't be << 8 chars.")
     private String password;
 }
 

@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
             ExceptionResponse.builder()
-                .errDescription("This is an internet error. Contact support.")
+                .errDescription("This is an internal error. Contact support.")
                 .errorBody(exp.getMessage())
                 .build()
         );

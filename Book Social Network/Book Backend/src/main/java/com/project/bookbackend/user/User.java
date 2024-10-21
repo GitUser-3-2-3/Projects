@@ -1,11 +1,14 @@
 package com.project.bookbackend.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.project.bookbackend.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,23 +16,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Builder
+@SuperBuilder
 @Table(name = "_user")
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class User implements UserDetails, Principal {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+public class User extends BaseEntity implements UserDetails, Principal {
 
     private String firstname;
     private String lastname;
@@ -47,14 +45,6 @@ public class User implements UserDetails, Principal {
     @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime lastModifiedDate;
 
     @Override
     public String getName() {

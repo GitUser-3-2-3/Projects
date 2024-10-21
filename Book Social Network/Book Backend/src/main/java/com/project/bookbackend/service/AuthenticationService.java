@@ -62,6 +62,7 @@ public class AuthenticationService {
             .password(passwordEncoder.encode(req.getPassword()))
             .accountLocked(false).accountEnabled(false)
             .roles(List.of(userRole))
+            .createdBy(req.getUserEmail())
             .build();
 
         userRepository.save(user);
@@ -132,6 +133,7 @@ public class AuthenticationService {
             .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         user.setAccountEnabled(true);
+        user.setLastModifiedBy(user.getUserEmail());
         userRepository.save(user);
 
         savedToken.setValidatedAT(LocalDateTime.now());

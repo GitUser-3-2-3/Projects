@@ -1,7 +1,10 @@
 package com.project.bookbackend.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.project.bookbackend.book.Book;
 import com.project.bookbackend.common.BaseEntity;
+import com.project.bookbackend.records.BookTransactionHistory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -46,16 +49,24 @@ public class User extends BaseEntity implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    @Override
-    public String getName() {
-        return userEmail;
-    }
+    @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<BookTransactionHistory> histories;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
             .map(role -> new SimpleGrantedAuthority(role.getName()))
             .toList();
+    }
+
+    @Override
+    public String getName() {
+        return userEmail;
     }
 
     @Override

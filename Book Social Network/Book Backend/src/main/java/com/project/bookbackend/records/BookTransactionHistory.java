@@ -1,8 +1,9 @@
-package com.project.bookbackend.feedback;
+package com.project.bookbackend.records;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.project.bookbackend.book.Book;
 import com.project.bookbackend.common.BaseEntity;
+import com.project.bookbackend.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,13 +19,16 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Feedback extends BaseEntity {
+public class BookTransactionHistory extends BaseEntity {
 
-    private Double note;
-    private String comment;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+
+    private boolean returned;
+    private boolean returnApproved;
 }

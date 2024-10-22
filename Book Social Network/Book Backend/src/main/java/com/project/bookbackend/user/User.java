@@ -84,12 +84,12 @@ public class User extends BaseEntity implements UserDetails, Principal {
     }
 
     @Override
-    public boolean isEnabled() {
+    public boolean isCredentialsNonExpired() {
         return false;
     }
 
     @Override
-    public boolean isCredentialsNonExpired() {
+    public boolean isEnabled() {
         return false;
     }
 

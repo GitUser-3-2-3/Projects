@@ -3,7 +3,6 @@ package com.project.bookbackend.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.bookbackend.book.Book;
-import com.project.bookbackend.common.BaseEntity;
 import com.project.bookbackend.records.BookTransactionHistory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -12,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,7 +32,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class User extends BaseEntity implements UserDetails, Principal {
+public class User implements UserDetails, Principal {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     private String firstname;
     private String lastname;
@@ -41,6 +47,14 @@ public class User extends BaseEntity implements UserDetails, Principal {
     @Column(unique = true)
     private String userEmail;
     private String password;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAT;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime lastModifiedAT;
 
     private boolean accountLocked;
     private boolean accountEnabled;

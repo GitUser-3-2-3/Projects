@@ -9,8 +9,28 @@ import org.springframework.data.jpa.repository.Query;
 public interface TransactionHistoryRepository extends JpaRepository<BookTransactionHistory, Integer> {
 
     @Query("""
-        select transaction from BookTransactionHistory transaction
-        where transaction.user.id = :userId
+        select transactionHistory from BookTransactionHistory transactionHistory
+        where transactionHistory.user.id = :userId
         """)
     Page<BookTransactionHistory> findAllBorrowedBooks(Pageable pageable, Integer userId);
+
+    @Query("""
+        select transactionHistory from BookTransactionHistory transactionHistory
+        where transactionHistory.book.createdBy = :userId
+        """)
+    Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, Integer userId);
+
+    @Query("""
+        select (count (*) > 0) as isBorrowed from BookTransactionHistory transactionHistory
+        where transactionHistory.user.id = :userId and transactionHistory.book.id = :bookId
+        and transactionHistory.returnApproved = false
+        """)
+    boolean isAlreadyBorrowedByUser(Integer bookId, Integer userId);
+
+    @Query("""
+        select (count (*) > 0) as isBorrowed from BookTransactionHistory transactionHistory
+        where transactionHistory.user.id != :userId and transactionHistory.book.id = :bookId
+        and transactionHistory.returnApproved = false
+        """)
+    boolean isAlreadyBorrowedByOtherUser(Integer bookId, Integer userId);
 }

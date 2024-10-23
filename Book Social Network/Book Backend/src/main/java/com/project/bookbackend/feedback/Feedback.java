@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class Feedback extends BaseEntity {
 
-    private Double note;
+    private Double rating;
     private String comment;
 
     @JsonBackReference

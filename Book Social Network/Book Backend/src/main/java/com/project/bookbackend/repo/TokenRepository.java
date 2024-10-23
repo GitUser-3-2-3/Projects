@@ -1,6 +1,6 @@
 package com.project.bookbackend.repo;
 
-import com.project.bookbackend.token.Token;
+import com.project.bookbackend.security.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

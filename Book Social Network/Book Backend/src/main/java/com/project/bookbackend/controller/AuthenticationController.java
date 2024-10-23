@@ -1,9 +1,9 @@
 package com.project.bookbackend.controller;
 
-import com.project.bookbackend.model.AuthRequest;
-import com.project.bookbackend.model.AuthResponse;
-import com.project.bookbackend.model.RegisterRequest;
-import com.project.bookbackend.service.AuthenticationService;
+import com.project.bookbackend.auth.AuthRequest;
+import com.project.bookbackend.auth.AuthResponse;
+import com.project.bookbackend.auth.RegisterRequest;
+import com.project.bookbackend.auth.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;

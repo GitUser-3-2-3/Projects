@@ -1,4 +1,4 @@
-package com.project.bookbackend.service;
+package com.project.bookbackend.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package com.project.bookbackend.model;
+package com.project.bookbackend.auth;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;

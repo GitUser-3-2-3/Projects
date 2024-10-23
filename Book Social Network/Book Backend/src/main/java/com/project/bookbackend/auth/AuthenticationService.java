@@ -1,14 +1,12 @@
-package com.project.bookbackend.service;
+package com.project.bookbackend.auth;
 
 import com.project.bookbackend.email.EmailService;
 import com.project.bookbackend.email.EmailTemplateName;
-import com.project.bookbackend.model.AuthRequest;
-import com.project.bookbackend.model.AuthResponse;
-import com.project.bookbackend.model.RegisterRequest;
 import com.project.bookbackend.repo.RoleRepository;
 import com.project.bookbackend.repo.TokenRepository;
 import com.project.bookbackend.repo.UserRepository;
-import com.project.bookbackend.token.Token;
+import com.project.bookbackend.security.Token;
+import com.project.bookbackend.security.JwtService;
 import com.project.bookbackend.user.User;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;

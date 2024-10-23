@@ -1,4 +1,4 @@
-package com.project.bookbackend.token;
+package com.project.bookbackend.security;
 
 import com.project.bookbackend.user.User;
 import jakarta.persistence.*;

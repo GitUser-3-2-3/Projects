@@ -1,4 +1,4 @@
-package com.project.bookbackend.service;
+package com.project.bookbackend.user;
 
 import com.project.bookbackend.repo.UserRepository;
 import jakarta.transaction.Transactional;

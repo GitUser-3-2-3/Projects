@@ -1,5 +1,6 @@
 package com.project.bookbackend.handler;
 
+import com.project.bookbackend.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(LockedException.class)
-    public ResponseEntity<ExceptionResponse> handleException(LockedException lkdExp) {
+    public ResponseEntity<ExceptionResponse> handleLockedException(LockedException lkdExp) {
 
         return ResponseEntity.status(UNAUTHORIZED).body(
             ExceptionResponse.builder().errorCode(ACCOUNT_LOCKED.getErrorCode())
@@ -32,7 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DisabledException.class)
-    public ResponseEntity<ExceptionResponse> handleException(DisabledException dsbldExp) {
+    public ResponseEntity<ExceptionResponse> handleDisabledException(DisabledException dsbldExp) {
 
         return ResponseEntity.status(UNAUTHORIZED).body(
             ExceptionResponse.builder().errorCode(ACCOUNT_DISABLED.getErrorCode())
@@ -43,7 +44,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ExceptionResponse> handleException() {
+    public ResponseEntity<ExceptionResponse> handleBadCredentialsException() {
 
         return ResponseEntity.status(UNAUTHORIZED).body(
             ExceptionResponse.builder().errorCode(BAD_CREDENTIALS.getErrorCode())
@@ -54,7 +55,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MessagingException.class)
-    public ResponseEntity<ExceptionResponse> handleException(MessagingException msgExp) {
+    public ResponseEntity<ExceptionResponse> handleMessagingException(MessagingException msgExp) {
 
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
             ExceptionResponse.builder().errorBody(msgExp.getMessage())
@@ -62,15 +63,28 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleNotPermittedException(
+        OperationNotPermittedException onpExp
+    ) {
+        log.error("Operation was not permitted::{}", onpExp.getMessage());
+
+        return ResponseEntity.status(BAD_REQUEST).body(
+            ExceptionResponse.builder().errorBody(onpExp.getMessage())
+                .build()
+        );
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException argInvalidExp) {
+    public ResponseEntity<ExceptionResponse> handleArgumentNotValidException(
+        MethodArgumentNotValidException argInvalidExp
+    ) {
         Set<String> validationErrors = new HashSet<>();
 
-        argInvalidExp.getBindingResult().getAllErrors()
-            .forEach(error -> {
-                var errorMessage = error.getDefaultMessage();
-                validationErrors.add(errorMessage);
-            });
+        argInvalidExp.getBindingResult().getAllErrors().forEach(error -> {
+            var errorMessage = error.getDefaultMessage();
+            validationErrors.add(errorMessage);
+        });
 
         return ResponseEntity.status(BAD_REQUEST).body(
             ExceptionResponse.builder().validationErrors(validationErrors)

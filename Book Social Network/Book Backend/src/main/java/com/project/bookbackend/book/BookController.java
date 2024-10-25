@@ -1,12 +1,14 @@
 package com.project.bookbackend.book;
 
 import com.project.bookbackend.common.PageResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Book")
 @RestController
@@ -100,6 +102,15 @@ public class BookController {
         @PathVariable("book-id") Integer bookId, Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.approveBookReturn(bookId, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCover(
+        @PathVariable("book-id") Integer bookId, Authentication connectedUser,
+        @Parameter() @RequestPart("bookCover") MultipartFile bookCover
+    ) {
+        bookService.uploadBookCover(bookId, connectedUser, bookCover);
+        return ResponseEntity.accepted().build();
     }
 }
 

@@ -2,6 +2,7 @@ package com.project.bookbackend.book;
 
 import com.project.bookbackend.common.PageResponse;
 import com.project.bookbackend.exception.OperationNotPermittedException;
+import com.project.bookbackend.file.FileStorageService;
 import com.project.bookbackend.records.BookTransactionHistory;
 import com.project.bookbackend.repo.BookRepository;
 import com.project.bookbackend.repo.TransactionHistoryRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +26,7 @@ import static com.project.bookbackend.book.BookSpecification.withOwnerId;
 @RequiredArgsConstructor
 public class BookService {
 
+    private final FileStorageService fileStorageService;
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final TransactionHistoryRepository transactionHistoryRepository;
@@ -176,7 +179,7 @@ public class BookService {
 
         BookTransactionHistory transactionHistory = transactionHistoryRepository
             .findByBookIdAndUserId(bookId, user.getId())
-                .orElseThrow(() -> new OperationNotPermittedException("You did not borrow this book."));
+            .orElseThrow(() -> new OperationNotPermittedException("You did not borrow this book."));
 
         transactionHistory.setReturned(true);
         return transactionHistoryRepository.save(transactionHistory).getId();
@@ -187,7 +190,7 @@ public class BookService {
 
         BookTransactionHistory transactionHistory = transactionHistoryRepository
             .findByBookIdAndOwnerId(bookId, user.getId())
-                .orElseThrow(() -> new OperationNotPermittedException("Cannot approve. The book is not returned yet."));
+            .orElseThrow(() -> new OperationNotPermittedException("Cannot approve. The book is not returned yet."));
 
         transactionHistory.setReturnApproved(true);
         return transactionHistoryRepository.save(transactionHistory).getId();
@@ -206,6 +209,17 @@ public class BookService {
             throw new OperationNotPermittedException("Dude...You can't borrow/return your own book!");
         }
         return user;
+    }
+
+    public void uploadBookCover(Integer bookId, Authentication connectedUser, MultipartFile bookCover) {
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new EntityNotFoundException("No book found with id::" + bookId));
+        User user = (User) connectedUser.getPrincipal();
+
+        var savedBookCover = fileStorageService.saveBookCover(user.getId(), bookCover);
+        book.setBookCover(savedBookCover);
+
+        bookRepository.save(book);
     }
 }
 

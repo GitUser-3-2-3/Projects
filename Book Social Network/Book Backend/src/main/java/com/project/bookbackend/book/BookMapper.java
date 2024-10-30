@@ -1,5 +1,6 @@
 package com.project.bookbackend.book;
 
+import com.project.bookbackend.file.FileUtils;
 import com.project.bookbackend.records.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ public class BookMapper {
             .authorName(req.getAuthorName()).isbn(req.getIsbn())
             .synopsis(req.getSynopsis())
             .rating(req.getRating()).owner(req.getOwner().getFullName())
-            .isArchived(req.isArchived()).isShareable(req.isShareable())
+            .isArchived(req.isArchived())
+            .isShareable(req.isShareable()).bookCover(FileUtils.readCoverFromLocation(req.getBookCover()))
             .build();
     }
 

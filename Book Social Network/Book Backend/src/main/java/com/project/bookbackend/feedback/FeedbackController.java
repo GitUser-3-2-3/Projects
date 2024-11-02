@@ -29,7 +29,7 @@ public class FeedbackController {
         @RequestParam(name = "size", defaultValue = "10", required = false) int size,
         @PathVariable("book-id") Integer bookId, Authentication connectedUser
     ) {
-        return ResponseEntity.ok(feedbackService.getAllFeedbacksByBook(page, size, bookId, connectedUser));
+        return ResponseEntity.ok(feedbackService.getAllFeedbacks(page, size, bookId, connectedUser));
     }
 }
 

@@ -46,7 +46,6 @@ public class FeedbackService {
         }
     }
 
-    @Transactional
     public PageResponse<FeedbackResponse> getAllFeedbacks(int page, int size, Integer bookId, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 

@@ -50,7 +50,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.findAllBooksByOwner(page, size, connectedUser));
     }
 
-    @GetMapping("/owner")
+    @GetMapping("/borrowed")
     public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllBorrowedBooks(
         @RequestParam(name = "size", defaultValue = "10", required = false) int size,
         @RequestParam(name = "page", defaultValue = "0", required = false) int page,
@@ -59,7 +59,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.findAllBorrowedBooks(page, size, connectedUser));
     }
 
-    @GetMapping("/owner")
+    @GetMapping("/returned")
     public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllReturnedBooks(
         @RequestParam(name = "size", defaultValue = "10", required = false) int size,
         @RequestParam(name = "page", defaultValue = "0", required = false) int page,
@@ -90,14 +90,14 @@ public class BookController {
     }
 
 
-    @PatchMapping("/borrow/{book-id}")
+    @PatchMapping("/borrow/return/{book-id}")
     public ResponseEntity<Integer> returnBorrowedBook(
         @PathVariable("book-id") Integer bookId, Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.returnBorrowedBook(bookId, connectedUser));
     }
 
-    @PatchMapping("/borrow/{book-id}")
+    @PatchMapping("/returned/{book-id}")
     public ResponseEntity<Integer> approveBookReturn(
         @PathVariable("book-id") Integer bookId, Authentication connectedUser
     ) {

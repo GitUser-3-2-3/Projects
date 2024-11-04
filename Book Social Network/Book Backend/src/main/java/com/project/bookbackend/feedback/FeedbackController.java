@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Feedback", description = "Feedback Operations")
+@Tag(name = "Feedback")
 @RestController
 @RequestMapping("feedbacks")
 @RequiredArgsConstructor

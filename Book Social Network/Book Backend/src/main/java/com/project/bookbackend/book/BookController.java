@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Tag(name = "Book", description = "Book Operations")
+@Tag(name = "Book")
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor

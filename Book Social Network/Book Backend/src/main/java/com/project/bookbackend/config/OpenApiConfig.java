@@ -24,10 +24,16 @@ import io.swagger.v3.oas.annotations.servers.Server;
     ),
     termsOfService = "None of ya business"
 ),
-    servers = @Server(
-        description = "Local Env",
-        url = "http://localhost:8080/api/v1"
-    ),
+    servers = {
+        @Server(
+            description = "Local ENV",
+            url = "http://localhost:8088/api/v1"
+        ),
+        @Server(
+            description = "Prod ENV",
+            url = "https://srivastavcodes.com/codesamples"
+        )
+    },
     security = {
         @SecurityRequirement(
             name = "bearerAuth"

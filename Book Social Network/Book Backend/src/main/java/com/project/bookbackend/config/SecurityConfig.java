@@ -1,6 +1,7 @@
 package com.project.bookbackend.config;
 
 import com.project.bookbackend.security.JwtFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,15 +18,11 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
-
-    public SecurityConfig(JwtFilter jwtFilter, AuthenticationProvider authenticationProvider) {
-        this.jwtFilter = jwtFilter;
-        this.authenticationProvider = authenticationProvider;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {

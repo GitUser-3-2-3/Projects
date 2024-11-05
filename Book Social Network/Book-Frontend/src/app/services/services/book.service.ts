@@ -64,7 +64,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllBooks$Response(params?: FindAllBooks$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBookResponse>> {
+    findAllBooks$Response(params?: FindAllBooks$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<PageResponseBookResponse>> {
         return findAllBooks(this.http, this.rootUrl, params, context);
     }
 
@@ -130,7 +131,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    updateShareableStatus$Response(params: UpdateShareableStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    updateShareableStatus$Response(params: UpdateShareableStatus$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<number>> {
         return updateShareableStatus(this.http, this.rootUrl, params, context);
     }
 
@@ -152,7 +154,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    approveBookReturn$Response(params: ApproveBookReturn$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    approveBookReturn$Response(params: ApproveBookReturn$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<number>> {
         return approveBookReturn(this.http, this.rootUrl, params, context);
     }
 
@@ -196,7 +199,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    returnBorrowedBook$Response(params: ReturnBorrowedBook$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    returnBorrowedBook$Response(params: ReturnBorrowedBook$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<number>> {
         return returnBorrowedBook(this.http, this.rootUrl, params, context);
     }
 
@@ -218,7 +222,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    updateArchivedStatus$Response(params: UpdateArchivedStatus$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    updateArchivedStatus$Response(params: UpdateArchivedStatus$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<number>> {
         return updateArchivedStatus(this.http, this.rootUrl, params, context);
     }
 
@@ -262,7 +267,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllReturnedBooks$Response(params?: FindAllReturnedBooks$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
+    findAllReturnedBooks$Response(params?: FindAllReturnedBooks$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
         return findAllReturnedBooks(this.http, this.rootUrl, params, context);
     }
 
@@ -272,7 +278,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllReturnedBooks(params?: FindAllReturnedBooks$Params, context?: HttpContext): Observable<PageResponseBorrowedBookResponse> {
+    findAllReturnedBooks(params?: FindAllReturnedBooks$Params, context?: HttpContext):
+        Observable<PageResponseBorrowedBookResponse> {
         return this.findAllReturnedBooks$Response(params, context).pipe(
             map((r: StrictHttpResponse<PageResponseBorrowedBookResponse>): PageResponseBorrowedBookResponse => r.body)
         );
@@ -284,7 +291,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllBooksByOwner$Response(params?: FindAllBooksByOwner$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBookResponse>> {
+    findAllBooksByOwner$Response(params?: FindAllBooksByOwner$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<PageResponseBookResponse>> {
         return findAllBooksByOwner(this.http, this.rootUrl, params, context);
     }
 
@@ -294,7 +302,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllBooksByOwner(params?: FindAllBooksByOwner$Params, context?: HttpContext): Observable<PageResponseBookResponse> {
+    findAllBooksByOwner(params?: FindAllBooksByOwner$Params, context?: HttpContext):
+        Observable<PageResponseBookResponse> {
         return this.findAllBooksByOwner$Response(params, context).pipe(
             map((r: StrictHttpResponse<PageResponseBookResponse>): PageResponseBookResponse => r.body)
         );
@@ -306,7 +315,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllBorrowedBooks$Response(params?: FindAllBorrowedBooks$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
+    findAllBorrowedBooks$Response(params?: FindAllBorrowedBooks$Params, context?: HttpContext):
+        Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
         return findAllBorrowedBooks(this.http, this.rootUrl, params, context);
     }
 
@@ -316,7 +326,8 @@ export class BookService extends BaseService {
      *
      * This method doesn't expect any request body.
      */
-    findAllBorrowedBooks(params?: FindAllBorrowedBooks$Params, context?: HttpContext): Observable<PageResponseBorrowedBookResponse> {
+    findAllBorrowedBooks(params?: FindAllBorrowedBooks$Params, context?: HttpContext):
+        Observable<PageResponseBorrowedBookResponse> {
         return this.findAllBorrowedBooks$Response(params, context).pipe(
             map((r: StrictHttpResponse<PageResponseBorrowedBookResponse>): PageResponseBorrowedBookResponse => r.body)
         );

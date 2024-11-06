@@ -1,0 +1,42 @@
+<div class="container-fluid card login-container" xmlns="http://www.w3.org/1999/html">
+    <h3 class="text-center">Login</h3>
+    <hr>
+
+    <div class="mb-3">
+        <label for="login" class="form-label">Email Address</label>
+        <input [(ngModel)]="authRequest.userEmail" type="email" class="form-control"
+               id="login" placeholder="name@example.com">
+        <div *ngIf="errorMsg.length" class="ms-1 small">
+            <div class="text-danger" *ngFor="let err of errorMsg">{{ err }}</div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input [(ngModel)]="authRequest.password" type="password" class="form-control"
+               id="password" placeholder="password longer than 8">
+        <div *ngIf="errorMsg.length" class="ms-1 small">
+            <div class="text-danger" *ngFor="let err of errorMsg">{{ err }}</div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mb-3">
+        <button (click)="login()" type="button" class="btn btn-primary fw-semibold">
+            Sign in
+        </button>
+
+        <div>
+            Don't have an account?
+            <button (click)="register()" type="button" class="btn btn-link">
+                Register
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

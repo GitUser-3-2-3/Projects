@@ -11,8 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.project.bookbackend.handler.BusinessErrorCodes.*;
 import static org.springframework.http.HttpStatus.*;
@@ -79,11 +79,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleArgumentNotValidException(
         MethodArgumentNotValidException argInvalidExp
     ) {
-        Set<String> validationErrors = new HashSet<>();
+        Map<String, String> validationErrors = new HashMap<>();
 
         argInvalidExp.getBindingResult().getAllErrors().forEach(error -> {
             var errorMessage = error.getDefaultMessage();
-            validationErrors.add(errorMessage);
+            var errorCode = error.getCode();
+            validationErrors.put(errorCode, errorMessage);
         });
 
         return ResponseEntity.status(BAD_REQUEST).body(

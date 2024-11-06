@@ -18,6 +18,6 @@ public class ExceptionResponse {
     private String errorBody;
     private String errDescription;
 
-    private Set<String> validationErrors;
+    private Map<String, String> validationErrors;
     private Map<String, String> errorMap;
 }

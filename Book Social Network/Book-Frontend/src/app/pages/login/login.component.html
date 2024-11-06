@@ -6,18 +6,15 @@
         <label for="login" class="form-label">Email Address</label>
         <input [(ngModel)]="authRequest.userEmail" type="email" class="form-control"
                id="login" placeholder="name@example.com">
-        <div *ngIf="errorMsg.length" class="ms-1 small">
-            <div class="text-danger" *ngFor="let err of errorMsg">{{ err }}</div>
-        </div>
+        <div class="text-danger small" *ngIf="validErrorMsg.NotEmpty">{{ validErrorMsg.NotEmpty }}</div>
+        <div class="text-danger small" *ngIf="validErrorMsg.Email">{{ validErrorMsg.Email }}</div>
     </div>
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input [(ngModel)]="authRequest.password" type="password" class="form-control"
                id="password" placeholder="password longer than 8">
-        <div *ngIf="errorMsg.length" class="ms-1 small">
-            <div class="text-danger" *ngFor="let err of errorMsg">{{ err }}</div>
-        </div>
+        <div class="text-danger small" *ngIf="validErrorMsg.Size">{{ validErrorMsg.Size }}</div>
     </div>
 
     <div class="d-flex justify-content-between mb-3">

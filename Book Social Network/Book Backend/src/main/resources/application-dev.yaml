@@ -32,10 +32,6 @@ server:
   port: 8088
 
 application:
-  security:
-    jwt:
-      secret-key: C1C3EFD866C9686599781AD925A1C
-      expiration: 86400000
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account

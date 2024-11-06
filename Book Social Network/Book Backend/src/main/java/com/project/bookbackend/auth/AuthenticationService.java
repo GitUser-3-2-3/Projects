@@ -5,14 +5,17 @@ import com.project.bookbackend.email.EmailTemplateName;
 import com.project.bookbackend.repo.RoleRepository;
 import com.project.bookbackend.repo.TokenRepository;
 import com.project.bookbackend.repo.UserRepository;
-import com.project.bookbackend.security.Token;
 import com.project.bookbackend.security.JwtService;
+import com.project.bookbackend.security.Token;
 import com.project.bookbackend.user.User;
 import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
@@ -36,20 +41,6 @@ public class AuthenticationService {
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
-
-    public AuthenticationService(
-        RoleRepository roleRepository, PasswordEncoder passwordEncoder, UserRepository userRepository,
-        TokenRepository tokenRepository, EmailService emailService,
-        AuthenticationManager authManager, JwtService jwtService
-    ) {
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
-        this.tokenRepository = tokenRepository;
-        this.emailService = emailService;
-        this.authManager = authManager;
-        this.jwtService = jwtService;
-    }
 
     public void registerUser(RegisterRequest req) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
@@ -66,12 +57,14 @@ public class AuthenticationService {
         sendValidationEmail(user);
     }
 
-    public AuthResponse verifyUser(AuthRequest req) {
-        var auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(
+    public AuthResponse verifyUser(final AuthRequest req) {
+        log.warn("User Verification Reached");
+        Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(
                 req.getUserEmail(),
                 req.getPassword()
             )
         );
+        log.warn("User has been verified");
         var extraClaims = new HashMap<String, Object>();
         var userDetails = ((User) auth.getPrincipal());
 

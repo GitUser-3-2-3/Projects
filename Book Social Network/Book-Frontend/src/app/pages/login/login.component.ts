@@ -29,7 +29,7 @@ export class LoginComponent {
             next: (response) => {
                 this.tokenService.token = response.token as string;
 
-                this.router.navigate(['api/v1/books']).then(success => {
+                this.router.navigate(['books']).then(success => {
                     success ? console.log("successful")
                         : console.log("failed")
                 })

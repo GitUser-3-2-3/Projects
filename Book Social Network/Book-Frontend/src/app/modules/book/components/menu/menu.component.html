@@ -1,1 +1,56 @@
-<p>menu works!</p>
+<nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="javascript:void(0)">BSN</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold" aria-current="page" routerLink="/books">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold" aria-current="page" routerLink="/my-books">
+                        &nbsp;My Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold" aria-current="page" routerLink="/waiting-list">
+                        &nbsp;Waiting List
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold" aria-current="page" routerLink="/returned-books">
+                        &nbsp;Returned Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold" aria-current="page" routerLink="/borrowed-books">
+                        &nbsp;Borrowed Books
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex gap-2 align-items-center" role="search">
+                <input class="form-control" type="text" placeholder="Find a Book" aria-label="search">
+                <button class="btn btn-success pt-1 pb-1" type="submit">Search</button>
+                <span class="ps-3">Welcome</span>
+                <span class="text-capitalize fw-semibold">Parth</span>
+                <button class="btn btn-outline-danger pt-1 pb-1" type="button" (click)="logout()">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+

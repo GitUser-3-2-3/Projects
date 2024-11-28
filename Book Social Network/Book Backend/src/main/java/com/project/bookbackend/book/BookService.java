@@ -48,7 +48,7 @@ public class BookService {
     public PageResponse<BookResponse> findAllBooks(int page, int size, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAT").descending());
         Page<Book> books = bookRepository.findAllDisplayableBooks(pageable, user.getId());
 
         List<BookResponse> bookResponseList = books.stream()
@@ -65,7 +65,7 @@ public class BookService {
     public PageResponse<BookResponse> findAllBooksByOwner(int page, int size, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAT").descending());
         Page<Book> books = bookRepository.findAll(withOwnerId(user.getId()), pageable);
 
         List<BookResponse> bookResponseList = books.stream()
@@ -82,7 +82,7 @@ public class BookService {
     public PageResponse<BorrowedBookResponse> findAllBorrowedBooks(int page, int size, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAT").descending());
         Page<BookTransactionHistory> borrowedBooks = transactionHistoryRepository
             .findAllBorrowedBooks(pageable, user.getId());
 
@@ -100,7 +100,7 @@ public class BookService {
     public PageResponse<BorrowedBookResponse> findAllReturnedBooks(int page, int size, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAT").descending());
         Page<BookTransactionHistory> returnedBooks = transactionHistoryRepository
             .findAllReturnedBooks(pageable, user.getId());
 

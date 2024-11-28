@@ -52,7 +52,7 @@ public class Book extends BaseEntity {
             return 0.0;
         }
         var rating = this.feedbacks.stream().mapToDouble(Feedback::getRating)
-            .average().orElse(0.0);
+          .average().orElse(0.0);
 
         // Returns 4.0 if rounded rate is less than 4.5 or else returns 4.5
         return Math.round(rating * 10.0) / 10.0;

@@ -18,9 +18,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@DiscriminatorColumn(name = "entity_type", discriminatorType = DiscriminatorType.STRING)
 public class Book extends BaseEntity {
 
     private String title;

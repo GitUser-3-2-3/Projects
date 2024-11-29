@@ -32,6 +32,10 @@ server:
   port: 8088
 
 application:
+  security:
+    jwt:
+      secret-key: qMB1ZJDi3lRW92LuQ8Hzb6eoU41Ny3x3ioowN2JNaFeBJ6bSvnOr1/xLwprKB2py
+
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account

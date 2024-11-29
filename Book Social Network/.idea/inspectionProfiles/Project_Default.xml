@@ -1,6 +1,9 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="CommentedOutCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="minLines" value="11" />
+    </inspection_tool>
     <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredErrors">
         <list>
@@ -16,6 +19,7 @@
           <option value="Book-Backend" />
           <option value="Book-Backend" />
           <option value="Book-Backend" />
+          <option value="Book-Backend" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -23,10 +27,12 @@
           <option value="org.xmlunit:xmlunit-core:2.9.1" />
           <option value="org.springframework.security:spring-security-web:6.2.6" />
           <option value="org.springframework:spring-context:6.1.13" />
+          <option value="org.apache.tomcat.embed:tomcat-embed-core:10.1.30" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />

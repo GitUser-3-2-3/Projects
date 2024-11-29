@@ -44,27 +44,23 @@ public class AuthenticationService {
 
     public void registerUser(RegisterRequest req) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role wasn't initialized."));
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role wasn't initialized."));
 
         var user = User.builder().firstname(req.getFirstname()).lastname(req.getLastname())
-            .dateOfBirth(req.getDateOfBirth()).userEmail(req.getUserEmail())
-            .password(passwordEncoder.encode(req.getPassword()))
-            .accountLocked(false).accountEnabled(false)
-            .roles(List.of(userRole))
-            .build();
+          .dateOfBirth(req.getDateOfBirth()).userEmail(req.getUserEmail())
+          .password(passwordEncoder.encode(req.getPassword()))
+          .accountLocked(false).accountEnabled(false)
+          .roles(List.of(userRole))
+          .build();
 
         userRepository.save(user);
         sendValidationEmail(user);
     }
 
     public AuthResponse verifyUser(final AuthRequest req) {
-        log.warn("User Verification Reached");
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(
-                req.getUserEmail(),
-                req.getPassword()
-            )
-        );
-        log.warn("User has been verified");
+          req.getUserEmail(), req.getPassword()
+        ));
         var extraClaims = new HashMap<String, Object>();
         var userDetails = ((User) auth.getPrincipal());
 
@@ -78,8 +74,8 @@ public class AuthenticationService {
         var newToken = generateAndSaveActivationToken(user);
 
         emailService.sendEmail(user.getUserEmail(), user.getFullName(),
-            EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl,
-            newToken, "Account activation"
+          EmailTemplateName.ACTIVATE_ACCOUNT, activationUrl,
+          newToken, "Account activation"
         );
     }
 
@@ -87,9 +83,9 @@ public class AuthenticationService {
         String generatedToken = generateActivationCode();
 
         var token = Token.builder().token(generatedToken)
-            .createdAT(LocalDateTime.now())
-            .expiresAT(LocalDateTime.now().plusMinutes(15))
-            .user(user).build();
+          .createdAT(LocalDateTime.now())
+          .expiresAT(LocalDateTime.now().plusMinutes(15))
+          .user(user).build();
 
         tokenRepository.save(token);
         return generatedToken;
@@ -109,7 +105,7 @@ public class AuthenticationService {
 
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (LocalDateTime.now().isAfter(savedToken.getExpiresAT())) {
             sendValidationEmail(savedToken.getUser());
@@ -120,7 +116,7 @@ public class AuthenticationService {
 
     private void validateUserAndSaveToken(Token savedToken) {
         var user = userRepository.findById(savedToken.getUser().getId())
-            .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+          .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         user.setAccountEnabled(true);
         userRepository.save(user);

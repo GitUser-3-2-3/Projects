@@ -4,15 +4,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +18,10 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final String secretKey;
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
 
+/*
     private JwtService() {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
@@ -33,6 +32,7 @@ public class JwtService {
             throw new RuntimeException(algoNotFoundExp);
         }
     }
+*/
 
     @SuppressWarnings("unused")
     public String generateToken(UserDetails userDetails) {
@@ -43,22 +43,20 @@ public class JwtService {
         return buildToken(extraClaims, userDetails);
     }
 
-    private String buildToken(
-        Map<String, Object> extraClaims, UserDetails userDetails
-    ) {
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         var authorities = userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .toList();
+          .map(GrantedAuthority::getAuthority)
+          .toList();
 
         return Jwts.builder().claims(extraClaims)
-            .subject(userDetails.getUsername()).issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + 86400000))
-            .claim("authorities", authorities)
-            .signWith(getSignInKey())
-            .compact();
+          .subject(userDetails.getUsername()).issuedAt(new Date(System.currentTimeMillis()))
+          .expiration(new Date(System.currentTimeMillis() + 86400000))
+          .claim("authorities", authorities)
+          .signWith(getSignInKey())
+          .compact();
     }
 
-    private Key getSignInKey() {
+    private SecretKey getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -87,9 +85,9 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-            .verifyWith((SecretKey) getSignInKey()).build()
-            .parseSignedClaims(token)
-            .getPayload();
+          .verifyWith(getSignInKey()).build()
+          .parseSignedClaims(token)
+          .getPayload();
     }
 }
 

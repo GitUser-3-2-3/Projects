@@ -1,1 +1,7 @@
-<p>book-list works!</p>
+<h3>Book List</h3>
+<hr>
+<div class="d-flex justify-content-between gap-2 flex-wrap">
+    <app-book-card
+      *ngFor="let book of bookResponse.content" [book]="book"
+    >{{ book.title }}</app-book-card>
+</div>

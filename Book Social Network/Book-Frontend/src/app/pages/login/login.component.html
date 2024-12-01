@@ -16,7 +16,7 @@
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input [(ngModel)]="authRequest.password" type="password" class="form-control"
+        <input [(ngModel)]="authRequest.password" type="text" class="form-control"
                id="password" placeholder="password longer than 8">
 
         <div class="text-danger small" *ngIf="validErrorMsg.Size">{{ validErrorMsg.Size }}</div>

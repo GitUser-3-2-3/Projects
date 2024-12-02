@@ -67,13 +67,20 @@ export class BookListComponent implements OnInit {
         this.bookService.borrowBook({'book-id': res.id as number}).subscribe({
             next: () => {
                 this.level = 'success';
+                this.clearMessageAfterDelay();
                 this.message = 'Book borrowed successfully';
             }, error: (err) => {
-                console.log(err);
                 this.level = 'error';
+                this.clearMessageAfterDelay()
                 this.message = err.error.errorBody;
             }
         });
+    }
+
+    private clearMessageAfterDelay() {
+        setTimeout(() => {
+            this.message = '';
+        }, 5000);
     }
 }
 

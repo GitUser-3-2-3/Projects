@@ -7,6 +7,7 @@
             <div class="mt-2">
                 <input (change)="onFileSelected($event)" accept="image/*" class="form-control" id="formFile" type="file">
             </div>
+            <div class="text-danger small" *ngIf="validationErrMsg.NoCover">{{ validationErrMsg.NoCover }}</div>
         </div>
 
         <div class="col-6 d-flex justify-content-center" style="margin-left: 7rem">

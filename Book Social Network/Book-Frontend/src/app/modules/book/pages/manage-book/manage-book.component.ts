@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class ManageBookComponent {
     protected readonly Math = Math;
-    validationErrMsg: { NotBlank: string } = {NotBlank: ''}
+    validationErrMsg = {NotBlank: '', NoCover: ''}
 
     selectedBookCover: any;
     selectedPicture: string | undefined;
@@ -37,8 +37,11 @@ export class ManageBookComponent {
     }
 
     saveBook() {
-        this.validationErrMsg = {NotBlank: ''}
-
+        this.validationErrMsg = {NotBlank: '', NoCover: ''}
+        if (!this.selectedBookCover) {
+            this.validationErrMsg.NoCover = 'Book cover is required';
+            return;
+        }
         this.bookService.saveBook({body: this.bookRequest}).subscribe({
             next: (bookId) => {
                 this.bookService.uploadBookCover({

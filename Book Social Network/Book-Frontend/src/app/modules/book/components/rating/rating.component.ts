@@ -18,9 +18,7 @@ export class RatingComponent {
         return this.rating % 1 !== 0;
     }
 
-    get emptyStart(): number {
+    get emptyStars(): number {
         return this.maxRating - Math.ceil(this.rating);
     }
-
-    protected readonly Array = Array;
 }

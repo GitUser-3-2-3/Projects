@@ -1,21 +1,21 @@
 package com.project.bookbackend.book;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 
 public record BookRequest(
 
     Integer id,
 
-    @NotEmpty(message = "100")
+    @NotBlank(message = "Title cannot be blank")
     String title,
 
-    @NotEmpty(message = "101")
+    @NotBlank(message = "Author name is mandatory")
     String authorName,
 
-    @NotEmpty(message = "102")
+    @NotBlank(message = "ISBN is mandatory")
     String isbn,
 
-    @NotEmpty(message = "103")
+    @NotBlank(message = "Synopsis cannot be blank")
     String synopsis,
 
     boolean shareable

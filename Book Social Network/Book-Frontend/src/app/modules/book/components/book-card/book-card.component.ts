@@ -10,6 +10,13 @@ export class BookCardComponent {
     private _book: BookResponse = {};
     private _manage = false;
 
+    @Output() private share: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+    @Output() private archive: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+    @Output() private borrow: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+    @Output() private edit: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+    @Output() private addToWaitingList: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+    @Output() private details: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+
     get book(): BookResponse {
         return this._book;
     }
@@ -34,13 +41,6 @@ export class BookCardComponent {
         }
         return 'https://picsum.photos/1920/1080?random' + Math.random();
     }
-
-    @Output() private share: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-    @Output() private archive: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-    @Output() private addToWaitingList: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-    @Output() private borrow: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-    @Output() private details: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-    @Output() private edit: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
 
     onShowDetails() {
         return this.details.emit(this._book);

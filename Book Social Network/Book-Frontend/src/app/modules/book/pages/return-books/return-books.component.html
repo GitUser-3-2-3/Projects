@@ -1,1 +1,94 @@
-<p>return-books works!</p>
+<div class="content-container">
+   <div class="content">
+      <div class="d-flex justify-content-center">
+         <h3 class="mb-1 mt-2">Returned Books</h3>
+      </div>
+
+      <div class="d-flex justify-content-center">
+         <div *ngIf="message" [class.alert-danger]="level === 'error'" [class.alert-success]="level === 'success'"
+              [class.alert-warning]="level === 'warning'"
+              class="alert p-1 m-0">{{ message }}
+         </div>
+      </div>
+
+      <hr class="mb-0" style="color: gray">
+      <table class="table">
+         <thead>
+            <tr>
+               <th scope="col">#</th>
+               <th scope="col">Title</th>
+               <th scope="col">Author</th>
+               <th scope="col">ISBN</th>
+               <th scope="col">Rating</th>
+               <th scope="col">Status</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            <tr *ngFor="let book of returnedBooks.content; let index = index">
+               <th scope="row">{{ index + 1 }}</th>
+               <td>{{ book.title }}</td>
+               <td>{{ book.authorName }}</td>
+               <td>{{ book.isbn }}</td>
+               <td><i class="fas fa-star rating-color ms-2"></i>&nbsp;{{ book.rating }}</td>
+               <td>
+                  <div class="d-flex gap-2 ms-1">
+                     <i *ngIf="book.returned" class="cursor-pointer fa-regular fa-paper-plane text-success"></i>
+
+                     <i *ngIf="!book.returned"
+                        class="cursor-pointer fa-solid fa-paper-plane text-primary"></i>
+
+                     <i [class.text-danger]="!book.returned" [class.text-success]="book.returnApproved"
+                        [class.text-warning]="book.returned && !book.returnApproved" (click)="approveReturn(book)"
+                        class="cursor-pointer fa-solid fa-circle-check text-success"></i>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+
+   <div class="navigation">
+      <div class="d-flex justify-content-center mt-3">
+         <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+               <li class="page-item">
+                  <a (click)="goToFirstPage()" [class.disabled]="page == 0" aria-label="previous" class="page-link"
+                     href="javascript:void(0)">
+                     <i class="fa fa-solid fa-angles-left"></i>
+                  </a>
+               </li>
+
+               <li class="page-item">
+                  <a (click)="goToPreviousPage()" [class.disabled]="page == 0" aria-label="previous" class="page-link"
+                     href="javascript:void(0)">
+                     <i class="fa fa-solid fa-angle-left"></i>
+                  </a>
+               </li>
+
+               <li *ngFor="let i of [].constructor(this.returnedBooks.totalPages); let pageIndex = index"
+                   [class.active]="pageIndex == page" class="page-item">
+                  <a (click)="goToPage(pageIndex)" aria-label="page" class="page-link" href="javascript:void(0)">
+                     {{ pageIndex + 1 }}
+                  </a>
+               </li>
+
+               <li class="page-item">
+                  <a (click)="goToNextPage()" [class.disabled]="isLastPage" aria-label="next" class="page-link"
+                     href="javascript:void(0)">
+                     <i class="fa fa-solid fa-angle-right"></i>
+                  </a>
+               </li>
+
+               <li class="page-item">
+                  <a (click)="goToLastPage()" [class.disabled]="isLastPage" aria-label="next" class="page-link"
+                     href="javascript:void(0)">
+                     <i class="fa fa-solid fa-angles-right"></i>
+                  </a>
+               </li>
+            </ul>
+         </nav>
+      </div>
+   </div>
+</div>

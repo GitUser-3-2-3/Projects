@@ -14,7 +14,7 @@ export class ReturnBooksComponent implements OnInit {
     level = 'success';
     message = '';
     page = 0;
-    size = 5;
+    size = 10;
 
     constructor(private bookService: BookService) {
     }

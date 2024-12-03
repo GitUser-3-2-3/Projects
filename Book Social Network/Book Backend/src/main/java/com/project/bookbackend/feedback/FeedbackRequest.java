@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 public record FeedbackRequest(
 
     @Min(value = 0, message = "201")
-    @Max(value = 0, message = "202")
+    @Max(value = 5, message = "202")
     @Positive(message = "200")
     Double rating,
 

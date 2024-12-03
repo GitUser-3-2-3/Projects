@@ -1,0 +1,11 @@
+.content-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+.content {
+  flex: 1;
+}
+.navigation {
+  margin-top: auto;
+}

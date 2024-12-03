@@ -1,0 +1,17 @@
+.rating-color {
+  color: #ff7f00;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+}
+
+.content {
+  flex: 1;
+}
+
+.navigation {
+  margin-top: auto;
+}

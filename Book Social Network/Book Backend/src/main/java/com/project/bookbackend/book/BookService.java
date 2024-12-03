@@ -175,7 +175,17 @@ public class BookService {
     }
 
     public Integer returnBorrowedBook(Integer bookId, Authentication connectedUser) {
-        User user = getUserAndVerify(bookId, connectedUser);
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new EntityNotFoundException("No book found with id::" + bookId));
+
+        if (book.isArchived() || !book.isShareable()) {
+            throw new OperationNotPermittedException("Book is archived or is not shareable.");
+        }
+        User user = (User) connectedUser.getPrincipal();
+
+        if (Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("You can't borrow your own book!");
+        }
 
         BookTransactionHistory transactionHistory = transactionHistoryRepository
             .findByBookIdAndUserId(bookId, user.getId())
@@ -186,17 +196,6 @@ public class BookService {
     }
 
     public Integer approveBookReturn(Integer bookId, Authentication connectedUser) {
-        User user = getUserAndVerify(bookId, connectedUser);
-
-        BookTransactionHistory transactionHistory = transactionHistoryRepository
-            .findByBookIdAndOwnerId(bookId, user.getId())
-            .orElseThrow(() -> new OperationNotPermittedException("Cannot approve. The book is not returned yet."));
-
-        transactionHistory.setReturnApproved(true);
-        return transactionHistoryRepository.save(transactionHistory).getId();
-    }
-
-    private User getUserAndVerify(Integer bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
             .orElseThrow(() -> new EntityNotFoundException("No book found with id::" + bookId));
 
@@ -205,10 +204,15 @@ public class BookService {
         }
         User user = (User) connectedUser.getPrincipal();
 
-        if (Objects.equals(book.getOwner().getId(), user.getId())) {
-            throw new OperationNotPermittedException("Dude...You can't borrow/return your own book!");
+        if (!Objects.equals(book.getOwner().getId(), user.getId())) {
+            throw new OperationNotPermittedException("You can't return book you don't own!");
         }
-        return user;
+        BookTransactionHistory transactionHistory = transactionHistoryRepository
+            .findByBookIdAndOwnerId(bookId, user.getId())
+            .orElseThrow(() -> new OperationNotPermittedException("Cannot approve. The book is not returned yet."));
+
+        transactionHistory.setReturnApproved(true);
+        return transactionHistoryRepository.save(transactionHistory).getId();
     }
 
     public void uploadBookCover(Integer bookId, Authentication connectedUser, MultipartFile bookCover) {

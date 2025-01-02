@@ -20,6 +20,15 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+  bn-api:
+    container_name: bn-api
+    image: bn/bn:1.0.0
+    ports:
+      - "8088:8088"
+    networks:
+      - spring-demo
+    depends_on:
+      - postgres
 
 networks:
   spring-demo:

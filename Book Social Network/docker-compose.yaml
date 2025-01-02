@@ -22,13 +22,22 @@ services:
       - "1025:1025"
   bn-api:
     container_name: bn-api
-    image: bn/bn:1.0.0
+    image: bn/bn:1.0.1
     ports:
       - "8088:8088"
     networks:
       - spring-demo
     depends_on:
       - postgres
+  bn-ui:
+    container_name: bn-ui
+    image: bn/bn-ui:1.0.0
+    ports:
+      - "8080:80"
+    networks:
+      - spring-demo
+    depends_on:
+      - bn-api
 
 networks:
   spring-demo:

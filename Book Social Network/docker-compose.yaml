@@ -20,6 +20,9 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+    networks:
+      - spring-demo
+
   bn-api:
     container_name: bn-api
     image: bn/bn:1.0.1
@@ -29,6 +32,7 @@ services:
       - spring-demo
     depends_on:
       - postgres
+
   bn-ui:
     container_name: bn-ui
     image: bn/bn-ui:1.0.0
@@ -38,6 +42,19 @@ services:
       - spring-demo
     depends_on:
       - bn-api
+
+  keycloak:
+    container_name: keycloak-bn
+    image: quay.io/keycloak/keycloak:25.0.6
+    ports:
+      - "9090:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - spring-demo
+    command:
+      - "start-dev"
 
 networks:
   spring-demo:

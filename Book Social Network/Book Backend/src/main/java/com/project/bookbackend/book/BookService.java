@@ -72,8 +72,7 @@ public class BookService {
             .map(bookMapper::toBookResponse)
             .toList();
 
-        return new PageResponse<>(
-            bookResponseList, books.getNumber(), books.getSize(),
+        return new PageResponse<>(bookResponseList, books.getNumber(), books.getSize(),
             books.getTotalElements(), books.getTotalPages(),
             books.isFirst(), books.isLast()
         );
@@ -90,8 +89,7 @@ public class BookService {
             .map(bookMapper::toBorrowedBookResponse)
             .toList();
 
-        return new PageResponse<>(
-            bookResponseList, borrowedBooks.getNumber(), borrowedBooks.getSize(),
+        return new PageResponse<>(bookResponseList, borrowedBooks.getNumber(), borrowedBooks.getSize(),
             borrowedBooks.getTotalElements(), borrowedBooks.getTotalPages(),
             borrowedBooks.isFirst(), borrowedBooks.isLast()
         );
@@ -108,8 +106,7 @@ public class BookService {
             .map(bookMapper::toBorrowedBookResponse)
             .toList();
 
-        return new PageResponse<>(
-            bookResponseList, returnedBooks.getNumber(), returnedBooks.getSize(),
+        return new PageResponse<>(bookResponseList, returnedBooks.getNumber(), returnedBooks.getSize(),
             returnedBooks.getTotalElements(), returnedBooks.getTotalPages(),
             returnedBooks.isFirst(), returnedBooks.isLast()
         );

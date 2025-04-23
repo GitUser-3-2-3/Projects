@@ -1,0 +1,184 @@
+
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses the same commands as the original
+" .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Mapping <Space> as leader
+let mapleader = " "
+
+" Color customization for skipping plugin
+let g:qs_primary_color = "#3394FF"
+
+" Enables all the switch_definitions for vim switch plugin
+let g:switch_definitions = 'group:basic,group:java,group:javascript'
+
+" Custom switch definitions for vim switch plugin
+let g:switch_custom_definitions = [
+    \ switchWords(['Integer', 'Double', 'Long', 'Byte']),
+    \ switchWords(['int', 'double', 'long', 'byte']),
+    \ switchWords(['ArrayList', 'HashSet']),
+    \ switchWords(['List', 'Set']),
+    \ switchWords(['Service', 'Component', 'Configuration']),
+    \ switchWords(['GetMapping', 'PostMapping', 'PutMapping', 'DeleteMapping']),
+    \ switchWords(['int8', 'int16', 'int32', 'int64', 'float32', 'float64']),
+    \ switchWords(['struct', 'interface']),
+\ ]
+
+" Changes the color of highlightedyank
+let g:highlightedyank_highlight_color = "rgba(40, 230, 170, 55)"
+
+" Map alt + space and kj to Escape
+imap <A-Space> <Esc>
+imap kj <Esc>
+
+" *************************************************************************************************************************
+
+" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=10 sidescrolloff=10
+
+" Increase which-key duration
+set notimeout
+
+" Show two numbered lines
+set relativenumber
+
+" Ignore case in search
+set ignorecase
+
+" Match case if explicitly stated
+set smartcase
+
+" Highlight all occurrences
+" set hlsearch
+
+" Do incremental searching.
+set incsearch
+
+" Gives you option to switch to different characters in the same line
+set quickscope
+
+" After you press the <leader> it shows you all the options available
+set which-key
+
+" Let's you have shortcuts for operations on functions
+set functiontextobj
+
+" Config for vim switch plugin, let's you cycle through alternative
+set switch
+
+" Shows register content in a popup window
+set peekaboo
+
+" Use the system clipboard for all yank, delete, change, and put operations
+set clipboard=unnamedplus
+
+" -- Map IDE actions to IdeaVim -- Link: https://jb.gg/abva4t
+" *************************************************************************************************************************
+" -- Plugins --
+
+" Multiple Cursors
+Plug 'terryma/vim-multiple-cursors'
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+" change arguments in functions conveniently
+Plug 'vim-scripts/argtextobj.vim'
+
+" For enhanced pair matching of brackets/etc.
+Plug 'chrisbra/matchit'
+
+" For surrounding text with (whatever)
+Plug 'tpope/vim-surround'
+
+"Plugin Mappings +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+:map <C-n> <Plug>NextWholeOccurrence
+:xmap <C-n> <Plug>NextWholeOccurrence
+:map <leader><C-n> <Plug>AllWholeOccurrences
+
+" *************************************************************************************************************************
+
+" -- Mappings --
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t --
+
+" MAPPINGS for IDE Actions -----------------------------------------------------------------------------------------------
+:map \r <Action>(RearrangeCode)
+:map \f <Action>(ReformatCode)
+:map \x <Action>(ToggleReadOnlyAttribute)
+
+:xmap \c <Action>(CommentByBlockComment)
+
+" MAPPINGS FOR CODE EDITING ACTIONS ---------------------------------------------------------------------------------------
+:map qc <Action>(EditorToggleCase)
+:map qi <Action>(CallInlineCompletionAction)
+
+" MAPPINGS WITH <LEADER> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+" MAPPINGS for creating new files <leader>n-------------------------------------------------------------------------------
+:map <leader>nf <Action>(NewFile)
+:map <leader>nh <Action>(NewHtmlFile)
+
+" MAPPINGS WITH <leader>j -------------------------------------------------------------------------------------------------
+
+:map <leader>jc <Action>(RunClass)
+:map <leader>jr <Action>(Run)
+:map <leader>jd <Action>(Debug)
+
+" MAPPINGS WITH <leader>r -------------------------------------------------------------------------------------------------
+
+:map <leader>rr <Action>(RenameElement)
+:map <leader>rm <Action>(ExtractMethod)
+:xmap <leader>rm <Action>(ExtractMethod)
+
+" MAPPINGS WITH <leader>f -------------------------------------------------------------------------------------------------
+
+:map <leader>ff <Action>(FindInPath)
+:map <leader>fe <Action>(ActivateProjectToolWindow)
+:map <leader>fd <Action>(GotoDeclaration)
+
+" MAPPINGS WITH <leader> t ------------------------------------------------------------------------------------------------
+
+:map <leader>tq <Action>(CloseProject)
+
+" MAPPINGS WITH <LEADER> ENDS +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+" MAPPINGS WITH (g) -------------------------------------------------------------------------------------------------------
+:map gu <Action>(ShowUsages)
+:map gp <Action>(ShowErrorDescription)
+:map gi <Action>(QuickJavaDoc)
+:map gm <Action>(CollapseRegion)
+
+" MAPPINGS WITH (t) -------------------------------------------------------------------------------------------------------
+:map taw <Action>(HideAllWindows)
+:map tt <Action>(ActivateTerminalToolWindow)
+:map tw <Action>(HideActiveWindow)
+:map tjr <Action>(ActivateRunToolWindow)
+:map tai <Action>(AIAssistant.ToolWindow.ShowOrFocus)
+:map tpw <Action>(ActivateProblemsViewToolWindow)
+:map tq <Action>(CloseAllEditorsButActive)
+:map td <Action>(ActivateDatabaseToolWindow)
+
+" Map L/H to switch tabs
+:map L <Action>(NextTab)
+:map H <Action>(PreviousTab)
+
+" Map ]/[ to switch project windows
+:map ] <Action>(NextProjectWindow)
+:map [ <Action>(PreviousProjectWindow)
+
+" Map "-" and "+" to cycle forward, or cycle backward
+nnoremap + :Switch<CR>
+nnoremap - :SwitchReverse<CR>
+
+" EDITOR key change +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+" Map r to redo instead of Ctrl + r
+:map r <C-r>
